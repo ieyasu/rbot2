@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+FILE = 'db/galenquotes'
+
+def handle_command(nick, dest, args)
+    quote = "NO LINE WAS EVER SELECTED FROM THE FILE"
+    IO.readlines(FILE).each_with_index do |line, i|
+        next if line.rstrip.length < 10
+        quote = line.rstrip if rand(i + 1) < 1
+    end
+    "P\t#{quote}"
+end
+
+load 'boilerplate.rb'

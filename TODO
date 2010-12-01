@@ -1,0 +1,134 @@
+To Do
+=====
+
+ - use 'does not compute' as an error message
+ - "o/` it's more fun to compute"
+ - next searching in a web page
+ - tack on javascript:parent.location='...' inside the href for pug's
+   urlgrabber to fix ie referrer troubles
+ - write !thes(aurus) command because you hate yourself
+ - full-text search on urlgrabber
+ - make timestamps anchors and links so that urls can be pasted into channel
+   and will point to that vicinity of conversation
+ - !domain ass2ass -> check all TLD's in order of popularity or something.
+ - use URLs at http://xem.us/g/test-regex.php for testing pug
+ - capture privately nexted urls and make available via grabber, privately
+ - !map should use maps.google.com
+ - http://idrink.com/ - webtender alternative
+ - :bigfeh.com 433 * rb-test :Nickname is already in use.
+ - <<< WHOIS rb-test
+   >>> :bigfeh.com 451  WHOIS :Register first.
+ - archiving url grabber that saves text of web page so that you can search
+   for urls by web page contents
+ - opt-in for url summarizer, print status code for paster so they know if
+   it's a 404 or not
+ - !conv enhancement: conv climbing scales and various shoe sizes,
+   see http://www.boot.com/bsizcvt.htm#Measure for more
+ - fix resellerratings
+ - make '!next nick !smite nick' work
+ - use ferret for FTS and !searchnexts
+ - add merb- or camping-based web interface
+ - plugin and command reload capability
+ - repackage commands into objects with common interface, in preparation
+   for using that as the standard interface for defining new !commands.
+ - make rb give the date with !nexts if they're more than a week old
+ - !dexonline or !411
+ - <sock> !imdb to return plot summary!
+
+Rewrite:
+ - package as gem
+
+now depends on ruby-sqlite3, hpricot, raspell, chronic
+
+---
+db: rbot:rbot/nofig7
+buxus.atmos.colostate.edu
+svn co svn://f3h.com/rbot/trunk/rbot/
+
+
+\002 - bold
+\003CC - color
+
+
+Command Interface
+-----------------
+
+The command-runner hook handles 'native' ruby bot commands. When a message
+matching a command is received, command-runner starts a sub-process for that
+command and passes it a single argument containing the string of the message
+invoking that command. The command is then expected to reply with zero or more
+lines of text, each a complete raw irc message ready to be sent down the pipe.
+It is up to the command to follow all the rules as to how to properly respond
+to a request.
+
+
+
+-- have one of these tables per account
+CREATE TABLE rn_<account> (
+    sent_at  INT  NOT NULL,
+    recvd_at INT  NOT NULL,
+    message  TEXT NOT NULL, --  [sent] -recips- <from> -text-
+    PRIMARY KEY (recvd_at, message)
+);
+
+
+CREATE TABLE cron (
+    at      INT  NOT NULL,
+    nick    TEXT NOT NULL,
+    message TEXT NOT NULL,
+    PRIMARY KEY (at, nick, message)
+);
+
+
+Next Design
+===========
+
+mothball php: zipdistance, zipinfo
+
+Features:
+ - email-ish list of nexts (send actual email?) when you get too many
+   or they wait too long. (only applies to account nexts)
+ - if pattern matches account nick or account name, deliver to any nick
+   owned by that account.
+   - '-p' option: deliver to that nick pattern, not an account
+   - '-n' option: deliver to that nick string, i.e. case-insensitive,
+     whole-string match. (adds ^ and $ around nick, basically)
+
+sarg's suggestions: don't add arguments; if the account matched is your own,
+deliver to the nick pattern, otherwise to the matched account.  If no account
+is matched, use old behavior.  allow <nick1>|<nick2> to deliver to both <nick1>
+and <nick2>.  If multiple accounts are matched and not a '|' pattern, just
+fall back on default behavior.
+
+account deliveries have a list of valid nicks to deliver to;
+nick deliveries have a single valid nick to deliver to; these could be
+trivially combined. But what if a nick is added to an account? That may just 
+be too bad...  Err, but account-nexts are to any one of the list of nicks and
+not all.
+
+Need to match to account first and uniq-ify the list.
+
+Pattern deliveries work as now, except without the account crap.
+
+
+
+upon !next: count number of undelivered messages. if > 7, send in email if
+email given.
+
+Split on | in addition to , and ; but only when to ( ) present.
+
+when <nick> talks, match <nick> to account and check against account nexts.
+next, match <nick> against pattern recipeints.
+
+three tables: 1. messages, 2. account recipients, 3. pattern recipients
+And don't archive nexts.
+
+
+email good, but shouldn't take place of full text history stuff.  Two thresh-
+holds: time and amount (chris said 3 days, 20 nexts, pulled out of ass).
+
+
+
+
+; nick -> account -> list of account recips
+select 

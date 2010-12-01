@@ -1,0 +1,1 @@
+../../lib/rubybot2/plugins/command_runner.rb

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="http://www.webserviceX.NET" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" targetNamespace="http://www.webserviceX.NET" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.webserviceX.NET">
+      <s:element name="GetAtoms">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAtomsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAtomsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAtomicWeight">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ElementName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAtomicWeightResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAtomicWeightResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAtomicNumber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ElementName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAtomicNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAtomicNumberResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetElementSymbol">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ElementName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetElementSymbolResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetElementSymbolResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </types>
+  <message name="GetAtomsSoapIn">
+    <part name="parameters" element="s0:GetAtoms" />
+  </message>
+  <message name="GetAtomsSoapOut">
+    <part name="parameters" element="s0:GetAtomsResponse" />
+  </message>
+  <message name="GetAtomicWeightSoapIn">
+    <part name="parameters" element="s0:GetAtomicWeight" />
+  </message>
+  <message name="GetAtomicWeightSoapOut">
+    <part name="parameters" element="s0:GetAtomicWeightResponse" />
+  </message>
+  <message name="GetAtomicNumberSoapIn">
+    <part name="parameters" element="s0:GetAtomicNumber" />
+  </message>
+  <message name="GetAtomicNumberSoapOut">
+    <part name="parameters" element="s0:GetAtomicNumberResponse" />
+  </message>
+  <message name="GetElementSymbolSoapIn">
+    <part name="parameters" element="s0:GetElementSymbol" />
+  </message>
+  <message name="GetElementSymbolSoapOut">
+    <part name="parameters" element="s0:GetElementSymbolResponse" />
+  </message>
+  <message name="GetAtomsHttpGetIn" />
+  <message name="GetAtomsHttpGetOut">
+    <part name="Body" element="s0:string" />
+  </message>
+  <message name="GetAtomicWeightHttpGetIn">
+    <part name="ElementName" type="s:string" />
+  </message>
+  <message name="GetAtomicWeightHttpGetOut">
+    <part name="Body" element="s0:string" />
+  </message>
+  <message name="GetAtomicNumberHttpGetIn">
+    <part name="ElementName" type="s:string" />
+  </message>
+  <message name="GetAtomicNumberHttpGetOut">
+    <part name="Body" element="s0:string" />
+  </message>
+  <message name="GetElementSymbolHttpGetIn">
+    <part name="ElementName" type="s:string" />
+  </message>
+  <message name="GetElementSymbolHttpGetOut">
+    <part name="Body" element="s0:string" />
+  </message>
+  <message name="GetAtomsHttpPostIn" />
+  <message name="GetAtomsHttpPostOut">
+    <part name="Body" element="s0:string" />
+  </message>
+  <message name="GetAtomicWeightHttpPostIn">
+    <part name="ElementName" type="s:string" />
+  </message>
+  <message name="GetAtomicWeightHttpPostOut">
+    <part name="Body" element="s0:string" />
+  </message>
+  <message name="GetAtomicNumberHttpPostIn">
+    <part name="ElementName" type="s:string" />
+  </message>
+  <message name="GetAtomicNumberHttpPostOut">
+    <part name="Body" element="s0:string" />
+  </message>
+  <message name="GetElementSymbolHttpPostIn">
+    <part name="ElementName" type="s:string" />
+  </message>
+  <message name="GetElementSymbolHttpPostOut">
+    <part name="Body" element="s0:string" />
+  </message>
+  <portType name="periodictableSoap">
+    <operation name="GetAtoms">
+      <documentation>Get element </documentation>
+      <input message="s0:GetAtomsSoapIn" />
+      <output message="s0:GetAtomsSoapOut" />
+    </operation>
+    <operation name="GetAtomicWeight">
+      <documentation>Get atomic wieght by element name </documentation>
+      <input message="s0:GetAtomicWeightSoapIn" />
+      <output message="s0:GetAtomicWeightSoapOut" />
+    </operation>
+    <operation name="GetAtomicNumber">
+      <documentation>Get atomic Number by element name </documentation>
+      <input message="s0:GetAtomicNumberSoapIn" />
+      <output message="s0:GetAtomicNumberSoapOut" />
+    </operation>
+    <operation name="GetElementSymbol">
+      <documentation>Get atomic symbol by element name </documentation>
+      <input message="s0:GetElementSymbolSoapIn" />
+      <output message="s0:GetElementSymbolSoapOut" />
+    </operation>
+  </portType>
+  <portType name="periodictableHttpGet">
+    <operation name="GetAtoms">
+      <documentation>Get element </documentation>
+      <input message="s0:GetAtomsHttpGetIn" />
+      <output message="s0:GetAtomsHttpGetOut" />
+    </operation>
+    <operation name="GetAtomicWeight">
+      <documentation>Get atomic wieght by element name </documentation>
+      <input message="s0:GetAtomicWeightHttpGetIn" />
+      <output message="s0:GetAtomicWeightHttpGetOut" />
+    </operation>
+    <operation name="GetAtomicNumber">
+      <documentation>Get atomic Number by element name </documentation>
+      <input message="s0:GetAtomicNumberHttpGetIn" />
+      <output message="s0:GetAtomicNumberHttpGetOut" />
+    </operation>
+    <operation name="GetElementSymbol">
+      <documentation>Get atomic symbol by element name </documentation>
+      <input message="s0:GetElementSymbolHttpGetIn" />
+      <output message="s0:GetElementSymbolHttpGetOut" />
+    </operation>
+  </portType>
+  <portType name="periodictableHttpPost">
+    <operation name="GetAtoms">
+      <documentation>Get element </documentation>
+      <input message="s0:GetAtomsHttpPostIn" />
+      <output message="s0:GetAtomsHttpPostOut" />
+    </operation>
+    <operation name="GetAtomicWeight">
+      <documentation>Get atomic wieght by element name </documentation>
+      <input message="s0:GetAtomicWeightHttpPostIn" />
+      <output message="s0:GetAtomicWeightHttpPostOut" />
+    </operation>
+    <operation name="GetAtomicNumber">
+      <documentation>Get atomic Number by element name </documentation>
+      <input message="s0:GetAtomicNumberHttpPostIn" />
+      <output message="s0:GetAtomicNumberHttpPostOut" />
+    </operation>
+    <operation name="GetElementSymbol">
+      <documentation>Get atomic symbol by element name </documentation>
+      <input message="s0:GetElementSymbolHttpPostIn" />
+      <output message="s0:GetElementSymbolHttpPostOut" />
+    </operation>
+  </portType>
+  <binding name="periodictableSoap" type="s0:periodictableSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <operation name="GetAtoms">
+      <soap:operation soapAction="http://www.webserviceX.NET/GetAtoms" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetAtomicWeight">
+      <soap:operation soapAction="http://www.webserviceX.NET/GetAtomicWeight" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetAtomicNumber">
+      <soap:operation soapAction="http://www.webserviceX.NET/GetAtomicNumber" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetElementSymbol">
+      <soap:operation soapAction="http://www.webserviceX.NET/GetElementSymbol" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="periodictableHttpGet" type="s0:periodictableHttpGet">
+    <http:binding verb="GET" />
+    <operation name="GetAtoms">
+      <http:operation location="/GetAtoms" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetAtomicWeight">
+      <http:operation location="/GetAtomicWeight" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetAtomicNumber">
+      <http:operation location="/GetAtomicNumber" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetElementSymbol">
+      <http:operation location="/GetElementSymbol" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="periodictableHttpPost" type="s0:periodictableHttpPost">
+    <http:binding verb="POST" />
+    <operation name="GetAtoms">
+      <http:operation location="/GetAtoms" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetAtomicWeight">
+      <http:operation location="/GetAtomicWeight" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetAtomicNumber">
+      <http:operation location="/GetAtomicNumber" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetElementSymbol">
+      <http:operation location="/GetElementSymbol" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+  </binding>
+  <service name="periodictable">
+    <port name="periodictableSoap" binding="s0:periodictableSoap">
+      <soap:address location="http://www.webservicex.com/periodictable.asmx" />
+    </port>
+    <port name="periodictableHttpGet" binding="s0:periodictableHttpGet">
+      <http:address location="http://www.webservicex.com/periodictable.asmx" />
+    </port>
+    <port name="periodictableHttpPost" binding="s0:periodictableHttpPost">
+      <http:address location="http://www.webservicex.com/periodictable.asmx" />
+    </port>
+  </service>
+</definitions>
