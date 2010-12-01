@@ -1,0 +1,106 @@
+8ball%%Gives you a random answer to a question
+addnick%<account-name> <password>%adds the current nick to the indicated account
+anime%<title>%Shows release information about anime DVDs
+areacode%<code> | <location>%prints the location(s) associated with the given areacode or vice versa
+arin%<ip address range>%Performs an ownership lookup for the given IP range in the ARIN registry
+ascii%(CHAR|NUMBER)%prints the ascii character for a number or the numerical value for an ascii character
+at%<time> (;|say) [/me|(!sms|/msg) <nick>] <stuff to say>%echoes <stuff to say> at the appointed time; optionally does an action, sends an sms, or messages the nick. See also: http://rubybot.f3h.com/date_syntax.html
+login%<account-name> <password>%logs in to the given account
+bitchslap%<person>%takes a target name as an argument and echos a shot in the channel
+bnet%<name>[:realm[:classic]]%looks up the given player on battle.net
+calc%<expression>%evalutes and returns the result of the given expression; accepts any valid bc syntax
+conv%<source value/units> [to] <dest units>%converts between different units
+country%<2-letter code> | <country name>%prints the country matching the given code or vice-versa
+cpu%%prints the process(es) using the most cpu
+date%[<date>]%if no date is given, prints the current date; if a number is given, interprets it as the number of seconds since the epoch (unix time); otherwise, converts the normal date to unix time
+logout%%logs out of your account
+deletenext%%deletes the last undelivered next
+delnick%<account-name> <password>%removes the given nick from the indicated account
+deop%%removes your channel op privileges
+dict%<word>%looks up the given word with google define: and displays its definition(s)
+ding%<level>%records a player's level in RO
+domain%<name>%returns expiration date, or if it is available
+dpl%<product>%looks up default login information for a given product
+drink%<drink name>%looks up drink mixing instructions on webtender
+drops%<monster>%prints the items a given monster drops in RO
+dsay%<seconds> <stuff to say>%prints <stuff to say> after <seconds> delay
+etoj%<word>%Translates English to Japanese Romanji
+fight%<item 1> : <item 2>%determines the victor of the two items by the magic of google
+filetype%<extension>%shows information about the given file extension
+flip%%flips a coin
+forecast%[<zip_code> | <city>, <st>]%prints the forecast for the given location
+forget%<key>%removes a key/value pair from the whatis database
+free%%prints the amount of free disk space on f3h
+froogle%<product>%uses google's froogle service to search for the given product
+func%<php function>%looks up the calling syntax for the given php function
+galenquote%%prints a quote from galen's selected quotes database
+game%[number]%prints randomly generated game names
+gay%<name>%determines how gay something is
+geoip%<IP or hostname>%prints the geographical locale for an IP or hostname
+gn%[number]%prints randomly generated game names
+google%<search terms>%does a google search for the given terms and prints the first result
+help%[<command>]%prints help (much like this) for the given command
+host%<hostname or IP address>%performs a lookup of the given address
+image%<search terms>%prints an url to an image from images.google.com
+imdb%[All|Titles|Names|Characters|Quotes] <search terms>%Searches for the given terms at imdb.com and returns a link to the relevant page, if any
+in%<delay> (;|say) [/me|(!sms|/msg) <nick>] <stuff to say>%echoes <stuff to say> after the time delay has passed; optionally does an action, sends an sms, or messages the nick. See also: http://rubybot.f3h.com/date_syntax.htm
+jtoe%<word>%translates japanese romanji to english
+kill%[[number of monsters] | [until item]] <monster>%RO drop simulator
+kjv%<book> <chapter>:<verse>[-<verse>]%looks up the given bible citation in the KJV
+korea%%prints the current date and time in korea
+level%<nick>%prints the character level in RO of the given nick
+listnexts%%lists your undelivered nexts
+marvin%%prints a random marvin quote (HHGttG)
+md5%<str>%prints the md5 sum of the given string
+moon%%prints the current phase of the moon
+news%[number of stories to pull]%prints the top two stories on google news
+next%<nick>{[;,]<nick>} <message>%sends the given message to the indicated nick(s) next time they speak. Separate multiple nicks with a comma or semicolon but do not put a space between them.
+nicks%<account-name>%lists the nicks owned by the given account
+noaa%[<zip_code> | <city>, <st>]%shows the weather at the given location
+opme%%makes you a channel op
+ping%[<host>]%pings the given host, if given; otherwise replies with a pong as a test of IRC connectedness
+ptable%<element>%get atomic weight, symbol and number for an element
+quotd%%prints a quote from galen's selected quotes database
+quote%<string or regex>%searches for a pattern in the irc logs, counts all matching lines, then prints one
+raw%<admin_pass> <raw irc command>%Sends the given raw irc command if the password is correct
+read%%shows your nexts if there are any
+register%<account-name> <password>%creates a user account with the given name and password
+remember%<key> == <value>%stores a value for the given key in the whatis database
+republicanbs%%generates random political buzzword bingo
+roads%[regex-pattern]%searches cdot infos for road conditions, only shows roads matching the given regular expression
+roll%<number of dice>d<faces>%roll some dice
+ro%[(stats|extended|drops|location)] <monster>%all submodules have usage instructions
+roulette%<who knows>%play roulette
+sad%%prints a random marvin quote (HHGttG)
+scrabble%<word>%checks if a word is valid in scrabble
+seen%<nick> [<chan>]%displays the last thing <nick> said
+serial%<program>%finds h4x for a proprietary software application
+service%(<domain> | <ip>) [<port>]%prints information about the internet service provided by the given host
+setmail%<email-address>%changes the email address for your account; used when nexts have piled up for too long
+setpass%<old-pass> <newpass>%changes the password to your account
+setzip%<zip>%changes your accounts zip, used for default weather info location &c.
+shoot%<person>%takes a target name as an argument and echos a shot in the channel
+smite%<person>%takes a target name as an argument and echos a shot in the channel
+snopes%<claim>%checks the status of a given claim
+snow%<location>%displays the snow report for all configured resorts or the specified resort
+spell%<word>%checks the spelling of the given word
+stockquote%<symbol>%shows the stock quote for the given company
+tempo%<bpm> <beatstring> <loops>%00ntz to your heart's content
+temp%[<zip_code> | <city>, <st>]%shows the weather at the given location or from CSU if no location is given
+time%[<date>]%if no date is given, prints the current date; if a number is given, interprets it as the number of seconds since the epoch (unix time); otherwise, converts the normal date to unix time
+translate%<src lang> [to] <dest lang> <phrase>%translates the given phrase from the source to the destination language; languages: arabic, chinese, english, french, german, italian, japanese, korean, portuguese, russian, spanish
+tv%<channel> | <station>%look up the given channel or station in a db
+udict%<slang term>%looks up the given phrase at urbandictionary.com
+unregister%<account-name> <password>%destroys the given user account
+untiny%<url>%reveal a tinyurl's true destination
+uptime%%print the server machine's uptime
+urban%<slang term>%looks up the given phrase at urbandictionary.com
+version%<program>%prints version information for the given program
+wait%<seconds>%sleeps for the given number of seconds
+webbs%= %generates random .com-era buzzword bingo
+whatis%<expression>%prints the whatis entry for the given expression
+whodrops%<item>%prints the monsters that drop the given item
+whois%<name>%prints the googlism for the given name
+wundr%[<zip_code> | <city>, <st>]%looks up current weather conditions for the given location using weather underground
+zipdistance%<zipFrom> <zipTo>%returns distance between two zip codes
+zip%(<zip code>|<city>, <st>)%Looks up the given 5-digit zip code and returns the corresponding city, state or vice-versa

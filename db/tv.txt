@@ -1,0 +1,66 @@
+01 - Unused
+02 - CW2
+03 - Leased Access 
+04 - CBS
+05 - Comcast
+06 - PBS
+08 - TV Guide
+07 - ABC
+09 - NBC
+10 - Poudre School District
+11 - CSU
+12 - PBS
+13 - Fox
+14 - City of Fort Collins
+15 - CSPAN1
+16 - CSPAN2
+18 - PAX
+19 - Univision
+20 - KTVD
+21 - WGN
+22 - Public Access
+23 - Weird Oscilloscope Channel
+24 - BET
+25 - Altitude
+26 - Fox Sports
+27 - ESPN
+28 - ESPN2
+29 - TNT
+30 - USA
+31 - TBS
+32 - Nick
+33 - TV Land
+34 - Cartoon Network
+35 - Disney
+36 - Family
+37 - Hallmark
+38 - Lifetime
+39 - FX
+40 - CNN
+41 - Headline News
+42 - Faux News
+43 - MSNBC
+44 - CNBC
+45 - Court TV
+46 - History
+47 - Discovery
+48 - Animal Planet
+49 - TLC
+50 - HGTV
+51 - Food
+52 - Travel
+53 - Weather
+54 - Golf
+55 - Versus
+56 - Spike
+57 - AMC
+58 - A&E
+59 - E!
+60 - Comedy Central
+61 - MTV
+62 - VH1
+63 - CMT
+64 - Oxygen
+96 - Government Access 
+98 - Home Shopping Network
+99 - Telemundo 

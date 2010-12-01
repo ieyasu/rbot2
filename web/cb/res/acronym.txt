@@ -1,0 +1,1405 @@
+A-D|Analog to Digital
+AA|Author's Alteration
+AA|Auto Answer
+AAL5|ATM Adaption Layer 5
+ABEND|Abnormal End
+ABI|Application Binary Interface
+ABR|Available Bit Rate
+AC97|Audio Codec 97
+ACB|Access method Control Block
+ACDS|Active Control Data Set
+ACE|Asynchronous Communications Element
+ACF|Advanced Communication Facility
+ACIA|Asynchronous Communications Interface Adapter
+ACK|Acknowledge
+ACS|Asynchronous Connection Server
+ACS|Automatic Class Selection
+ACSE|Application Control Service Element
+ACT|Application Control Table
+ACU|Automatic Calling Unit
+ADC|Analog Digital Converter
+ADDMD|Administrative Directory Management Domain
+ADMD|Administrative Management Domain
+ADO|ActiveX Data Object
+ADSL|Asymetric Digital Subscriber Line
+AEA|Activity End Acknowledge
+AEI|Application Entity Invocation
+AF|Application Framework
+AFP|Advanced Function Printing
+AGP|Accellerated Graphics Port
+AGS|Advanced Graphics System
+AI|Artificial Intelligence
+AIU|Application Interface Unit
+AIX|Advanced Interactive eXecutive
+AIX|Alternate IndeX
+ALGOL|ALGOrithmic Language
+ALS|Application Layer Structure
+ALS|Automatic Line Switching
+ALT|Application Load Table
+ALU|Arithmetic and Logic Unit
+AM|Access Method
+AMH|Automated Material Handling
+AMI|Alternate Mark Inversion
+AMIS|Audio Messaging Interchange Specification
+AMR|Audio Modem Riser
+AMS|Access Method Services
+ANR|Automatic Network Routing
+ANS|Advanced Network Services
+ANSI|American National Standards Institute
+AOCE|Apple Open Collaboration Environment
+AOW|Asian and Oceanic Workshop for open systems
+AP|Access Point
+AP|Automation Protocol
+APA|All Points Addressable
+APDU|Application Protocol Data Unit
+API|Application Programming Interface
+APIA|API Association
+APL|A Programming Language
+APPC|Advanced Program-to-Program Communication
+APPI|Advanced Peer-to-Peer Internetwork(ing)
+APPN|Advanced Peer-to-Peer Network(ing)
+APS|Advanced Production System
+AR|Attention Routine
+ARP|Address Resolution Protocol
+ARPA|Advanced Research Projects Agency
+ARPANET|Advanced Research Projects Agency Network
+ARU|Audio Response Unit
+AS|Activity Start
+AS|Autonomous System
+ASC|Accredited Standards Committee
+ASCII|American Standard Code for Information Interchange
+ASE|Application Service Element
+ASIC|Application-Specific Integrated Circuit
+ASN|Abstract Syntax Notation
+ASN.1|Abstract Syntax Notation One
+ASO|Application Service Object
+ASP|Active Server Pages
+ASR|Automatic Speech Recognition
+ASTs|Asynchronous System Traps
+AT|Advanced Technology
+ATM|Adobe Type Manager
+ATM|Asynchronous Transfer Mode
+ATM|Automatic Teller Machine
+ATMP|Ascend Tunnel Management Protocol
+ATSF|Alert Transport Service Facility
+AU|Access Unit
+AVR|Automatic Volume Recognition
+AWG|American Wire Gauge
+
+B8ZS|Binary Eight Zero Substitution
+BABT|British Approvals Board for Telecommunications
+BAL|Business Application Language
+BAM|Basic Access Methods
+BAS|Basic Activity Subset
+BASH|Bourne-Again SHell
+BASIC|Beginners All-Purpose Symbolic Instruktion Code
+BBS|Bulletin Board System
+BCC|Block Check Character
+BCD|Binary Coded Decimal
+BCF|Bridge Control Facility
+BCPL|Basic Combined Programming Language
+BCS|Basic Catalog Structure
+BCS|Basic Combined Subset
+BDAM|Basic Direct Access Method
+BDR|Basic Density Range
+BEL|Bell
+BER|Bit Error Rate
+BES|Bursty Errored Seconds
+BG|BackGround
+BHT|Branch History Table
+BIOS|Basic Input/Output System
+BIS|Business Information System
+BISYNC|Binary Synchronous Communication
+BIT|Binary Digit
+BITNIC|Bitnet Network Information Center
+BLOB|Binary Large Object
+BMIC|Bus Master Interface Controller
+BMP|BitMaP
+BMS|Basic Mapping Support
+BNN|Boundary Network Node
+BOC|Bell Operating Companies
+BOT|Begin Of Tape
+BP|Base Pointer
+BPAM|Basic Partitioned Access Method
+BPI|Bytes Per Inch
+BPS|Bites Per Second
+BRA|Basic Rate Access
+BRI|Basic Rate Interface
+BS|Backspace / British Standard
+BSA|Basic Service Area
+BSAM|Basic Sequential Access Method
+BSC|Binary Synchronous Communication
+BSD|Berkeley Software Distribution
+BSDS|BootStrap Data Set
+BSI|British Standards Institute
+BSS|Basic Synchronous Subset
+BTAC|Branch Target Address Cache
+BTAM|Basic Teleprocessing Access Method
+BTA-ES|Basic Teleprocessing Access Method - Extended Storage
+BYP|Bypass
+
+CA|Collision Avoidance
+CA...|Computer Aided ...
+CAA|Computer Aided Architecture
+CAD|Computer Aided Design
+CADD|Computer Aided Design and Drafting
+CADIS|Computer Aided Design Interactive System
+CAE|Common Application Environment
+CAE|Computer Assisted Education, Computer Aided Engineering = CAD + 
+|CAP + CAQ
+CAH|Computer Aided Handling
+CAI|Computer Aided Instruction = CIM + CAO
+CAISE|Computer Aided Integrated Software Engineering
+CALS|Computer Aided Acquisition and Logistic Support
+CAM|Computer Aided Manufacturing / Content Adressable Memory
+CAMAC|Computer Automated MeAsurement Control
+CAN|Cancel
+CAO|Computer Aided Office
+CAP|Computer Aided Planning / Computer Aided Publishing
+CAPP|Computer Aided Production Planning
+CAPPC|Computer Aided Production Planning and Control
+CAPSC|Computer Aided Production Scheduling and Control
+CAQ|Computer Aided Quality Assurance
+CAR|Computer Aided Roboting
+CAR|Computer Assisted Radiology
+CAS|Computer Aided Selling
+CASE|Common Application Service Elements
+CASE|Computer Aided Software-Engineering
+CAT|Computer Aided Testing
+CATV|CAble TeleVision
+CBDS|Connectionless Broadband Data Service
+CBEMA|Computer and Business Equipment Manufacturers' Association
+CBR|Constant Bit Rate
+CBT|Computer Based Training
+CCD|Charge-Coupled Device
+CCETT|Centre Commun d'Etudes de Telediffusion et Telecommunications
+CCIR|International Radio Consultative Committee
+CCITT|Comite Consultatif International Telegraphique et Telephonique
+CCR|Committment, Concurrency and Recovery
+CCS|Common Communication Support
+CCTA|Central Computer and Telecommunications Agency
+CCU|Communication Control Unit
+CCW|Channel Command Word
+CD|Collision Detection
+CD|Compact Disk
+CDB|Command Descriptor Block
+CDC|Century Date Change
+CDDA|Compact Disk - Digital Audio
+CDDI|Copper Data Distribution Interface
+CDE|Common Desktop Environment
+CDG|Compact Disk - Graphic
+CDI|Compact Disk Interactive
+CDMA|Code Division Multiple Access
+CDPD|Cellular Digital Packet Data
+CDR|Copy Density Range
+CDROM|Compact Disk ROM
+CDTV|Commodore Total Vision
+CDXA|Copmact Disk eXtended Architecture
+CEC|Commission of European Communities
+CEFIC|Conseil Europ&eacute;en des Federations de l'Industrie Chimique
+CELP|Code Excited Linear Prediction
+CEN|Comit&eacute; Europ&eacute;en de Normalisation
+CENELEC|Comit&eacute; Europ&eacute;en de Normalisation Electrotechnique
+CEO|Comprehensive Electronic Office
+CEPT|Conference Europ&eacute;enne des Administrations des Postes et
+|des Telecommunications
+CERN|Conseil Europ&eacute;en pour la Recherche Nucl&eacute;aire
+CF|Call Forwarding
+CF|Carry Flag
+CF|Control Function
+CFV|Call For Votes
+CGA|Colour Graphics Adapter
+CGI|Common Gateway Interface
+CGI|Computer Graphics Interface
+CGM|Computer Graphics Metafile
+CHAP|Challenge-Handshake Authentication Protocol
+CHL-I|CHanneL Interface
+CHPID|CHannel Path IDentifier
+CI|Computer Interconnect
+CI|Control Interval
+CIAM|Computer Integrated and Automated Manufacturing
+CIB|Computer Integrated Business
+CICS|Customer Information Control System
+CID|Configuration, Installation and Distribution
+CIF|Cells In Frames
+CIF|Common Intermediate Format
+CIF|Computer Integrated Factory = CIO + CIM
+CIM|Computer Input by Microfilm
+CIM|Computer Integrated Manufacturing = PPS + CAE + CAM
+CIO|Computer Integrated Office
+CIR|Committed Information Rate
+CIS|Card Information Structure
+CISC|Complex (Complete) Instruction Set Computer
+CIT|Computer Integrated Telephony
+CIV|Conversation Verb Interface
+CKD|Count Key Data
+CL|Core Image Library
+CL|Connectionless 
+CLI|Call Level Interface
+CLIM|Compaq/Lotus/Intel/Microsoft
+CLNS|Connectionless Network Service
+CM/2|Communication Manager / 2
+CMC|Communication Management Configuration
+CMEA|Council for Mutual Economic Assistance
+CMIP|Common Management Information Protocol
+CMIS|Common Management Information Service
+CMOS|Cellular Management Operation System
+CMOS|Complimentary Metal Oxide Semiconductor
+CMOT|Common Management Information Protocol (CMOT) Over TCP/IP
+CMR|Communications Resource Manager
+CMS|Conversational Monitor System
+CMYK|Cyan, Magenta, Yellow, Black
+CN|Corporate Network
+CNC|Computerized Numerical Control
+CNLP|Connectionless Network Protocol
+CNM|Communication Network Management
+CNMA|Communication Network for Manufacturing Applications
+CNR|Carrier-to-Noise-Ratio
+COBOL|COmmon Business Oriented Language
+COCOM|Coordinating Comittee on Multilateral Export Controls
+CODASYL|COnference on DAta SYstems Languages
+Codec|Coder/Decoder
+COFF|Common Object File Format
+COM|Common Object Model
+COM|Computer Output on Microfilm
+COMAL|COMmon Algorithmic Language
+COMREG|Communication Region
+CONS|Connection-Oriented Network Service
+CORBA|Common Object Request Broker Architecture
+COS|Corporation for Open Systems
+COSE|Common Open Software Environment
+COSINE|Cooperation for OSI Networking in Europe
+COSS|Cross Operating System Service
+CP|Control Program
+CP-SVR|Control Point to Server
+CP/M|Control Program/Monitor (for Microcomputer)
+CPE|Customer Premises Equipment
+CPI|Characters Per Inch
+CPI|Common Programming Interface
+CPI|Computer to PABX Interface
+CPIC|Common Programming Interface for Communications
+CPL|Current Privilege Level
+CPR|Computerized Patient Record
+CPS|Characters Per Second
+CPU|Central Processing Unit
+CR|Carriage Return
+CR|Communication Region
+CRC|Cyclic Redundancy Check
+CRJE|Conversational Remote Job Entry
+CRS|Computer Reservation System
+CRS|Configuration Report Server
+CRT|Cathode Ray Tube
+CS|Communications Server
+CSA|Common System Area
+CSC|Cross System Consistency
+CSDN|Circuit Switched Data Network
+CSECT|Control Section
+CSI|Consolidated Software Inventory
+CSLIP|Compressed SLIP
+CSMA/CA|Carrier Sense Multiple Access with Collision Avoidance
+CSMA/CD|Carrier Sense Multiple Access with Collision Detection
+CSP|Control Sequence Prefix
+CSP|Cross System Product
+CSPDN|Circuit Switched Public Data Network
+CSS|Cascading Style Sheet
+CST|Computer Supported Telephony
+CSU|Channel Service Unit
+CSU/DSU|Channel Service Unit / Data Service Unit
+CT|Continuous Tone
+CT2T|Continuous Tone To Tape
+CTC|Channel To Channel
+CTC|CICS To CICS
+CTS|Clear To Send
+CTS|Conformance Test System
+CTS-WAN|Conformance Testing Services for WAN
+CU|Control Unit
+CUA|Common User Access
+CUT|Control Unit Terminal
+CVOL|Control VOLume
+CWS|Coalition for Working Systems
+
+D/A|Digital/Analog
+DA|Desk Accessory
+DAC|Digital Analog Converter
+DAC|Dual Attachment Concentrator
+DAI|Distributed Artificial Intelligence
+DAM|Direct Access Method 
+DAP|Directory Access Protocol
+DAP|Document Application Profile
+DARPA|Defense Advanced Research Projects Agency
+DAS|Dual Attachment Station
+DASD|Direct Access Storage Device
+DAT|Digital Audio Tape
+DAT|Dynamic Address Translation
+DB|Database
+DBCS|Double Byte Character Set
+DBMS|DataBase Management System
+DBRT|Directed Beam Refresh Terminal
+DC|Data Cartridge
+DC|Data Communication
+DCA|Document Content Architecture
+DCAF|Distributed Console Access Facility
+DCB|Data Control Block
+DCB|Disk Coprocessor Board
+DCC|Diskette Controller Chip
+DCE|Data Circuit terminating Equipment
+DCE|Data Communications Equipment
+DCE|Distributed Computing Environment
+DCI|Display Control Interface
+DCL|Digital Command Language
+DCS|Desktop Color Separation
+DCT|Destination Control Table
+DCT|Discrete Cosine Transform
+DD|Data Definition
+DDCMP|Digital Data Communications Message Protocol
+DDCS|Distributed Database Connecion Services/2
+DDE|Dynamic Data Exchange
+DDES|Digital Data Exchange Specifications
+DDI|Device Driver Interface
+DDK|Driver Development Kit
+DDL|Data Definition Language
+DDL|Document Description Language
+DDM|Distributed Data Management
+DDN|Defense Data Network
+DDP|Distributed Data Processing
+DDRM|Device driver interface/Driver kernel interface
+|Reference Manual
+DDS|Dataphone Digital Service 
+DDS|Decision Support System
+DECT|Digital European Cordless Telephone
+DECUS|Digital Equipment Computer Users Society
+DEL|Delete
+DES|Data Encryption Standard
+DF|Direction Flag
+DFC|Distributed Coordination Function
+DFDSS|Data Facility Data Set Services
+DFHSM|Data Facility Hierarchical Storage Manager
+DFP|Data Facility Product
+DFR|Document Filing and Retrival
+DFS|Distributed File System
+DFSMS|Data Facility Storage Management Subsystem
+DFSORT|Data Facility Sort
+DFT|Distributed Function Terminal
+DFWMAC|Distributed Foundation Wireless Media Access Control
+DHCP|Dynamic Host Configuration Protocol
+DHTML|Dynamic HTML
+DIA|Document Interchange Architecture
+DIB|Data Input Bus
+DIB|Device Independent Bitmap
+DIFS|Distributed coordination function InterFrame Space
+DIMM|Dual Inline Memory Module
+DIP|Dual Inline Package
+DIS|Draft International Standard
+DISSOS|Distributed Office Support System
+DIT|Directory Information Tree
+DKI|Driver Kernel Interface
+DL|Data Length
+DL|Directory Listing
+DL/1|Data Language 1
+DLBL|Disk Label
+DLCI|Data Linc Connection Identifier
+DLE|Data Link Escape
+DLL|Dynamic Link Library
+DLS|Device Level Selection
+DLSE|Device Level Selection Enhanced
+DLSw|Data Link Switching
+DLUR|Dependent LU Requester
+DLUR/S|Dependent LU Requester / Server
+DLUS|Dependent LU Server
+DMA|Direct Memory Access
+DMCI|Direct Memory Communications Interface
+DMD|Directory Management Domain
+DMI|Digital Multiplexed Interface
+DML|Data(base) Manipulation Language
+DMNL|Direct Multi Network Link
+DMP|Dot Matrix Printer
+DN|Distinguished Name
+DNA|Digital Network Architecture
+DNS|Domain Name Service
+DOC|Display Operator Console
+DOE|Distributed Objects Everywhere
+DOMF|Distributed Object Management Facility
+DOS|Declaration Of Support
+DOS|Disk Operating System
+DOS/VS|Disk Operating System / Virtual Storage
+DOS/VSE|Disk Operating System / Virtual Storage Extended
+DP|Data Processing
+DP|Draft Proposal
+DPA|Document Printing Application
+DPF|Data Private Facility
+DPI|Dots Per Inch
+DPL|Descriptor Privilege Level
+DPMS|Display Power Management Signaling
+DPS|Dynamic Path Selection
+DQDB|Distributed Queue Dual Bus
+DRAM|Dynamic Random Access Memory
+DRQ|Data ReQuest
+DS|Digit Select
+DS|Directory System
+DSA|Directory System Agent
+DSA|Distributed Systems Architecture
+DSA|Dynamic Storage Area
+DSF|Device Support Facility
+DSL|Direct Swift Link
+DSN|DataSetName
+DSN|Distributed Systems Network
+DSNL|Direct Swift Network Link
+DSOM|Distributed System Object Model
+DSP|Digital Signal Processor
+DSP|Directory System Protocol
+DSR|Data Set Ready
+DSSI|Digital Storage Systems Interconnect
+DSU|Data Service Unit
+DTAM|Document Transfer, Access and Manipulation
+DTD|Document Type Definition
+DTE|Data Terminal Equipment
+DTI|Department of Trade and Industry (UK)
+DTP|DeskTop Publishing
+DTR|Data Terminal Ready
+DU|Data Unit
+DUA|Directory User Agent
+DUN|Dispatch Unit Number
+DVI|Digital Video Interface
+DVST|Direct View Bistable Storage
+DXI|Data eXchange Interface
+
+E1|2,048 Mbps
+E3|34 Mbps
+EARN|European Academic and Research Network
+EB|Error Bell
+EB|ExaByte (1,152,921,504,606846,976 bytes)
+EBAM|Electronic Beam-Addressable Memory
+EBCD|Extended Binary Coded Decimal
+EBCDIC|Extended Binary Coded Decimal Interchange Code
+ECC|Error Checking and Correction
+ECC|Error Correction Code
+ECE|Economic Commission for Europe
+ECF|Enhanced Connectivity Facility
+ECITC|European Committee fo IT Testing and Certification
+ECKD|Extended Count-Key Data
+ECMA|European Computer Manufacturers Association
+ECTUA|European Counsil for Telecommunications Users Association
+EDC|Enterprise Database Connectivity
+EDF|Execution Diagnostic Facility
+EDG|Electronic Dot Generation
+EDI|Electronic Data Interchange
+EDICON|EDI Community for the Construction Industry (UK)
+EDIF|Electronic Design Interchange Format
+EDIFACT|Electronic Data Interchange For Administration, Commerce and
+|Transport
+EDIM|Electronic Data Interchange Message
+EDIMS|EDI Messaging System
+EDM|Engineering Data Management
+EDP|Electronic Data Processing
+EDR|Early Device Release
+EEMA|European Electronic Mail Association
+EFT|Electronic Funds Transfer
+EGA|Enhanced Graphics Adapter
+EGP|Exterior Gateway Protocol
+EHLLAPI|Emulator High Level Language Applications Programming Interface
+EIB|Execute Interface Block
+EIP|Execute Interface Program
+EISA|Extended Industry Standard Architecture
+EIT|Encoding Information Type
+EIUF|European ISDN User Forum
+ELAN|European LAN
+ELAN|Extended LAN
+ELAN|Emulated LAN
+EM|End of Medium
+EMA|Enterprise Management Architecture
+EMS|Expanded Memory Specification
+EMUG|European MAP Users Group
+EN|European Norme
+ENE|Enterprise Network Event
+ENP|Enable Presentation
+ENQ|Enquiry
+EO|Eight Ones
+EOB|End of Block
+EOC|End of Cylinder
+EOF|End of File
+EOJ|End of Job
+EOP|End of Procedure
+EOT|End of Transmission
+EOV|End of Volume
+EP|Emulation Program
+EPDE|Electronic Product Data Exchange
+EPOW|Emergency Power Off Warning
+EPROM|Eraseable Programable Read Only Memory
+EPS|Encapsulated PostScript
+EPSF|Encapsulated PostScript Format
+ER|Entity Relationship
+ERDS|Error Recording Data Set
+EREP|Environmental Record Editing and Printing program
+ES|Errored Second
+ESA|Extended Service Area
+ESC|Escape
+ESCON|Enterprise System Connection Architecture
+ESD|Electronic Software Distribution
+ESD|External Symbol Dictionary
+ESDI|Enhanced Small Device Interface
+ESDS|Entry Sequenced Data Set
+ESF|Extended SuperFrame
+ESPRIT|European Strategic Programme for Research and development in
+|Information Technology
+ESQA|Extended System Queue Area
+ETB|End of Transmission Block
+ETCOM|European Testing and Certification for Office and
+|Manufacturing protocols
+ETS|European Telecommunication Standard
+ETSI|European Telecommunication Standards Institute
+ETX|End of Text
+EUnet|European Unix Network
+EUUG|European Unix User Group
+EVI|EVent Information
+EWOS|European Workshop for Open Systems
+EXCP|EXecute Channel Program
+EZ|Excessive Zeros
+
+F/STP|Foil STP
+FA|Foreign Agent
+FAQ|Frequently Asked Questions
+FAST|Federation Against Software Theft
+FAT|File Allocation Table
+FBA|Fix Block Architecture
+FBA|Fixed Blocked ANSI-defined printer control characters
+FBM|Fix Block Modus
+FC|File Control
+FCB|Format Control Buffer
+FCP|File Control Program
+FCS|Frame-Check Sequence
+FCT|File Control Table
+FDD|Fixed Disk Drive
+FDDI|Fiber Distributed Data Interface
+FEAL|Fast Data Encipherment Algorithm
+FEP|Front-End Processor
+FF|Formfeed
+FH|Frame Handler
+FIFO|First In, First Out
+FIPS|Federal Information Processing Standard
+FLOPS|Floating-point operations per second
+FMLI|Forms and Menu Language Interpreter
+FOB|Form Overlay Buffer
+FOND|Font family descriptor
+FORTRAN|FORmula TRANslator
+FPU|Floating Point Unit
+FRAD|Frame Relay Access Device
+FROM|Factory ROM
+FRU|Field Replaceable Unit
+FS|Field Separator
+FS|File Separator
+FSB|Front Side Bus
+FSF|Free Software Foundation
+FSK|Frequency Shift Keying
+FT|Fault Tolerant
+FTAM|File Transfer and Access Method
+FTP|File Transfer Protocol
+FTP|Foil Twisted Pair
+FTTC|Fibre To The Curb
+FTTH|Fibre To The Home
+FTTP|Fibre To The Building
+FUP|Funktionsplan
+
+GAL|Global Address List
+GATF|Graphic Arts Technical Foundation
+GB|GigaByte (1,073,741,824 bytes)
+GCR|Group Coded Recording
+GDG|Generation Data Group
+GDS|Global Directory Service
+GDT|Global Descriptor Table
+GDTR|Global Descriptor Table Register
+GE|Graphic Escape
+GETVIS|GET VIrtual Storage
+GID|Group ID
+GIF|Graphics Interchange Format
+GIS|Generalized Information System
+GIX|Global Internet Exchange
+GKS|Graphical Kernel System
+GML|Generalized Markup Language
+GOSIP|Government OSI Profile
+GP|General Protection
+GPIB|General-Purpose Interface Bus
+GRS|Global Resource Serialization
+GS|Group Separator
+GTF|Generalized Trace Facility
+GUI|Graphical User Interface
+GUIP|Graphical User Interface for Blind people
+GUUG|German Unix User Group
+
+H&amp;J|Hyphenation and Justification
+HA|Home Address
+HA|Host Agent
+HADA|High Availability Disk Array
+HCL|Hue, Chroma, and Luminance
+HDA|Head-Disk Assembl
+HDBV|Host Data Base View
+HDLC|High Level Data Link Communications
+HDSL|High-bit rate Digital Subscriber Loop
+HDTV|High Definition TV
+HE|High End (system)
+HGC|Hercules Graphics Card
+HIC|Host Interface Computer
+HLL|High Level Language
+HLS|Hue-Lightness-Saturation
+HMD|Head-Mounted Display
+HMMP|HyperMedia Management Protocol
+HMMS|HyperMedia Management Schema
+HPCL|Hewlett-Packard Control Language
+HPFS|High Performance File System
+HPGL|Hewlett-Packard Graphical Language
+HPR|High Performance Routing
+HR|Horizontal Rule
+HSB|Hue-saturation-brightness
+HSELAN|High Speed ELAN
+HSI|Hue-Saturation-Intensity
+HSLAN|High Speed LAN
+HSSI|High Speed Serial Interface
+HSV|Hue-Saturation-Value
+HT|Horizontal Tab
+HTML|Hypertext Markup Language
+HTTP|Hypertext Transfer Protocol
+Hz|Hertz
+
+I-Net|Intranet
+I/O|Input/Output
+I/O|Input/Output
+IA5|International Alphabet Five
+IAB|Internet Activities Board
+IC|Integrated Circuit
+ICEM|Integrated Computer Engineering and Manufacturing
+ICMP|Internet Control Message Protocol
+ID|Identifier
+IDA|Indirect Data Addressing
+IDA|Intelligent Drive Array
+IDE|Integrated Drive Electronics
+IDEA|International Data Encryption Algorithm
+IDL|Interfacce Definition Language
+IDT|Interrupt Descriptor Table
+IEC|InterExchange Carrier
+IEEE|Institute of Electrical and Electronic Engineers
+IETF|Internet Engineering Task Force
+IF|Interrupt Flag
+IFF|Interchange File Format
+IFIP|International Federation of Information Processing
+IFS|Interchange File Separator
+IFS|InterFrame Space
+IGES|Initial Graphics Exchange Specification
+IGMP|Internet Group Membership Protocol
+IGS|Interchange Group Separator
+II|Interactive Interface
+IISP|Interim Interswitch Signaling Protocol
+IKT|Informatione- und Kommunikationstechnik
+ILC|InterLanguage Communication
+IML|Initial Microcode Load
+IMPL|Initial Microprogram Load
+IMR|Interrupt Mask Registers
+IMS|Information Management System
+IMS/VS|Information Management System / Virtual Storage
+INP|Inhibit Presentation
+INT|INTerrupt
+IOC|ISDN Ordering Code
+IOCP|Input/Output Configuration Program
+IOCS|Input/Output Control System
+IOGEN|Input/Output device GENeration
+IOPL|Input/Output Privilege Level
+IOS|Input/Output Supervisor
+IP|Internet Protocol
+IPL|Initial Program Load
+IPM|InterPersonal Message
+IPSE|Integrated Project Support Environment
+IPX|Internet Packet Exchange
+IR|Index Return
+IRC|Internet Relay Chat
+IRDS|Information Resource Dictionary System
+IRQ|Interrupt ReQuest
+IRS|Interchange Recors Separator
+IS|Information System
+IS|Intermediate System
+IS|International Standard
+ISA|Industry Standard Architecture
+ISAM|Indexed Sequential Access Method
+ISDN|Integrated Services Digital Network
+ISFMS|Indexed Sequential File Management System
+ISMF|Interactive Storage Management Facility
+ISO|International Standardization Organisation
+ISO IEC|ISO International Electrotechnical Commitee
+ISODE|ISO Development Environment
+ISP|Internet Service Provider
+ISPF|Interactive System Produvtivity Facility
+ISPF/PDF|ISPF Program Development Facility
+ISR|Information Storage and Retrieval
+ISR|Intermediate Session Routing
+ISSE|Intel SIMD Sreaming Extension
+ISV|Independent Software Vendor
+IT|Indent Tab
+ITB|Intermediate Transmission Block
+ITLD|International Top-Level Domain
+ITRC|Information Technology Requirements Council
+ITU|International Comunication Union (ehem. CCITT)
+ITV|Interactive TeleVision
+IUS|Interchange Unit Separator
+IWS|Intelligent WorkStation
+
+JCC|Job Control Command
+JCL|Job Control Language
+JCS|Job Control Statement
+JCT|JES Control Table
+JCT|Journal Control Table
+JECL|Job Entry Control Language
+JEIDA|Japan Electronics Industry Development Association
+JES|Job Entry Subsystem
+JPEG|Joint Photographic Experts Group
+
+K|Kilobyte
+KB|KiloByte (1,024 Bytes)
+KBPS|KiloBits Per Second
+kHz|KiloHertz
+KIP|Kinetics Internet Protocol
+KIPS|Kilo Instructions per second
+KL|Key Length
+KOPS|Kilo Operations per second
+KSDS|Key Sequenced Data Set
+KVA|KiloVolt Ampere
+
+L2F|Layer 2 Forwarding
+L2TP|Layer 2 Tunneling Protocol
+LAN|Local Area Network 
+LAPS|LAN Adapter Protocol Support Program
+LBL|Label
+LCD|Liquid Crystal Display
+LCS|Lotus Communication Server
+LDAP|Lightweight Directory Access Protocol
+LDMF|Librarian Disc Master File
+LDS|Linear Data Set
+LDT|Local Descriptor Table
+LE|Low End (system)
+LEC|LAN Emulation Client
+LEC|Local Exchange Carrier
+LED|Light Emitting Diode
+LF|Linefeed
+LIC|Line Interface Computer
+LIFO|Last In, First Out
+LILO|Last In, Last Out
+LILO|Linux Loader
+LIM-EMS|Lotus Intel Microsoft EMS
+LIOCS|Logical Input/Output Control System
+LISP|List Programming
+LLC2|Logical Link Control Layer 2
+LOC|Lines Of Code
+LOS|Local Operator System
+LPI|Lines Per Inch
+LRC|Longitudinal Redundancy Checking
+LRU|Least Recently Used
+LSD|Least Significant Digit
+LSI|Large Scale Integration -> VLSI
+LU|Logical Unit
+LUB|Logical Unit Block
+LUT|Look Up Table
+LVT|Light Valve Technology
+LW|Line Work
+LZ|Lempel-Ziv
+LZW|Lempel-Ziv-Welch
+
+MAC|Media Access Control
+MAN|Metropolitan Area Network
+MAP|Maintenance Analysis Procedure
+MAP|Manufacturing Automation Protocol
+MAPI|Messaging Applications Programming Interface
+MB|MegaByte (1,048,576 bytes)
+MBCS|Multiple Byte Character Set
+MBONE|Multicast Backbone
+MBPS|MegaBits Per Second
+MCA|Micro Channel Architecture
+MCBF|Mean Cycles Between Failures
+MCCOI|Multimedia Communications Community of Interest
+MCGA|MultiColour Graphics Array
+MCI|Media Control Interface
+MD|Management Domain
+MD5|Message Digest 5
+MDA|Monochrome Display Adapter
+MEB|Memory Expansion Board
+MFA|Modify Field Attribute
+MFC|Microsoft Foundation Classes
+MFKS|Multifunktionales Konferenzsystem
+MFLOPS|Million Floating-Point Operations Per Second
+MFM|Modified Frequency Modulation
+MFV|Multi File Volume
+MFWS|MultiFunction WorkStation
+MGA|Monochrome Graphic Adapter
+MH|Mobile Host
+MHS|Message Handling System
+MI|Multiple Inheritance
+MIB|Management Information Database
+MICR|Magnetic Ink Character Reader
+MIDI|Musical Instrument Digital Interface
+MIME|Multipurpose Internet Mail Extensions
+MIPS|Millions of Instructions Per Second
+MISC|Minimum Instruction Set Computer -> CISC, RISC
+MLPPP|MultiLink PPP
+MMDF|Multi-Channel Memorandum Distribution Facility
+MMDS|Multi-Megabit Data Services
+MMFS|Manufacturing Manage Format Standard
+MMX|Multi Media eXtensions
+MNP|Microcom Network Protocol
+MODEM|MOdulator/DEModulator
+MOPS|Mega Operations per second
+MOTIS|Message-Oriented Text Interchange Systems
+MP|Multiprocessing
+MPC|Multimedia PC
+MPEG|Motion Picture Experts Group
+MPOA|MultiProtocol Over Asynchronous transfer mode
+MPSD|MultiPath Storage Director
+MPX|multiplex
+MS|Message Store
+MS-DOS|Microsoft Disk Operating System
+MSA|Metropolitan Statistical Area
+MSD|Most Significant Digit
+MSG|Message
+MSM|MultiSession Monitor
+MSW|Machine Status Word
+MTA|Message Transfer Agent
+MTBF|MeanTime Between Failures
+MTDA|Mean Time Data Availability
+MTS|Message Transfer System
+MUD|Multi-User Dungeon
+MULTICS|MULTiplexed Information and Computing Service
+MUMPS|Massachusetts General Hospital Utility Multi-Programmings System
+MUMPS|Multi-User Multi-ProgrammingSystem
+MVS|Multiple Virtual System
+MVS/ESA|Multiple Virtual System / Extended System Architecture
+MVS/XA|Multiple Virtual System / Extended Architecture
+MVSCP|MVS Configuration Program
+
+NAC|Network Adapter Card
+NAK|Negative Acknowledgement
+NAP|Network Access Point
+NAS|Network Access Server
+NAT|Network Address Translation
+NAU|Network Addressable Unit
+NBS|National Bureau of Standards
+NBS|Numeric BackSpace
+NC|Numeric Control
+NCCF|Network Communication Control Facility
+NCP|Network Control Processor
+NCP|Network Control Program
+NCP/VS|Network Control Program/Virtual Storage
+NDIS|Network Driver Interface Specification
+NetSP|Network Security Program
+NFNT|New font numbering table
+NFS|Network File System
+NHRP|Next Hop Routing Protocol
+NIC|Network Interface Card
+NIC|Network Information Center
+NIS|Network Information Service
+NIST|National Institute for Standards and Technology
+NJE|Network Job Entry
+NL|New Line
+NLQ|Near Letter Quality
+NLT|Nucleus Load Table
+NMI|NonMaskable Interrupt
+NNTP|Network News Transport Protocol
+NSA|National Security Agency
+NSC1|Network Systems Cypher One
+NSP|Numeric Space
+NSS|NATURAL Security-System
+NT|Network Termination
+NTS/2|Network Transport Services/2
+NTSC|National Television System Committee
+NUI|Network User Identification
+NUL|Null
+NUMA|Non-Uniform Memory Access
+NVOD|Near Video On Demand
+NVRAM|NonVolatile Random Access Memory
+NVS|NonVolatile Storage
+
+O/R|Originator / Recipient
+OC3|155 Mbit/s
+OCR|Optical Character Recognition
+OCX|OLE Control Extension
+ODA|Open Document Architecture
+ODSI|Open Directory Service Interfaces
+OEM|Original Equipment Manufacturer
+OI|Object Interface
+OLE|Object Linking and Embedding
+OLTEP|On-Line Test Executive Program
+OLTP|On-Line Transaction Processing
+OMG|Object Management Group
+OMR|Optical Mark Recognition
+OO|Objektorientierung
+OOA|Objektorientierte Analyse
+OODBMS|Object Oriented DBMS
+OOP|Objektorientierte Programmierung
+OOPL|Object Oriented Programming Language
+OOPS|Object Oriented Programming System
+OP|Operator Panel
+OPI|Open Prepress Interface
+ORB|Object Request Broker
+OS|Operating System
+OS/2|Operating System/2
+OSA|Office Systems Architecture
+OSA|Open System Architecture
+OSF|Open Software Foundation
+OSI|Open Systems Interconnection
+OSI/RM|OSI Reference Model
+OSNS|Open Systems Network Support
+OSPF|Open Shortest Path First
+OSTC|Open System Testing Consortium
+OTPROM|One Time Programable ROM
+OWL|Object Windows Library
+
+PABX|Private Automatic Branch Exchange
+PAD|Packet Assembly Disassembly
+PAL|Phase Alternating Line
+PAL|Programmable Array Logic
+PAM|Partitioned Access Method
+PAP|Password Authentication Protocol
+PB|PetaByte (1,125,899,906,842,624 bytes)
+PBX|Private Branch Exchange
+PC|Personal Computer
+PC|Personal Computing
+PC|Program Control
+PCB|Printed Circuit Board
+PCB|Program Control Block
+PCI|Peripheral Component Interface
+PCI|Program Controlled Interuption
+PCIL|Private Core Image Library
+PCL|Printer Control Language
+PCM|Plug Compatible Manufacturers
+PCMCIA|Personal Computer Memory Card International Association
+PCN|Personal Communication Network
+PCP|Program Control Program
+PCS|Personal Communication Services
+PCT|Private Communication Technology
+PCT|Program Control Table
+PD|Public Domain
+PDA|Personal Digital Assistant
+PDAD|Proposed Draft Addendum
+PDAU|Physical Data Access Unit
+PDF|Program Development Facility
+PDL|Page Description Language
+PDO|Portable Distributed Objects
+PDS|Partitioned Data Set
+PDS|Premise Distribution System
+PDS|Processor Direct Slot
+PDU|Protocol Data Unit
+PDX|Printer Description Extension
+PE|Printer's error
+PE|Protection Enabled
+PEARL|Processor and Experiment Automation Realtime Language
+PEM|Privacy Enhanced Mail
+PEP|Partitioned Emulation Program
+PER|Program Event Recording
+PERL|Practical Extraction and Report language
+PF|Parity Flag
+PFK|Program Function Key(board)
+PFM|Printer Font Metric
+PGA|Professional graphics adapter
+PGP|Pretty Good Privacy
+PIB|Program Information Block
+PID|Process ID
+PIFS|Point InterFrame Space
+PIM|Personal Information Management
+PIN|Personal Identification Number
+PIOCS|Physical Input/Output Control System
+PL|Procedure Library
+PL/1|Programming Language 1
+PLI|Programming Language 1
+PLPA|Pageable Link Pack Area
+PLT|Program List Table
+PLU|Primary Logical Unit
+PMMU|Paged memory management unit
+PMS|Pantone Matching System
+PMS|Project Management System
+PMT|Photomechanical Transfer (photostat)
+PMT|Photomultiplier Tube
+PNNI|Private Network-to-Network Interface
+POC|Program-Operator Communication
+POP|Point Of Presence
+POP|Post Office Protocol
+POSIX|Portable Operating System Interface for UNIX
+POTS|Plain Old Telephone System
+POWER|Priority Output Writer, Execution processors and input Readers
+PP|Presentation Position
+PPD|PostScript Printer Description
+PPGA|Plastic Pin Grid Array
+PPM|Pages Per Minute
+PPP|Point-to-Point Protocol
+PPT|Processing Program Table
+PPTP|Point-to-Point Tunneling Protocol
+PPV|Pay Per View
+PRDMD|Private Directory Management Domain
+PRL|Private Relocatable Library
+PRMD|Private Management Domain
+PROM|Programable Read Only Memory
+PSB|Program Specification Block
+PSDN|Packet Swiched Data Network
+PSRAM|Pseudo SRAM
+PSSL|Private Source Statement Library
+PSTN|Public Swiched Telephone Network
+PSW|Program Status Word
+PTF|Program Temporary Fix
+PTR|PoinTeR
+PU|Physical Unit
+PUB|Physical Unit Block
+PVC|Permanent Virtual Circuit
+PVP|Packet Video Processor
+PWB|Printed Wire Board
+PWS|Programmable WorkStation
+
+QAM|Quadrature Amplitude Modulation
+QBE|Query By Example
+QCIF|Quater Common Intermediate Format
+QIC|Quarter-Inch Cartridge
+QSAM|Queued Sequential Access Method
+QTAM|Queued Teleprocessing Access Method
+
+R0|Record zero
+RACF|Resource Access Control Facility
+RAID|Redundant Array of Inexpensive Disks
+RAID|Redundant Array of Independent Disks
+RAM|Random Access Memory 
+RARP|Reverse Address Resolution Protocol
+RBA|Relative Byte Adresse
+RC|Robot Control
+RCP|Remote Communication Processor
+RCS|Revision Control System
+RDA|Remote Data Access
+RDBMS|Relational DataBase Management System
+RDN|Relative Distinguished Name
+RES|Restore
+RF|Resume Flag
+RFC|Request For Comments
+RFF|Required Form Feed
+RFS|Remote File System
+RGB|Red, Green, Blue
+RGM|Red, Green, Blue (Monitor)
+RIFF|Resource Interchange File Format
+RIP|Raster Image Processor
+RIP|Router Information Protocol
+RISC|Reduced Instruction Set Computer
+RJE|Remote Job Entry
+RL|Relocatable Library
+RLD|Relocation Dictionary
+RLE|Run Length Encoded file
+RLL|Run Length Limited
+RMF|Resource Management Facility
+RNL|Required New Line
+ROM|Read Only Memory 
+RPC|Remote Procedure Call
+RPG|Report Program Generator
+RPL|Requestor's Privilege Level 
+RPL|Research Programming Language
+RPM|Revolutions Per Minute
+RPS|Rotational Position Sensing
+RPT|Repeat
+RRDS|Relative Record Data Set
+RRED|Right Reading Emulsion Down
+RREU|Right Reading Emulsion Up
+RS|Record Separator
+RSP|Required Space
+RSVP|Resource Reservation Protocol
+RTC|Real Time Clock
+RTCP|Realtime Transport Control Protocol
+RTF|Rich Text Format
+RTM/SF|Realtime Monitor / Systems Facility
+RTP|Realtime Transport Protocol
+RTSE|Reliable Transfer Service Element
+RWSI|Remote Workstation Interface
+
+S.W.I.F.T.|Society for Worldwide Interbank Financial Telecommunication
+S/STP|Shielded STP
+SA|Set Attribute
+SAA|Storage Accounting Area
+SAA|System Application Architecture
+SAM|Sequential Access Method
+SAP|Service Access Point
+SAP|Service Advertising Protocol
+SAR|Segmentation And Reassembly
+SBCS|Single Byte Character Set
+SBS|Subscript
+SC|Storage Control
+SCA|Shared Control Array
+SCCS|Source Code Control System
+SCDS|Source Control Data Set
+SCI|Scalable Coherent Interconnect
+SCODL|Scanned Conversion Object Description Language
+SCP|Storage Control Program
+SCP|System Control Program
+SCRAM|Static Column Random Access Memory
+SCSI|Small Computer Systems Interface
+SDH|Synchronous Digital Hierarchy
+SDK|Software Development Kit
+SDL|System Directory List
+SDLC|Synchronous Data Link Control
+SDRAM|Synchronous DRAM
+SDSF|System Display and Search Facility
+SE|Software Entwicklung
+SE|System Engineer
+SECC|Single Edge Contact Connector
+SECAM|Sequential Couleur a'Memorie
+SEL|Select
+SEPP|Single Edge Processor Package
+SET|Software-Engineering-Technology
+SF|Sign Flag
+SF|Support Facility
+SFA|Salesforce Automation
+SFBI|Shared Frame Buffer Interconnect
+SFE|Start Field Extended
+SFT|System Fault Tolerance
+SFTP|Shielded Foil Twisted Pair
+SGML|Standard Generalized Markup Language
+SHTTP|Secure HTTP
+SHY|Syllable Hyphen
+SI|Shift In
+SI|Single Inheritance
+SI|Standard Interface
+SIFS|Short InterFrame Space
+SIFT|Stanford Information Filtering Tool
+SIG|Special Interest Group
+SIM|Service Information Message
+SIMD|Single Instruction Multiple Data
+SIMM|Single In-line Memory Module
+SIRDS|Single Image Random Dot Stereogram
+SIT|System Initialization Table
+SL|Source Statement Library
+SLD|Structured Logic Design
+SLED|Single Large Expensive Disk
+SLIP|Serial Line Internet Protocol
+SLR|Service Level Reporter
+SLU|Secondary Logical Unit
+SM|Set Mode
+SMDS|Switched Multimegabit Data Service
+SMF|System Management Facility
+SML|MVS Storage Management Library
+SMLI|Stateful MultiLayer Inspection
+SMP|Symetric MultiProcessing
+SMP|System Modification Program
+SMS|Storage Management Subsystem
+SMTP|Simple Mail Transfer Protocol
+SNA|System Network Architecture
+SNADS|SNA Distribution Services
+SNMP|Simple Network Management Protocol
+SNOBOL|String Oriented Symbolic Language
+SNT|Sign-On Table
+SO|Shift Out
+SOD|Service On Demand
+SOH|Start Of Heading
+SOM|System Object Model
+SOS|Start Of Significance
+SP|Space
+SPA|Software Publishers Association
+SPARC|Scalar Processor ARChitecture
+SPDU|Session Protocol Data Unit
+SPM|System Performance Monitor/2
+SPOOL|Simultaneous Peripheral Operations On Line
+SPP|Scalable Parallel Processing
+SPS|Superscript
+SPX|Sequenced Packet eXchange
+SQL|Structured Query Language
+SQL/DS|Structured Query Language / Data System
+SRAM|Static Random Access Memory
+SRT|System Recovery Table
+SRU|Shared Resource Unit
+SS|Single Sided
+SS|Stack Segment
+SSCP|System Service Control Point
+SSID|SubSystem IDentifier
+SSL|Secure Socket Layer
+STM|Synchronous Transfer Mode
+STP|Shielded Twisted Pair
+STT|Secure Transaction Technology
+STX|Start of Text
+SUB|Substitute
+SV|Storage Violation
+SVA|Shared Virtual Area
+SVC|Supervisor Call
+SVC|Switched Virtual Circuit
+SVGA|Super-VGA
+SW|Switch
+SWOP|Specifications for Web Offset Printing
+SYN|Synchronous Idle
+SYSOP|System Operator
+
+T1|1.544 Mbit/s
+T3|45 Mbit/s
+TARGA|Truevision Advanced Raster Graphics Adapter
+TB|TeraByte (1,099,511,627,776 bytes)
+TC|Terminal Control
+TCA|Task Control Area
+TCAM|Telecommunications Access Method
+TCB|Task Control Block
+TCL|Tool Command Language
+TCM|Thermal Conduction Module
+TCO|Triple Capacity Option
+TCP|Terminal Control Program
+TCP|Transmission Control Protocol
+TCP/IP|Transmission Control Protocol/Internet Protocol
+TCT|Terminal Control Table
+TCTTE|Terminal Control Table Terminal Entry
+TCU|Transmission Control Unit
+TD|Transient Data
+TDIA|Transient Data Input Area
+TDM|Time-Division Multiplexing
+TDOA|Transient Data Output Area
+TDP|Transient Data Program
+TEO|Technical Electronic Office
+TF|Trap Flag
+TIC|Technical Integrity Check
+TIFF|Tagged Image File Format
+TIOA|Terminal Input/Output Area
+TLB|Translation Lookaside Buffer
+TLBL|Tape Label
+TMO|Thermo-Magneto-Optic technology
+TNEF|Transport-Neutral Encapsulation Format
+TOC|Table Of Contents
+TOP|Technical Office Protocol
+TPDU|Transport Protocol Data Unit
+TPF|Transaction Processing Facility
+TPI|Tracks Per Inch
+TPM|Third-Party Maintenance
+TPS|Transactions Per Second
+TRN|Transparent
+TS|Telecommunication System
+TS|Temporary Storage
+TSIOA|Temporary Storage Input/Output Area
+TSO|Time Sharing Option
+TSP|Temporary Storage Program
+TSR|Terminate and Stay Resident
+TTA|Teletex Attachment (Teletexzusatz)
+TTL|Transistor Transistor Logic
+TTR|Track Record
+TTY|TeleTYpe
+TWA|Transaction Work Area
+TWA|Two-Way Alternate
+TWS|Two-Way Simultaneous
+TX|Telex
+TXT|Text
+
+UA|User Agent
+UAE|Unrecoverable Application error
+UART|Universal Asynchronous Receiver/Transmitter
+UBR|Undefined Bit Rate
+UBS|Unit Backspace
+UCB|Unit Control Block
+UCR|Undercolor removal
+UCS|Universal Character Set
+UCSB|Universal Character Set Buffer
+UCW|Unit Control Word
+UDP|User Datagram Protocol
+UI|User Interface
+UID|User ID
+UMB|Upper Memory Block
+UNC|Universal Naming Convention
+UNC|Universal Network Convention
+UPC|Universal Product Code
+UPS|Uninterruptible Power Supply
+UPSI|User Program Switch Indicator
+UR|Unit Record
+URL|Uniform Resource Locator
+US|Unit Separator
+USART|Universal Synchronous/Asynchronous Receiver/Transmitter
+USENET|USEr NETwork
+USM|UnSharp Masking
+USRT|Universal Synchronous Receiver/Transmitter
+USV|Unterbrechungsfreie StromVersorgung
+UTP|Unshielded Twisted Pair
+UUCP|Unix-to-Unix Copy Program
+
+VAD|Value Added Dealer
+VAN|Value Added Network
+VAP|Value Added Process
+VAR|Value Added Reseller
+VAST|Virtual Archive Storage Technology
+VB|Visual Basic
+VBA|Visual Basic for Applications
+VBR|Variable Bit Rate
+VBN|Vermitteltes Breitbandnetz
+VC|Virtual Circuit
+VC-SDRAM|Virtual Channel SDRAM
+VCC|Virtual Circuit Connection
+VCI|Virtual Circuit Identifier
+VCNA|Vtam Communication Network Application
+VCPI|Virtual Control Program Interface
+VDAC|Video Digital Analog Converter
+VDI|Video Display Interface
+VDT|Video Display Terminal
+VDU|Visual Display Unit
+VERONICA|Very Easy Rodent-Oriented Netwide Index to Computerized Archives
+VGA|Video Graphics Array
+VGC|Video Graphics Controller
+VGM|Video Graphics Monitor
+VHDSL|Very High-bit rate Digital Subscriber Loop
+VHLL|Very High-Level Language
+VHS|Video Home System
+VIO|Video Input/Output
+VIO|Virtual Input/Output
+VIPA|Virtual IP Addressing
+VLAN|Virtual LAN
+VLSI|Very Large Scale Integration
+VM|Virtual Machine
+VM/SP|Virtual Machine / System Product
+VMMAP|VM Monitor Analysis Program
+VMOS|Vertical MOS
+VMPPF|VM Performance Planning Facility
+VMPRF|VM Performance Reporting Facility
+VMS|Virtual Management System
+VOD|Video On Demand
+VPD|Vital Product Data
+VPDN|Virtual Private Data Network
+VPI|Virtual Path Identifier
+VPN|Virtual Private Network
+VR|Virtual Reality
+VRAM|Video RAM
+VRML|Virtual Reality Modeling Language
+VRC|Vertical Redundancy Checking
+VS|Virtual Storage
+VSAM|Virtual Storage Access Method
+VSAT|Very Small Aperture Terminal
+VSM|Virtual Storage Management
+VSN|Volume Serial Number
+VT|Vertical Tab
+VTAM|Virtual Telecommunications Access Method
+VTOC|Volume Table of Contents
+VTP|Virtual Terminal Protocol
+VTP|Virtual Terminal Program
+VTX|VideoTeXt
+VVDS|VSAM Volume Data Set
+
+W3|World Wide Web
+W4WG|Windows for Workgroups
+WABI|Windows Application Binary Interface
+WAIS|Wide Area Information Service
+WAN|Wide Area Network
+WATM|Wireless ATM
+WATS|Wide Area Telecommunications Service
+WHAT|Wireless Hybrid Asynchronous Time-bounded
+WIMP|Windows, Icons, Mice and Pointers
+WINS|Windows Internet Name Service
+WMAC|Wireless Media Access Control
+WMF|Windows metafile
+WORM|Write Once, Read Many times
+WOSA|Windows Open Services/Systems Architecture
+WRED|Wrong Reading Emulsion Down
+WREU|Wrong Reading Emulsion Up
+WS|WorkStation
+WTO|Write To Operator
+WUS|Word Underscore
+WWW|World Wide Web
+WXTRN|Weak External Reference
+WYSIWYG|What You See Is What You Get
+
+XA|EXtended Architecture
+XIP|Execute In Place
+XLT|Transaction List Table
+XMS|Extended Memory Specification
+XT|eXtended Technology
+
+Y2K|Year 2000
+YIQ|(color components in NTSC color space)
+YUV|(color components in SECAM and PAL color spaces)
+
+ZBR|Zero Bug Release
+ZD|Zero Defects
+ZF|Zero Flag 
+TWAIN|Technology Without An Interesting Name
+ATA|AT Attachment
+ATAPI|AT Attachment Packet Interface
