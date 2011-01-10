@@ -1,7 +1,7 @@
 $rbconfig = {
     'host' => '127.0.0.1',
     'port' => 6667,
-    'nick' => 'rb',
+    'nick' => 'rb-test',
     'ircname' => "bishop's ruby bot v.2",
 
     'join-channels'       => %w(#test),
