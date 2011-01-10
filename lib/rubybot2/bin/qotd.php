@@ -6,7 +6,7 @@
 	$count = "";
 	// If there are no args, it's a random quote
 	if(strlen($args) == 0) {
-		$ret = db("select * from rash_quotes order by rand() limit 1");
+		$ret = db("select * from rash_quotes where rating>=0 order by rand() limit 1");
 		$ret = $ret[0];
 	} else {
 		$args = htmlspecialchars($args);
