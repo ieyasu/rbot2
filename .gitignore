@@ -1,5 +1,4 @@
 # project ignored
-run/db/*
 run/config.rb
 *.pyc
 
