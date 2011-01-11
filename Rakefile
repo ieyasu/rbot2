@@ -45,3 +45,9 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+namespace :db do
+  task :create do
+    sh "sqlite3 run/db/rubybot.db < db/dbdef.sql"
+  end
+end

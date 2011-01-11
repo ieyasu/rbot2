@@ -26,6 +26,8 @@ you need to do:
 
 * git clone git@github.com:ieyasu/rbot2.git
 * bundle install
+* rake db:create
+* cp run/config.rb.example run/config.rb (and edit to your content)
 * rake
 * ???
 * PROFIT!
@@ -35,4 +37,4 @@ Examples
 
 Here's a very clear and consise guide about how to write rbot2 modules:
 
-?_?
+ಠ_ಠ
