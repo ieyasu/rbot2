@@ -8,8 +8,10 @@ def reply(text):
 		else:
 			i = len(text)
 		r = text[:i]
+		if ( r[len(r)-1] == ","):
+			r = r + '\n'
 		text = text[i + 1:]
-		print 'PRIVMSG %s :%s' % (dest, r)
+		print "PRIVMSG %s :%s" % (dest, r)
 
 def main(callback):
 	global dest
