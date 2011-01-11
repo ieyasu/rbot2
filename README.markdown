@@ -17,3 +17,10 @@ you need to do:
 * rake
 * ???
 * PROFIT!
+
+Examples
+--------
+
+Here's a very clear and consise guide about how to write rbot2 modules:
+
+?_?
