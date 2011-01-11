@@ -6,6 +6,17 @@ It was kind of like in Iron Man where Tony Stark was locked in this crazy chambe
 captors "I NEEDZ MORE PARTZ" so they gave him more partz. And eventually he built an Arc Reactor and stuff, and the crazy Iron
 Man suit. Well rbot2 isn't an Arc Reactor-powered suit like Tony Stark's. But it's CLOSE ENOUGH...
 
+How to Contribute
+-----------------
+
+Is your git-fu lacking? Here's some helpful hints:
+
+* Install git
+* Create a github account
+* Create an ssh pubkey if you don't have one
+* Get bishop to add you as a contributor to the project
+* You are now an official rbot2 ninja
+
 Usage
 -----
 
