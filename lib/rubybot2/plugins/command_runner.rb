@@ -90,7 +90,11 @@ class CommandRunner
 
     def run_bin(bin, msg, args, r)
         args ||= ''
-        ENV['ZIP'] = Account.zip_by_nick(msg.nick, DB.handle).to_s
+        DB.lock do |dbh|
+            zip = Account.zip_by_nick(msg.nick, dbh) ||
+                  $rbconfig['default-zip']
+            ENV['ZIP'] = zip.to_s
+        end
         Open3.popen3(bin, msg.nick, msg.dest, args) do |b_in, b_out, b_err|
             while (line = b_out.gets)
                 line = line.rstrip
