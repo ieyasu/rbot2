@@ -89,7 +89,7 @@ def parse_conditions(body)
 end
 
 def handle_command(nick, dest, args)
-    args = zip_by_nick(nick) if args.length == 0
+    args = ENV['ZIP'] if args.length == 0
     body = open("http://www.wunderground.com/cgi-bin/findweather/getForecast?query=#{CGI.escape(args)}").read
     if body && (res = parse_conditions(body))
         "P\t#{res}"
