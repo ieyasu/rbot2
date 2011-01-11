@@ -3,7 +3,6 @@ run/log/*
 run/db/*
 run/config.rb
 *.pyc
-.bundle
 
 # rcov generated
 coverage
