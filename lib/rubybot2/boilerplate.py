@@ -4,7 +4,7 @@ def reply(text):
 	global dest
 	while text and len(text) > 1:
 		if(len(text) > 420):
-			i = text.rindex(' ', 420)
+			i = text.rindex(' ', 0, 420)
 		else:
 			i = len(text)
 		r = text[:i]
