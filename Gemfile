@@ -6,7 +6,7 @@ source "http://rubygems.org"
 gem "chronic"
 gem "hpricot"
 gem "raspell"
-gem "sqlite3-ruby", ">= 1.2.2"
+gem "sqlite3-ruby", "= 1.2.2"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
