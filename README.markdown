@@ -37,4 +37,4 @@ Examples
 
 Here's a very clear and consise guide about how to write rbot2 modules:
 
-?_?
+ಠ_ಠ
