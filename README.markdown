@@ -14,7 +14,8 @@ Is your git-fu lacking? Here's some helpful hints:
 * Install git
 * Create a github account
 * Create an ssh pubkey if you don't have one
-* Get bishop to add you as a contributor to the project
+* Add your ssh pubkey to your github account
+* Get bishop to add your github account as a contributor to the project
 * You are now an official rbot2 ninja
 
 Usage
