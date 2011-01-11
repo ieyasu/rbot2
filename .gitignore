@@ -1,4 +1,6 @@
 # project ignored
+run/log/*
+run/db/rubybot.db
 run/config.rb
 *.pyc
 
