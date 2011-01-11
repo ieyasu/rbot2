@@ -27,6 +27,7 @@ you need to do:
 * git clone git@github.com:ieyasu/rbot2.git
 * bundle install
 * rake db:create
+* cp run/config.rb.example run/config.rb (and edit to your content)
 * rake
 * ???
 * PROFIT!
