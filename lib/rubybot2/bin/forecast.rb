@@ -37,7 +37,7 @@ def parse_forecast(body)
 end
 
 def handle_command(nick, dest, args)
-    args = zip_by_nick(nick) if args.length == 0
+    args = ENV['ZIP'] if args.length == 0
     url = "zipcity.php?inputstring=#{CGI.escape(args)}"
     body = open("http://www.crh.noaa.gov/#{url}").read
 

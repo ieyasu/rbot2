@@ -5,10 +5,6 @@ load 'config.rb'
 
 include Web
 
-def zip_by_nick(nick)
-  ENV['ZIP']
-end
-
 def reply(text)
   begin
     i = (text.length > 420) ? text.rindex(' ', 420) : text.length

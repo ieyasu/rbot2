@@ -42,7 +42,7 @@ def parse_conditions(body)
 end
 
 def handle_command(nick, dest, args)
-    args = zip_by_nick(nick) if args.length == 0
+    args = ENV['ZIP'] if args.length == 0
     fin = open("http://forecast.weather.gov/zipcity.php?inputstring=#{CGI.escape(args)}")
     body = fin.read
 
