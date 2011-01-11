@@ -4,12 +4,14 @@ def reply(text):
 	global dest
 	while text and len(text) > 1:
 		if(len(text) > 420):
-			i = text.rindex(' ', 420)
+			i = text.rindex(' ', 0, 420)
 		else:
 			i = len(text)
 		r = text[:i]
+		if ( r[len(r)-1] == ","):
+			r = r + '\n'
 		text = text[i + 1:]
-		print 'PRIVMSG %s :%s' % (dest, r)
+		print "PRIVMSG %s :%s" % (dest, r)
 
 def main(callback):
 	global dest
