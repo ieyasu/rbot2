@@ -1,4 +1,5 @@
 require 'rubybot2/thread_janitor'
+require 'rubybot2/simple_account'
 require 'cgi'
 require 'open-uri'
 require 'open3'
@@ -89,6 +90,7 @@ class CommandRunner
 
     def run_bin(bin, msg, args, r)
         args ||= ''
+        ENV['ZIP'] = Account.zip_by_nick(msg.nick, DB.handle).to_s
         Open3.popen3(bin, msg.nick, msg.dest, args) do |b_in, b_out, b_err|
             while (line = b_out.gets)
                 line = line.rstrip

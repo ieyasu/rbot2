@@ -1,5 +1,4 @@
 require 'rubybot2/irc'
-require 'rubybot2/db'
 require 'rubybot2/web'
 require 'rubybot2/simple_account'
 load 'config.rb'
@@ -7,15 +6,7 @@ load 'config.rb'
 include Web
 
 def zip_by_nick(nick)
-  DB.lock do |dbh|
-    az = dbh.cell("SELECT accounts.zip FROM accounts, nick_accounts WHERE
-                   nick_accounts.nick = ? AND
-                   nick_accounts.account = accounts.name;", nick)
-    unless az && az.to_i > 0
-      az = $rbconfig['default-zip'] || 80523
-    end
-    az.to_s
-  end
+  ENV['ZIP']
 end
 
 def reply(text)
