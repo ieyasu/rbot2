@@ -192,15 +192,24 @@ class LookerUpper(Thread):
                 if response.find("The word you've entered isn't in the dictionary") == -1:
                     wordInfo['found'] = True
                     try:
-                        pattern = re.compile('<div class=\"defs\">.*?</div>', re.DOTALL)
+			# sometimes they are divs with class 'scnt'
+                        pattern = re.compile('<div class=\"scnt\">.*?</div>', re.DOTALL)
                         matches = pattern.findall(response)
-                        wordInfo['status'] = "GOOD"
+
+                        # and sometimes spans with class ssens
+                        if len(matches) == 0:
+                                pattern = re.compile('<div class=\"scnt\">.*?</div>', re.DOTALL)
+                                matches = pattern.findall(response)
 
                         if len(matches) > 0:
+			    wordInfo['status'] = "GOOD"
                             defin = matches[0]
                             defin = self.strip_tags(defin)
                             defin = defin.strip()
                             defin = defin.replace("\n\n", "\n")
+			    # Clean up first part of the definition
+			    if defin.startswith("a   : "):
+				defin = defin[6:]
                             wordInfo['definition'] = self.decode_htmlentities(defin)
 
                         # Check to see if we were redirected to something weird
