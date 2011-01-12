@@ -196,11 +196,6 @@ class LookerUpper(Thread):
                         pattern = re.compile('<div class=\"scnt\">.*?</div>', re.DOTALL)
                         matches = pattern.findall(response)
 
-                        # and sometimes spans with class ssens
-                        if len(matches) == 0:
-                                pattern = re.compile('<div class=\"scnt\">.*?</div>', re.DOTALL)
-                                matches = pattern.findall(response)
-
                         if len(matches) > 0:
 			    wordInfo['status'] = "GOOD"
                             defin = matches[0]
