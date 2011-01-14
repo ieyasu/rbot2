@@ -1,0 +1,9 @@
+<?php
+
+// Twilio settings
+$ApiVersion = "2010-04-01";
+$AccountSid = "";
+$AuthToken = "";
+$TwilioNumber = "";
+
+?>
