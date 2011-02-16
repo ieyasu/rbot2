@@ -5,9 +5,12 @@ SYNTAX = 'Usage: !tld <tld> | <country name>'
 def handle_command(nick, dest, args)
   return "P\t#{SYNTAX}" if args.length == 0 || args =~ /[^a-zA-Z.]/
 
+  args = ".#{args}" if args =~ /^[a-zA-Z]{2,3}$/
+  args = args.gsub(/\\*\./, "\\\\\\.")
+
   result=`grep -i #{args} db/tld.txt`
   if result.length > 0
-    result.split(/\r?\n/).map {|l| "P\t#{l.sub(/ /, ' - ')}"}
+    "P\t#{result.split(/\r?\n/).map {|l| l.sub(/ /, ' - ')}.join(", ")}"
   else
     "P\t#{args} not found"
   end

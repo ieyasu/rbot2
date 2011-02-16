@@ -1,125 +1,137 @@
-.ac Ascension
+.aero air-transport industry
+.asia Asia-Pacific region
+.biz business
+.cat Catalan
+.com commercial
+.coop cooperatives
+.edu educational
+.gov governmental
+.info information
+.int international organizations
+.jobs companies
+.mil U.S. military
+.mobi mobile devices
+.museum museums
+.name individuals, by name
+.net network
+.org organization
+.pro professions
+.tel Internet communication services
+.travel travel and tourism industry related sites
+.xxx adult entertainment
+.ac Ascension Island
 .ad Andorra
-.aero air-transport
-.ae United
+.ae United Arab Emirates
 .af Afghanistan
-.ag Antigua
+.ag Antigua and Barbuda
 .ai Anguilla
 .al Albania
 .am Armenia
-.an Netherlands
+.an Netherlands Antilles
 .ao Angola
 .aq Antarctica
 .ar Argentina
-.as American
-.asia Asia-Pacific
+.as American Samoa
 .at Austria
 .au Australia
 .aw Aruba
 .ax Åland
 .az Azerbaijan
-.ba Bosnia
+.ba Bosnia and Herzegovina
 .bb Barbados
 .bd Bangladesh
 .be Belgium
-.bf Burkina
+.bf Burkina Faso
 .bg Bulgaria
 .bh Bahrain
 .bi Burundi
-.biz business
 .bj Benin
 .bm Bermuda
-.bn Brunei
+.bn Brunei Darussalam
 .bo Bolivia
 .br Brazil
 .bs Bahamas
 .bt Bhutan
-.bv Bouvet
+.bv Bouvet Island
 .bw Botswana
 .by Belarus
 .bz Belize
 .ca Canada
-.cat Catalan
-.cc Cocos
-.cd Democratic
-.cf Central
-.cg Republic
+.cc Cocos (Keeling) Islands
+.cd Democratic Republic of the Congo
+.cf Central African Republic
+.cg Republic of the Congo
 .ch Switzerland
-.ci Côte
-.ck Cook
+.ci Côte d'Ivoire
+.ck Cook Islands
 .cl Chile
 .cm Cameroon
-.cn People's
+.cn People's Republic of China
 .co Colombia
-.com commercial
-.coop cooperatives
-.cr Costa
+.cr Costa Rica
+.cs Czechoslovakia
 .cu Cuba
-.cv Cape
-.cx Christmas
+.cv Cape Verde
+.cx Christmas Island
 .cy Cyprus
-.cz Czech
+.cz Czech Republic
 .de Germany
 .dj Djibouti
 .dk Denmark
 .dm Dominica
-.do Dominican
+.do Dominican Republic
 .dz Algeria
 .ec Ecuador
-.edu educational
 .ee Estonia
 .eg Egypt
 .er Eritrea
 .es Spain
 .et Ethiopia
-.eu European
+.eu European Union
 .fi Finland
 .fj Fiji
-.fk Falkland
-.fm Federated
-.fo Faroe
+.fk Falkland Islands
+.fm Federated States of Micronesia
+.fo Faroe Islands
 .fr France
 .ga Gabon
-.gb United
+.gb United Kingdom
 .gd Grenada
 .ge Georgia
-.gf French
+.gf French Guiana
 .gg Guernsey
 .gh Ghana
 .gi Gibraltar
 .gl Greenland
-.gm The
+.gm The Gambia
 .gn Guinea
-.gov governmental
 .gp Guadeloupe
-.gq Equatorial
+.gq Equatorial Guinea
 .gr Greece
-.gs South
+.gs South Georgia and the South Sandwich Islands
 .gt Guatemala
 .gu Guam
 .gw Guinea-Bissau
 .gy Guyana
-.hk Hong
-.hm Heard
+.hk Hong Kong
+.hm Heard Island and McDonald Islands
 .hn Honduras
 .hr Croatia
 .ht Haiti
 .hu Hungary
 .id Indonesia
-.ie Ireland, Northern Ireland
+.ie Ireland
+Northern Ireland Éire / Tuaisceart Éireann
 .il Israel
-.im Isle
-.info information
+.im Isle of Man
 .in India
-.int international
-.io British
+.io British Indian Ocean Territory
 .iq Iraq
 .ir Iran
 .is Iceland
 .it Italy
 .je Jersey
 .jm Jamaica
-.jobs companies
 .jo Jordan
 .jp Japan
 .ke Kenya
@@ -127,17 +139,17 @@
 .kh Cambodia
 .ki Kiribati
 .km Comoros
-.kn Saint
-.kp Democratic
-.kr Republic
+.kn Saint Kitts and Nevis
+.kp Democratic People's Republic of Korea
+.kr Republic of Korea
 .kw Kuwait
-.ky Cayman
+.ky Cayman Islands
 .kz Kazakhstan
 .la Laos
 .lb Lebanon
-.lc Saint
+.lc Saint Lucia
 .li Liechtenstein
-.lk Sri
+.lk Sri Lanka
 .lr Liberia
 .ls Lesotho
 .lt Lithuania
@@ -149,32 +161,27 @@
 .md Moldova
 .me Montenegro
 .mg Madagascar
-.mh Marshall
-.mil U.S.
-.mk Republic
+.mh Marshall Islands
+.mk Republic of Macedonia
 .ml Mali
 .mm Myanmar
 .mn Mongolia
-.mobi mobile
 .mo Macau
-.mp Northern
+.mp Northern Mariana Islands
 .mq Martinique
 .mr Mauritania
 .ms Montserrat
 .mt Malta
 .mu Mauritius
-.museum museums
 .mv Maldives
 .mw Malawi
 .mx Mexico
 .my Malaysia
 .mz Mozambique
-.name individuals by name
 .na Namibia
-.nc New
+.nc New Caledonia
 .ne Niger
-.net network
-.nf Norfolk
+.nf Norfolk Island
 .ng Nigeria
 .ni Nicaragua
 .nl Netherlands
@@ -182,21 +189,19 @@
 .np Nepal
 .nr Nauru
 .nu Niue
-.nz New
+.nz New Zealand
 .om Oman
-.org organization
 .pa Panama
 .pe Peru
-.pf French
-.pg Papua
+.pf French Polynesia
+.pg Papua New Guinea
 .ph Philippines
 .pk Pakistan
 .pl Poland
-.pm Saint-Pierre
-.pn Pitcairn
-.pro professions
-.pr Puerto
-.ps Palestinian
+.pm Saint-Pierre and Miquelon
+.pn Pitcairn Islands
+.pr Puerto Rico
+.ps Palestinian territories
 .pt Portugal
 .pw Palau
 .py Paraguay
@@ -206,63 +211,60 @@
 .rs Serbia
 .ru Russia
 .rw Rwanda
-.sa Saudi
-.sb Solomon
+.sa Saudi Arabia
+.sb Solomon Islands
 .sc Seychelles
 .sd Sudan
 .se Sweden
 .sg Singapore
-.sh Saint
+.sh Saint Helena
 .si Slovenia
-.sj Svalbard
+.sj Svalbard and  Jan Mayen Islands
 .sk Slovakia
-.sl Sierra
-.sm San
+.sl Sierra Leone
+.sm San Marino
 .sn Senegal
 .so Somalia
 .sr Suriname
-.st São
-.su former
-.sv El
+.st São Tomé and Príncipe
+.su former  Soviet Union
+.sv El Salvador
 .sy Syria
 .sz Swaziland
-.tc Turks
+.tc Turks and Caicos Islands
 .td Chad
-.tel Internet
-.tf French
+.tf French Southern and Antarctic Lands
 .tg Togo
 .th Thailand
 .tj Tajikistan
 .tk Tokelau
-.tl East
+.tl East Timor
 .tm Turkmenistan
 .tn Tunisia
 .to Tonga
-.tp East
-.travel travel
+.tp East Timor
 .tr Turkey
-.tt Trinidad
+.tt Trinidad and Tobago
 .tv Tuvalu
-.tw Republic
+.tw Republic of China (Taiwan)
 .tz Tanzania
 .ua Ukraine
 .ug Uganda
-.uk United
-.us United
+.uk United Kingdom
+.us United States of America
 .uy Uruguay
 .uz Uzbekistan
-.va Vatican
-.vc Saint
+.va Vatican City
+.vc Saint Vincent and the Grenadines
 .ve Venezuela
-.vg British
-.vi U.S.
+.vg British Virgin Islands
+.vi U.S. Virgin Islands
 .vn Vietnam
 .vu Vanuatu
-.wf Wallis
+.wf Wallis and Futuna
 .ws Samoa
-.xxx adult
 .ye Yemen
 .yt Mayotte
-.za South
+.za South Africa
 .zm Zambia
 .zw Zimbabwe
