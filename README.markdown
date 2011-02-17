@@ -21,16 +21,15 @@ Is your git-fu lacking? Here's some helpful hints:
 Usage
 -----
 
-How you use this thing is a total mystery... but as far as the Old Ones have been able to decipher, this is basically what
-you need to do:
+To get started, you will need to:
 
 * git clone git@github.com:ieyasu/rbot2.git
 * bundle install
 * rake db:create
-* cp run/config.rb.example run/config.rb (and edit to your content)
-* rake
-* ???
-* PROFIT!
+* cp run/config.rb.example run/config.rb and edit for your site
+* cp start_rubybot.sh.example start_rubybot.sh and edit for your site
+
+To see how to modify with the bot, read on.
 
 Examples
 --------
