@@ -1,6 +1,8 @@
 require 'rubybot2/db'
 require 'rubybot2/replier'
 
+# A sort of cron/at for the bot.  See that at and in commands in
+# commands/in_at.rb
 class Timer
     def initialize(client)
         @client = client

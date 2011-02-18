@@ -2,6 +2,8 @@ require 'rubybot2/thread_janitor'
 require 'rubybot2/web'
 require 'open-uri'
 
+# Grabs titles from web pages with non-useful URLs and displays them in
+# the originating channel. Just youtube for now.
 class TitleGrabber
     include Web
 

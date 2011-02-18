@@ -1,6 +1,9 @@
 require 'rubybot2/last'
 require 'rubybot2/nextlib'
 
+# Joins the IRC channels listed in the config and listens for channel chat
+# from nicks that need to be delivered 'nexts' and records the last thing
+# said by each nick.
 class GlobalMessage
     def initialize(client)
         @client = client

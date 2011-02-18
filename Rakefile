@@ -15,7 +15,7 @@ Jeweler::Tasks.new do |gem|
   gem.name = "rbot2"
   gem.homepage = "http://github.com/ieyasu/rbot2"
   gem.summary = %Q{I am rbot2, hear me roar!}
-  gem.description = %Q{Crazy polyglot IRC bot copypastaed together from crazy mansauce}
+  gem.description = %Q{Crazy polyglot IRC bot copypasted together from crazy mansauce}
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   #  gem.add_runtime_dependency 'jabber4r', '> 0.1'

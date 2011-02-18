@@ -4,6 +4,11 @@ require 'cgi'
 require 'open-uri'
 require 'open3'
 
+# Listens channel and private messages to the bot which instruct it
+# to run a command.  There are three different command interfaces:
+# internal, implemented as ruby code under commands/; normal commands
+# implemented as exec()able scripts under bin/; and php web commands
+# accessed by http (see php-root config value).
 class CommandRunner
     def initialize(client)
         @client = client

@@ -1,6 +1,9 @@
 require 'rubybot2/replier'
 require 'socket'
 
+# Reads from a FIFO /tmp/paste and spits the contents out on an IRC channel.
+# Originally went with a web page that wrote to the FIFO, but this is not
+# included with the bot.  You are on your own if you want to use this.
 class Paster
     def initialize(client)
         @client = client
