@@ -64,7 +64,7 @@ The Rubybot Story
 
 A long time ago on an IRC server far, far away my friends and I inhabited a channel #linux. There was a bot called DarkHelmet which took care of our botly needs. One day, one of these friends said to himself, "I need more gizmos in my IRC!" and thus supplebot was born.
 
-The supplebot was indeed a supple bot and treated us well--for a time. Many awesome commands were written, but you see, supplebot was written in PHP. The little web language that could had some memory collection issues on long-running processes. 600 megabyte IRC bots would not stand.
+The supplebot was indeed a supple bot and treated us well--for a time. Many awesome commands were written, but you see, supplebot was written in PHP. 'The little web language that could' had some memory collection issues on long-running processes. 600 megabyte IRC bots would not stand.
 
 Another friend saw this, and thought he could do better. "In C", he said, "that would never happen!" His creation was known as Cbot. It solved the resource usage issue, and was pretty sweet. It understood supplebot's commands, and even more commands were written--some even in C. Unfortunately, Cbot needed to be recompiled for each new command which was troublesome since its maintainer was not always around.
 
