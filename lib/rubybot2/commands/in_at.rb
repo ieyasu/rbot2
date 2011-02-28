@@ -42,6 +42,9 @@ class InAt
 
     def parse_delay(delay)
         dt = Time.now.to_i
+        if delay =~ /(?:^|\s)(\d+)\s*(?:y(?:ears?)?(?:[\w\s\d]|$))/i
+          dt += $1.to_i * 365 * 24 * 3600
+        end
         if delay =~ /(?:^|\s)(\d+)\s*(?:d(?:ays?)?(?:[\w\s\d]|$))/i
             dt += $1.to_i * 24 * 3600
         end
