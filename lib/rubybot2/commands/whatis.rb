@@ -3,7 +3,6 @@ require 'rubybot2/db'
 class Whatis
     WHATIS_SYNTAX    = 'Usage: !whatis <search terms>'
     REMEMBER_SYNTAX  = 'Usage: !remember <key> == <value>'
-    MREMEMBER_SYNTAX = 'Usage: !mremember <key> == <value>'
     FORGET_SYNTAX    = 'Usage: !forget <key>'
 
     def initialize(client)
@@ -25,15 +24,20 @@ class Whatis
     end
 
     def c_remember(msg, args, r)
-        do_remember(msg, args, r)
+        raise '' unless args =~ /([^=]+)==\s*(\S.*)/
+        key, val = $1.downcase.strip, $2
+        DB.lock do |dbh|
+            row = dbh.row("SELECT * FROM whatis WHERE thekey = ? LIMIT 1;", key)
+            if row
+                r.reply("#{row[2]} already taught me that #{row[0]} == #{row[1]}")
+            else
+                dbh.exec("INSERT INTO whatis VALUES(?,?,?);",
+                         key, val.rstrip, msg.nick)
+                r.reply("okay, #{key} == #{val}")
+            end
+        end
     rescue RuntimeError
         r.reply(REMEMBER_SYNTAX)
-    end
-
-    def c_mremember(msg, args, r)
-        do_remember(msg, args, r, true)
-    rescue RuntimeError
-        r.reply(MREMEMBER_SYNTAX)
     end
 
     def c_forget(msg, args, r)
@@ -63,24 +67,6 @@ class Whatis
         if rows.length > 0
             rows = rows[0..4] + [['...']] if rows.length > 9
             r.reply("(also: #{rows.map {|a| a[0] }.join(', ')})")
-        end
-    end
-
-    def do_remember(msg, args, r, multiline = false)
-        raise '' unless args =~ /([^=]+)==\s*(\S.*)/
-        key, val = $1.downcase.strip, $2
-        DB.lock do |dbh|
-            row = dbh.row("SELECT * FROM whatis WHERE thekey = ? LIMIT 1;",
-                          key)
-            if row
-                exval = row[1].gsub('\\', '\\\\').gsub("\n", '\\n')
-                r.reply("#{row[2]} already taught me that #{row[0]} == #{exval}")
-            else
-                val = val.gsub('\\n', "\n").gsub('\\\\', '\\') if multiline
-                dbh.exec("INSERT INTO whatis VALUES(?,?,?);",
-                         key, val.rstrip, msg.nick)
-                r.reply("okay, #{key} == #{val}")
-            end
         end
     end
 end
