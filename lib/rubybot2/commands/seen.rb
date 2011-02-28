@@ -1,7 +1,7 @@
 require 'rubybot2/last'
 
 class Seen
-    SYNTAX = 'Usage: !seen <nick>'
+    SYNTAX = 'Usage: !seen <nick> [<channel>]'
 
     def initialize(client)
     end
