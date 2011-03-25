@@ -107,10 +107,9 @@
 	}
 
 	function get_number() {
-		$ret = "";
-		$digits = mt_rand(1, 10);
-		for($i=0;$i<$digits;$i++) {
-			$ret .= mt_rand(0,9);
+		$ret = mt_rand(1, 9);
+		while(mt_rand(0, 1) < .1) {
+			$ret .= mt_rand(0, 9);
 		}
 		return $ret;
 	}
