@@ -43,6 +43,7 @@
 		$str = replace_word($str, 'color', 'color');
 		$str = replace_word($str, 'month', 'month');
 		$str = replace_word($str, 'digit', 'digit');
+		$str = replace_word($str, 'number', 'number');
 		return $str;
 	}
 
@@ -81,6 +82,7 @@
 	}
 
 	function get_word($pos) {
+		if($pos == 'number') return get_number();
 		static $words;
 		if(!$words) {
 			$file = file("db/lemma.al");
@@ -102,6 +104,15 @@
 		$size = count($words[$pos]);
 		$rand = (int) mt_rand(0, $size-1);
 		return $words[$pos][$rand];
+	}
+
+	function get_number() {
+		$ret = "";
+		$digits = mt_rand(1, 10);
+		for($i=0;$i<$digits;$i++) {
+			$ret .= mt_rand(0,9);
+		}
+		return $ret;
 	}
 
 	function get_colors() {
