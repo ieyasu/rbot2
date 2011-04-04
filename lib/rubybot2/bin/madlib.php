@@ -19,7 +19,7 @@
 	#infinitive-marker              1
 
 	if(!$args) {
-		reply('Parts of speech: $conjunction $adverb $verb $determiner $pronoun $interjection $adjective $noun $preposition $modal $infinitive-marker $letter $digit $color $month');
+		reply('Parts of speech: $conjunction $adverb $verb $determiner $pronoun $interjection $adjective $noun $preposition $modal $infinitive-marker $letter $digit $color $month $number $swear');
 		exit();
 	}
 
@@ -44,6 +44,7 @@
 		$str = replace_word($str, 'month', 'month');
 		$str = replace_word($str, 'digit', 'digit');
 		$str = replace_word($str, 'number', 'number');
+		$str = replace_word($str, 'swear', 'swear');
 		return $str;
 	}
 
@@ -98,6 +99,7 @@
 			$words['digit'] = range(0, 9);
 			$words['color'] = get_colors();
 			$words['month'] = array("january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december");
+			$words['swear'] = array("shit", "piss", "fuck", "cunt", "cocksucker", "motherfucker", "tits");
 		}
 		$pos = strtolower($pos);
 
