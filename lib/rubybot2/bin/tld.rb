@@ -12,7 +12,7 @@ def handle_command(nick, dest, args)
   if result.length > 0
     "P\t#{result.split(/\r?\n/).map {|l| l.sub(/ /, ' - ')}.join(", ")}"
   else
-    "P\t#{args} not found"
+    "P\t#{args.gsub("\\", '')} not found"
   end
 end
 
