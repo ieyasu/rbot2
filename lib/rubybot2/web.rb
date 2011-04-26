@@ -5,14 +5,15 @@ require 'uri'
 
 module Web
     HTML_ENTITIES = {
-        'quot' => '"',
-        'amp'  => '&',
-        'lt'   => '<',
-        'gt'   => '>',
-        'nbsp' => ' ',
-        '#39'  => "'",
-        '#176' => '',
-        'deg'  => "\260"
+        'quot'   => '"',
+        'amp'    => '&',
+        'lt'     => '<',
+        'gt'     => '>',
+        'nbsp'   => ' ',
+        '#39'    => "'",
+        '#8217'  => "'",
+        '#176'   => '',
+        'deg'    => "\260"
     }
 
     def replace_html_entities(html)
