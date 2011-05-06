@@ -1,11 +1,11 @@
 <?
   if(!$args) {
-    print(date("M jS, Y g:i:s a")."\n");
+    print(date("M jS, Y g:i:s a T")."\n");
   }
   elseif(is_numeric($args)) {
     //convert unix time -> normal
     $unix = $args;
-    print("Unix time $unix == ".date("M jS, Y g:i:s a", $unix)."\n");
+    print("Unix time $unix == ".date("M jS, Y g:i:s a T", $unix)."\n");
   }
   else {
     //attempt to convert normal -> unix
