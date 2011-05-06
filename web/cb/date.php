@@ -10,7 +10,7 @@
   else {
     //attempt to convert normal -> unix
     $unix = strtotime($args);
-    $newdate = date("m/d/Y g:i:s a", $unix);
+    $newdate = date("m/d/Y g:i:s a T", $unix);
     if($unix > 0)
       print("'$args' == $newdate == $unix Unix time\n");
     else
