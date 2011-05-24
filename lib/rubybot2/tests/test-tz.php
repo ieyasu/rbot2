@@ -35,4 +35,6 @@
 	// MST, MDT, UTC, GMT
 	// "10 am"
 	// 10:00
+
+	// gand and pat said were wrong: ACST, IST, AWST, CAT, WAT
 ?>
