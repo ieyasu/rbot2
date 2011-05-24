@@ -7,6 +7,7 @@ gem "chronic"
 gem "hpricot"
 gem "raspell"
 gem "sqlite3-ruby", "= 1.2.2"
+gem "nokogiri"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
