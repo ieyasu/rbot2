@@ -7,9 +7,8 @@ def parse_definitions(body)
   i = 0
   ary = []
   size = 0
-  while (i = body.index("<div class='definition'>", i))
-    j = body.index("<div class='example'>", i) ||
-      body.index("<div class='greenery'>", i)
+  while (i = body.index(%r!<div class=['"]definition['"]!i, i))
+    j = body.index(%r!</div!, i)
     definition =  strip_html(body[i...j])
     size += definition.length
     ary << definition
