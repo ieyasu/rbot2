@@ -4,6 +4,7 @@ run/log/*
 run/db/rubybot.db
 run/config.rb
 *.pyc
+Gemfile.lock
 
 # rcov generated
 coverage
