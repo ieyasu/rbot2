@@ -14,7 +14,7 @@ class TitleGrabber
     end
 
     def m_PRIVMSG(msg, replier)
-        if msg.text =~ %r!((?:http://)?(?:\w+\.)?youtube\.com/watch[^ \t>)]+)!
+        if msg.text =~ %r!((?:https?://)?(?:\w+\.)?youtube\.com/watch[^ \t>)]+)!
             url = $1
             @janitor.register(Thread.new { fetch_title(url, replier) })
         end
