@@ -31,7 +31,7 @@
 	$id = $ret['id'];
 	$rating = $ret['rating'];
 	$quote = html_entity_decode($ret['quote']);
-	$quote = join(" || ", preg_split("/[\r\n]+/", $quote));
+	$quote = join(" || ", preg_split("/[\r\n]+/", trim($quote)));
 	if($count) reply_exit("($count found) #$id [$rating] $quote");
 	reply("#$id [$rating] $quote");
 ?>
