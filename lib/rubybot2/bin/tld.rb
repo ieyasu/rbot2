@@ -3,7 +3,7 @@
 SYNTAX = 'Usage: !tld <tld> | <country name>'
 
 def handle_command(nick, dest, args)
-  return "P\t#{SYNTAX}" if args.length == 0 || args =~ /[^a-zA-Z.]/
+  return "P\t#{SYNTAX}" if args.length < 2 || args =~ /[^a-zA-Z.]/
 
   args = ".#{args}" if args =~ /^[a-zA-Z]{2,3}$/
   args = args.gsub(/\\*\./, "\\\\\\.")
