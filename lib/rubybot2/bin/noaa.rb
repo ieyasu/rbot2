@@ -30,6 +30,8 @@ def parse_conditions(body)
 
   conditions, i = extract_td(body, i, '<table')
   return unless conditions
+  conditions =~ /'([^']+)'\s*(\d+)\s*F\s*\((\d+)\s*C\)/
+  conditions,tempf,tempc = $1,$2,$3
 
   humidity, i = extract_td(body, i, 'Humidity')
   return unless humidity
@@ -37,15 +39,9 @@ def parse_conditions(body)
 
   wind, i = extract_td(body, i, 'Wind Speed')
   return unless wind
+  wind = "from #{wind}" unless wind =~ /calm/i
 
-  wind =
-    if wind =~ /calm/i
-      ''
-    else
-      "from #{wind}"
-    end
-
-  "#{location} #{update_at}: #{conditions} #{humidity} #{wind}".gsub(/\s+/, ' ')
+  "#{location}: #{conditions} (#{tempf}F, #{tempc}C)  Wind: #{wind}  RH: #{humidity}  #{update_at}"
 end
 
 def handle_command(nick, dest, args)
