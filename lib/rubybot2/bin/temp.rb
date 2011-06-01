@@ -29,7 +29,7 @@ def parse_csu_conds(body)
   i = body.index(/(\d\d-\d\d-\d{4}[^<]+)/, i) or return
   date, time, temp, rh, dewpt, ws, wd, gust, dir, press = $1.split
 
-  "CSU: #{munge_time(time)}: #{temp}F #{rh}% #{munge_direction(wd)} at #{ws}mph g #{gust}"
+  "CSU: #{munge_time(time)}: #{temp}F  #{rh}%  #{munge_direction(wd)} at #{ws}mph g #{gust}"
 end
 
 def handle_command(nick, dest, args)
