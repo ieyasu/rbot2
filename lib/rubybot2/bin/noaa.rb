@@ -38,7 +38,7 @@ def parse_conditions(body)
   wind, i = extract_td(body, i, 'Wind Speed')
   return unless wind
 
-  wing =
+  wind =
     if wind =~ /calm/i
       ''
     else
