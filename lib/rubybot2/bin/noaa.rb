@@ -24,8 +24,8 @@ def parse_conditions(body)
   j = body.index("</span", i) or return
   location = strip_html(body[i...j])
 
-  i = body.index(/Last Update on [^,]+,([^<]+)<br>/, j) or
-    i = body.index(/Last Update on \d\d? \w+ ([^<]+)<br>/) or return
+  i = body.index(/Last Update on ([^,]+,[^<]+)<br>/, j) or
+    i = body.index(/Last Update on (\d\d? \w+ [^<]+)<br>/) or return
   update_at = $1.strip
 
   conditions, i = extract_td(body, i, '<table')
