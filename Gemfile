@@ -4,7 +4,6 @@ source "http://rubygems.org"
 # Example:
 #   gem "activesupport", ">= 2.3.5"
 gem "chronic"
-gem "hpricot"
 gem "raspell"
 gem "sqlite3-ruby", "= 1.2.2"
 gem "nokogiri"

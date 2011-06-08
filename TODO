@@ -35,11 +35,6 @@ To Do
  - !dexonline or !411
  - <sock> !imdb to return plot summary!
 
-Rewrite:
- - package as gem
-
-now depends on ruby-sqlite3, hpricot, raspell, chronic
-
 ---
 db: rbot:rbot/nofig7
 buxus.atmos.colostate.edu

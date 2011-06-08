@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-%w(rubygems hpricot open-uri cgi).each {|lib| require lib}
+%w(rubygems nokogiri open-uri cgi).each {|lib| require lib}
 
 BASH_URL = 'http://bash.org/?random'
 MAX_LINES = 3
@@ -13,7 +13,7 @@ def put(str)
 end
 
 def handle_command(nick, dest, args)
-	doc = Hpricot(open(BASH_URL))
+  doc = Nokogiri::HTML(open(BASH_URL).read)
   quote = (doc/'p.qt')
   if quote.empty?
     put "no quotes found :("

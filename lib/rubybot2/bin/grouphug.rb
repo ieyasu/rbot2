@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-%w(rubygems hpricot open-uri cgi).each {|lib| require lib}
+%w(rubygems nokogiri open-uri cgi).each {|lib| require lib}
 
 MAX_CHARS = 700
 TRUNCATE = 400 # cut off this many if it's too long
@@ -13,7 +13,7 @@ def handle_command(nick, dest, args)
     hug_url << "confessions/#{args.split.first}"
   end
 
-  doc = Hpricot(open(hug_url))
+  doc = Nokogiri::HTML(open(hug_url).read)
 
   con = (doc/'div.node-confession div.content')
   if con.empty?
