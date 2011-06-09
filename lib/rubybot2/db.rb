@@ -13,10 +13,9 @@ module DB
             dbh.type_translation = true
             # sql user func regexp(text, pat)
             dbh.create_function('regexp', 2) do |func, text, pat|
-                m = unless text.null?
+                m = unless nil == text
                         Regexp.new(pat.to_s, Regexp::IGNORECASE) =~ text.to_s
                     end
-                #puts "/#{pat}/ =~ #{text} => #{m || -1}"
                 func.set_result(m ? 't' : 'f')
             end
             $dbh = dbh
