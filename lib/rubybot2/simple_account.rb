@@ -2,9 +2,9 @@ require 'rubybot2/db'
 
 module Account
     # Remember to aquire the database lock first (DB.lock).
-    def Account.by_authed_nick(nick, dbh)
+    def Account.by_nick(nick, dbh)
         dbh.cell("SELECT account FROM nick_accounts WHERE
-                  nick = ? AND authed = 1;", nick)
+                  nick = ?;", nick)
     end
 
     # Remember to aquire the database lock first (DB.lock).

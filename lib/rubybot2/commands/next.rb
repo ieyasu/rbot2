@@ -21,7 +21,7 @@ class Next
             if pats.length > MAX_RECIPS
                 "you cannot next more than #{MAX_RECIPS} people at a time"
             else
-                acct = DB.lock { |dbh| Account.by_authed_nick(msg.nick, dbh) }
+                acct = DB.lock { |dbh| Account.by_nick(msg.nick, dbh) }
                 NextLib.send(msg.nick, acct, pats, message)
             end
         r.priv_reply(reply)
@@ -36,14 +36,13 @@ class Next
 
     # list undelivered nexts
     def c_listnexts(msg, args, r)
-        # if authenticated as account, list messages from to-be-delivered tbl
-        account = DB.lock { |dbh| check_auth(msg.nick, r, dbh) } or return
+        account = DB.lock { |dbh| Account.by_nick(msg.nick, dbh) } or return
         r.priv_reply(NextLib.list_undelivered(account))
     end
 
     # delete undelivered nexts
     def c_deletelastnext(msg, args, r)
-        account = DB.lock { |dbh| check_auth(msg.nick, r, dbh) } or return
+        account = DB.lock { |dbh| Account.by_nick(msg.nick, dbh) } or return
         NextLib.del_last_undelivered(account, r)
     rescue ArgumentError # integer format trouble
         r.priv_reply(DEL_SYNTAX)
@@ -54,7 +53,7 @@ class Next
 
     # read already received nexts
     def c_pastnexts(msg, args, r)
-        account = DB.lock { |dbh| check_auth(msg.nick, r, dbh) } or return
+        account = DB.lock { |dbh| Account.by_nick(msg.nick, dbh) } or return
         offset, limit = args.split(nil, 2)
         offset = offset ? Integer(offset) : -1
         limit = limit ? Integer(limit) : 5
@@ -62,13 +61,5 @@ class Next
         r.priv_reply(NextLib.list_delivered(account, offset, limit))
     rescue ArgumentError # integer format trouble
         r.priv_reply(PAST_SYNTAX)
-    end
-
-    private
-
-    def check_auth(nick, r, dbh)
-        account = Account.by_authed_nick(nick, dbh) or
-            r.priv_reply('you must be authenticated to do that!')
-        account
     end
 end

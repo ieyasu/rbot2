@@ -91,40 +91,6 @@ class TestAccounts < Test::Unit::TestCase
         @accounts.c_delnick(Message.new('nick'), 'foo bar baz', r)
     end
 
-    def test_login
-        populate_db
-        r = flexmock('r')
-        r.should_receive(:priv_reply).
-            with('bad password for account account').once
-        @accounts.c_login(Message.new('nick'),  'account bass', r)
-        r = flexmock('r')
-        r.should_receive(:priv_reply).
-            with('unknown account bccount').once
-        @accounts.c_login(Message.new('nick'),  'bccount pass', r)
-        r = flexmock('r')
-        r.should_receive(:priv_reply).
-            with('you are now logged in to account account').once
-        @accounts.c_login(Message.new('nick2'), 'account pass', r)
-    end
-
-    def test_login_bad_args
-        r = flexmock('r')
-        r.should_receive(:priv_reply).with(Accounts::LOGIN_SYNTAX).twice
-        @accounts.c_login(Message.new('nick'), 'foo', r)
-        @accounts.c_login(Message.new('nick'), 'foo bar baz', r)
-    end
-
-    def test_logout
-        populate_db
-        r = flexmock('r')
-        r.should_receive(:priv_reply).with('you are not logged in').once
-        @accounts.c_logout(Message.new('unauthnick'), '', r)
-        r = flexmock('r')
-        r.should_receive(:priv_reply).
-            with('you are logged out of account account').once
-        @accounts.c_logout(Message.new('nick'), '', r)
-    end
-
     def test_setpass
         populate_db
         r = flexmock('r')
@@ -134,12 +100,6 @@ class TestAccounts < Test::Unit::TestCase
         r = flexmock('r')
         r.should_receive(:priv_reply).with('password updated').once
         @accounts.c_setpass(Message.new('nick'), 'pass newpass', r)
-        r = flexmock('r')
-        r.should_receive(:priv_reply).with('you are not logged in').once
-        @accounts.c_setpass(Message.new('biff'), 'pass newpass', r)
-        r = flexmock('r')
-        r.should_receive(:priv_reply).with('you are not logged in').once
-        @accounts.c_setpass(Message.new('unauthnick'), 'pass newpass', r)
     end
 
     def test_setpass_bad_args
@@ -156,9 +116,6 @@ class TestAccounts < Test::Unit::TestCase
         @accounts.c_setzip(Message.new('nick'), '12345', r)
         zip = $dbh.cell("SELECT zip FROM accounts WHERE name = 'account';")
         assert_equal(12345, zip)
-        r = flexmock('r')
-        r.should_receive(:priv_reply).with('you are not logged in').once
-        @accounts.c_setzip(Message.new('unauthnick'), '12345', r)
     end
 
     def test_setzip_bad_args

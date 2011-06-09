@@ -19,7 +19,6 @@ CREATE TABLE accounts (
 CREATE TABLE nick_accounts (
     nick    TEXT NOT NULL,
     account TEXT NOT NULL,
-    authed  INT  NOT NULL DEFAULT 0,
     PRIMARY KEY (nick)
 );
 

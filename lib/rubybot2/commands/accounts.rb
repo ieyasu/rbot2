@@ -6,10 +6,8 @@ class Accounts
     UNREGISTER_SYNTAX = 'Usage: !unregister <account-name> <password>'
     ADDNICK_SYNTAX    = 'Usage: !addnick <account-name> <password>'
     DELNICK_SYNTAX    = 'Usage: !delnick <account-name> <password>'
-    LOGIN_SYNTAX      = 'Usage: !login <account-name> <password>'
-    LOGOUT_SYNTAX     = 'Usage: !logout'
     SETPASS_SYNTAX    = 'Usage: !setpass <old-pass> <new-pass>'
-    SETZIP_SYNTAX     = 'Usage: !setzip <zip>'
+    SETZIP_SYNTAX     = 'Usage: !setzip <zip> <password>'
     NICKS_SYNTAX      = 'Usage: !nicks <account-name>'
 
     def initialize(client)
@@ -81,40 +79,15 @@ class Accounts
         r.priv_reply(DELNICK_SYNTAX)
     end
 
-    # log in to an account
-    def c_login(msg, args, r)
-        account, pass = split_2_args(args)
-        DB.lock do |dbh|
-            if check_passwd(account, pass, r, dbh)
-                dbh.exec("UPDATE nick_accounts SET authed = 1 WHERE
-                           nick = ? AND account = ?;", msg.nick, account)
-                r.priv_reply("you are now logged in to account #{account}")
-            end
-        end
-    rescue RuntimeError
-        r.priv_reply(LOGIN_SYNTAX)
-    end
-
-    # log out of an account
-    def c_logout(msg, args, r)
-        DB.lock do |dbh|
-            if (account = check_auth(msg.nick, r, dbh))
-                dbh.exec("UPDATE nick_accounts SET authed = 0 WHERE nick = ? AND account = ?;", msg.nick, account)
-                r.priv_reply("you are logged out of account #{account}")
-            end
-        end
-    end
-
     # change an account's password
     def c_setpass(msg, args, r)
         oldpass, newpass = split_2_args(args)
         DB.lock do |dbh|
-            if (account = check_auth(msg.nick, r, dbh))
-                if check_passwd(account, oldpass, r, dbh)
-                    dbh.exec("UPDATE accounts SET passwd = ? WHERE name = ?;",
-                             hash_passwd(newpass), account)
-                    r.priv_reply("password updated")
-                end
+            account = Account.by_nick(msg.nick, dbh)
+            if check_passwd(account, oldpass, r, dbh)
+                dbh.exec("UPDATE accounts SET passwd = ? WHERE name = ?;",
+                         hash_passwd(newpass), account)
+                r.priv_reply("password updated")
             end
         end
     rescue RuntimeError
@@ -123,9 +96,10 @@ class Accounts
 
     # change an account's zip
     def c_setzip(msg, args, r)
-        raise '' unless args =~ /^\d{5}$/
+        zip, pass = split_2_args(args)
         DB.lock do |dbh|
-            if (account = check_auth(msg.nick, r, dbh))
+            account = Account.by_nick(msg.nick, dbh)
+            if check_passwd(account, pass, r, dbh)
                 dbh.exec("UPDATE accounts SET zip = ? WHERE name = ?;",
                          args, account)
                 r.priv_reply("zip updated")
@@ -192,11 +166,6 @@ class Accounts
         (md5.hexdigest == pass) || raise("bad password for account #{account}")
     rescue RuntimeError => e
         r.priv_reply(e.message)
-    end
-
-    def check_auth(nick, r, dbh)
-        Account.by_authed_nick(nick, dbh) ||
-            (r.priv_reply("you are not logged in"); false)
     end
 
     def account_exists?(account, dbh)

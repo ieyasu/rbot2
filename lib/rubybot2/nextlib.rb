@@ -35,9 +35,7 @@ module NextLib
     DB.lock do |dbh|
       ary = NextLib.check(nick, dbh) and
         ary.each { |msg| r.priv_reply(msg) }
-      if NextLib.nexts_waiting?(nick, dbh)
-        r.priv_reply('you have next(s) which require authentication; please authenticate')
-      elsif !ary && report_none
+      if !ary && report_none
         r.priv_reply('you have no nexts')
       end
     end
@@ -121,15 +119,8 @@ module NextLib
     return accounts.uniq, nick_pats
   end
 
-  def NextLib.nexts_waiting?(nick, dbh)
-    dbh.cell("SELECT COUNT(*) FROM account_recips INNER JOIN nick_accounts
-                      ON nick_accounts.account = account_recips.account
-                      WHERE nick = ?;",
-             nick).to_i > 0
-  end
-
   def NextLib.check(nick, dbh)
-    account = Account.by_authed_nick(nick, dbh)
+    account = Account.by_nick(nick, dbh)
     recips = dbh.get("SELECT * FROM account_recips WHERE account = ?
                           UNION
                           SELECT * FROM pattern_recips

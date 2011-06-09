@@ -3,8 +3,8 @@ Rubybot User Account Guide
 
 Ruby bot provides user accounts and preferences to provide advanced features in IRC services.  An account is good for preventing others from stealing your nexts (due to nick pattern collision) and setting your default location for weather information and the like.
 
-Accounts and Authentication
----------------------------
+Accounts
+--------
 
 To create a new ruby bot account, type
 
@@ -42,29 +42,17 @@ To list the nicks belonging to an account, use the
 
 command. This prints the nicks belonging to the given account.
 
-To authenticate your current nick, use
-
-    /msg rb login <account-name> <password>
-
-Ruby bot will check the given password against the password for the account. If everything hashes correctly, You will be authenticated.
-
-To log out of your account, type
-
-    /msg rb logout
-
-at the command prompt.  You must login before receiving nexts sent to your account.
-
 To set your zip location, type
 
-    /msg rb setzip <zip> 
+    /msg rb setzip <zip> <password>
 
-at the command prompt.  You must be logged in before running this command.  Once set, rubybot will use this zip location as the default location for weather information and other local-specific data returned.
+at the command prompt.  Once set, rubybot will use this zip location as the default location for weather information and other local-specific data returned.
 
 To change your password, use
 
     /msg rb setpass <old-pass> <new-pass>
 
-You must be authenticated first.  If everything checks out, your password will be updated to the new value.
+If everything checks out, your password will be updated to the new value.
 
 
 Next Management
