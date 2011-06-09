@@ -1,5 +1,4 @@
 require 'rubybot2/irc'
-require 'rubybot2/simple_account'
 require 'thread'
 
 class IRC::TooManyLines < Exception; end

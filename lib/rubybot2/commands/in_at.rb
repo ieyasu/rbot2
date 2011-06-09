@@ -61,10 +61,7 @@ class InAt
     end
 
     def insert_job(at, msg, text, r)
-        DB.lock do |dbh|
-            dbh.exec("INSERT INTO cron VALUES(?,?,?,?);",
-                     at, msg.nick, msg.dest, text)
-        end
+        DB[:cron].insert(at, msg.nick, msg.dest, text)
         fat = Time.at(at).strftime('%a %d %b %H:%M')
         r.priv_reply("queueing '#{msg}' to be replayed at #{fat}")
     end

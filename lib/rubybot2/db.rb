@@ -1,91 +1,60 @@
 require 'rubygems'
-require 'sqlite3'
+require 'sequel'
 require 'thread'
 
-module DB
-    $db_lock = Mutex.new
+DB = Sequel.connect($rbconfig['db-uri'])
 
-    def DB.handle
-        if defined?($dbh) && $dbh
-            $dbh
-        else
-            dbh = SQLite3::Database.new($rbconfig['db-file'])
-            dbh.type_translation = true
-            # sql user func regexp(text, pat)
-            dbh.create_function('regexp', 2) do |func, text, pat|
-                m = unless nil == text
-                        Regexp.new(pat.to_s, Regexp::IGNORECASE) =~ text.to_s
-                    end
-                func.set_result(m ? 't' : 'f')
-            end
-            $dbh = dbh
-        end
-    end
-
-    def DB.close
-        if $dbh
-            $dbh.close if $dbh.closed?
-            $dbh = nil
-        end
-    end
-
-    def DB.lock(&block)
-        $client.logger.warn "%%% possible db deadlock" if $db_lock.locked?
-        ret = $db_lock.synchronize do
-            dbh = DB.handle
-            return dbh.transaction do
-                return block.call(dbh)
-            end
-        end
-        DB.close
-        ret
-    end
+# sanitizes name-like values for DB columns
+def db_sanitize_name(name)
+  (i = name.index(';')) and name = name[0...i]
+  name.scan(/[\w\s]+/).join
 end
 
-# Add some nice methods to be compatible with my old lib
-module SQLite3
-    class Database
-        def exec(*args)
-            res = get_first_value(*args)
-            changes
-        end
+class Sequel::Dataset
+  # Looks for the substring term in the given column, after sanitizing term.
+  def sanilike(col, term)
+    san = db_sanitize_name(term)
+    san.length > 0 ? filter(col.like("%#{san}%")) : self
+  end
 
-        def get(*args)
-            res = execute(*args)
-            res.length == 0 ? nil : res
-        end
+  # Scans the result set for a regex match in given column, pre-filtering
+  # when the regex has a long word char subsequence.
+  def filter_regex(col, regex)
+    seq = regex.to_s.scan(/\w{3,}/).sort_by {|w| w.length}.last
+    ds =
+      if seq
+        filter(col.like("%#{seq}%"))
+      else
+        self
+      end
+    regex = Regexp.new(regex, Regexp::IGNORECASE) if String === regex
+    ds.all.find {|row| row[col] =~ regex}
+  end
 
-        alias :row :get_first_row
-        alias :cell :get_first_value
+  # Returns an array result containing only the values of the requested column
+  def select_col(col)
+    select(col).all.map { |row| row[col]}
+  end
+end
 
-        def cells(*args)
-            res = execute(*args).map { |row| row[0] }
-            res.length == 0 ? nil : res
-        end
-    end
+module Account
+  # Returns the account dataset by the given nickname
+  def Account.ds_by_nick(nick)
+    na = DB[:nick_accounts].filter(:nick => nick).first
+    DB[:accounts].filter(:name => na[:account]) if na
+  end
 
-    class Statement
-        def exec(*args)
-            res = execute(*args).next
-            DB.handle.changes
-        end
+  def Account.by_nick(nick)
+    a = Account.ds_by_nick(nick) and a.first
+  end
 
-        def get(*args)
-            res = execute(*args).map { |row| row }
-            res.length == 0 ? nil : res
-        end
+  def Account.name_by_nick(nick)
+    na = Account.by_nick(nick)
+    na[:name] if na
+  end
 
-        def row(*args)
-            execute(*args).next
-        end
-
-        def cell(*args)
-            res = execute(*args).next[0] rescue nil
-        end
-
-        def cells(*args)
-            res = execute(*args).map { |row| row[0] }
-            res.length == 0 ? nil : res
-        end
-    end
+  def Account.zip_by_nick(nick)
+    DB[:accounts].join(:nick_accounts, :account => :name).
+      filter(:nick_accounts__nick => nick).select(:zip).first[:zip]
+  end
 end

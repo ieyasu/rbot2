@@ -10,14 +10,11 @@ class Whatis
 
     def c_whatis(msg, args, r)
         raise '' unless args.length > 0
-        DB.lock do |dbh|
-            rows = dbh.get("SELECT * FROM whatis WHERE regexp(thekey, ?) = 't'
-                            ORDER BY LENGTH(thekey), thekey LIMIT 10;", args)
-            if rows
-                present_whatis(rows, r)
-            else
-                r.reply("#{args} not found")
-            end
+        rows = DB[:whatis].sanilike(:thekey, args).order('length(thekey)').limit(10).all
+        if rows.length > 0
+            present_whatis(rows, r)
+        else
+            r.reply("#{args} not found")
         end
     rescue RuntimeError
         r.reply(WHATIS_SYNTAX)
@@ -26,16 +23,14 @@ class Whatis
     def c_remember(msg, args, r)
         raise '' unless args =~ /([^=]+)==\s*(\S.*)/
         key, val = $1.downcase.strip, $2
-        DB.lock do |dbh|
-            row = dbh.row("SELECT * FROM whatis WHERE thekey = ? LIMIT 1;", key)
-            if row
-                r.reply("#{row[2]} already taught me that #{row[0]} == #{row[1]}")
-            else
-                dbh.exec("INSERT INTO whatis VALUES(?,?,?);",
-                         key, val.rstrip, msg.nick)
+        row = DB[:whatis].filter(:thekey => key)
+        if row
+            r.reply("#{row[]} already taught me that #{row[0]} == #{row[1]}")
+        else
+          DB[:whatis].insert(:thekey => key, :value => val.rstrip,
+                             :nick => msg.nick)
                 r.reply("okay, #{key} == #{val}")
             end
-        end
     rescue RuntimeError
         r.reply(REMEMBER_SYNTAX)
     end
@@ -43,15 +38,13 @@ class Whatis
     def c_forget(msg, args, r)
         raise '' unless args.length > 0
         args = args.downcase
-        DB.lock do |dbh|
-            row = dbh.row("SELECT * FROM whatis WHERE thekey = ? LIMIT 1;",
-                          args)
-            if row
-                dbh.exec("DELETE FROM whatis WHERE thekey = ?;", args)
-                r.reply("forgot that #{row[2]} taught me #{row[0]} == #{row[1]}")
-            else
-                r.reply("don't know about #{args}")
-            end
+        bykey = DB[:whatis].filter(:thekey => args)
+        row = bykey.first
+        if row
+          bykey.delete
+          r.reply("forgot that #{row[:nick]} taught me #{row[:thekey]} == #{row[:value]}")
+        else
+            r.reply("don't know about #{args}")
         end
     rescue RuntimeError
         r.reply(FORGET_SYNTAX)
@@ -61,12 +54,12 @@ class Whatis
 
     def present_whatis(rows, r)
         res = rows.shift
-        lines = res[1].split("{BR}")
-        r.reply("#{res[2].strip} taught me that #{res[0]} == #{lines.shift}")
+        lines = res[:value].split("{BR}")
+        r.reply("#{res[:nick].strip} taught me that #{res[:thekey]} == #{lines.shift}")
         lines.each { |line| r.reply(line) }
         if rows.length > 0
-            rows = rows[0..4] + [['...']] if rows.length > 9
-            r.reply("(also: #{rows.map {|a| a[0] }.join(', ')})")
+            rows = rows[0..4] + [{:thekey => '...'}] if rows.length > 9
+            r.reply("(also: #{rows.map {|a| a[:thekey] }.join(', ')})")
         end
     end
 end

@@ -1,5 +1,4 @@
 require 'rubybot2/nextlib'
-require 'rubybot2/simple_account'
 
 class Next
     NEXT_SYNTAX = 'Usage: !next <nick>([;,]<nick>...) <message>'
@@ -21,7 +20,7 @@ class Next
             if pats.length > MAX_RECIPS
                 "you cannot next more than #{MAX_RECIPS} people at a time"
             else
-                acct = DB.lock { |dbh| Account.by_nick(msg.nick, dbh) }
+                acct = Account.by_nick(msg.nick)
                 NextLib.send(msg.nick, acct, pats, message)
             end
         r.priv_reply(reply)
@@ -36,13 +35,13 @@ class Next
 
     # list undelivered nexts
     def c_listnexts(msg, args, r)
-        account = DB.lock { |dbh| Account.by_nick(msg.nick, dbh) } or return
+        account = Account.by_nick(msg.nick) or return
         r.priv_reply(NextLib.list_undelivered(account))
     end
 
     # delete undelivered nexts
     def c_deletelastnext(msg, args, r)
-        account = DB.lock { |dbh| Account.by_nick(msg.nick, dbh) } or return
+        account = Account.by_nick(msg.nick) or return
         NextLib.del_last_undelivered(account, r)
     rescue ArgumentError # integer format trouble
         r.priv_reply(DEL_SYNTAX)
@@ -53,7 +52,7 @@ class Next
 
     # read already received nexts
     def c_pastnexts(msg, args, r)
-        account = DB.lock { |dbh| Account.by_nick(msg.nick, dbh) } or return
+        account = Account.by_nick(msg.nick) or return
         offset, limit = args.split(nil, 2)
         offset = offset ? Integer(offset) : -1
         limit = limit ? Integer(limit) : 5

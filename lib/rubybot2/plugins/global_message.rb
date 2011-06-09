@@ -1,4 +1,3 @@
-require 'rubybot2/last'
 require 'rubybot2/nextlib'
 
 # Joins the IRC channels listed in the config and listens for channel chat
@@ -48,7 +47,7 @@ class GlobalMessage
 
         # update last statement
         unless $rbconfig['no-monitor-channels'].include?(msg.dest)
-            Last.update(msg.nick, msg.dest, msg.text)
+            update_last(msg.nick, msg.dest, msg.text)
         end
 
         # check for nexts
@@ -56,6 +55,11 @@ class GlobalMessage
     end
 
     private
+
+    def update_last(nick, chan, text)
+      DB.run('INSERT OR REPLACE INTO last VALUES(?, ?, ?, ?);',
+             nick, chan, text, Time.now.to_i)
+    end
 
     def add_channels(channel_list)
         @channels |= channel_list.split.map {|c| c[0,1] == '@' ? c[1..-1] : c }

@@ -46,8 +46,11 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
+require 'run/config.rb'
 namespace :db do
-  task :create do
-    sh "sqlite3 run/db/rubybot.db < db/dbdef.sql"
+  task :migrate do
+    Dir.chdir('run')
+    sh "sequel -m ../db/migrations #{$rbconfig['db-uri']}"
+    Dir.chdir('..')
   end
 end

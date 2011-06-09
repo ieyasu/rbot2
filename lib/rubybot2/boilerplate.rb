@@ -1,6 +1,6 @@
 require 'rubybot2/irc'
 require 'rubybot2/web'
-require 'rubybot2/simple_account'
+require 'rubybot2/db'
 load 'config.rb'
 
 include Web
