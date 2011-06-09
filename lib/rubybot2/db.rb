@@ -19,7 +19,7 @@ class Sequel::Dataset
   # Scans the result set for a regex match in given column, pre-filtering
   # when the regex has a long word char subsequence.
   def filter_regex(col, regex)
-    seq = regex.to_s.scan(/\w{3,}/).sort_by {|w| w.length}.last
+    seq = regex.to_s.scan(/[\w-]{3,}/).sort_by {|w| w.length}.last
     ds = seq ? filter(col.like("%#{seq}%")) : self
     regex = Regexp.new(regex, Regexp::IGNORECASE) if String === regex
     ds.all.find {|row| row[col] =~ regex}
