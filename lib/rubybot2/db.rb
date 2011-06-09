@@ -48,11 +48,6 @@ module Account
     a = Account.ds_by_nick(nick) and a.first
   end
 
-  def Account.name_by_nick(nick)
-    na = Account.by_nick(nick)
-    na[:name] if na
-  end
-
   def Account.zip_by_nick(nick)
     DB[:accounts].join(:nick_accounts, :account => :name).
       filter(:nick_accounts__nick => nick).select(:zip).first[:zip]
