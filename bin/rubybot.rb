@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
+
 #trap('HUP') { $client.reload_plugins }
 trap('TERM') { forcefully_quit('SIGTERM') }
 trap('INT')  { forcefully_quit('SIGINT') } # ^c
