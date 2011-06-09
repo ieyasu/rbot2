@@ -168,22 +168,6 @@ class TestAccounts < Test::Unit::TestCase
         @accounts.c_setzip(Message.new('nick'), 'foo', r)
     end
 
-    def test_setemail
-        populate_db
-        r = flexmock('r')
-        r.should_receive(:priv_reply).with('email updated').once
-        @accounts.c_setemail(Message.new('nick'), 'foo@bar.com', r)
-        email = $dbh.cell("SELECT email FROM accounts WHERE name = 'account';")
-        assert_equal('foo@bar.com', email)
-    end
-
-    def test_setemail_bad_args
-        r = flexmock('r')
-        r.should_receive(:priv_reply).with(Accounts::SETEMAIL_SYNTAX).twice
-        @accounts.c_setemail(Message.new('nick'), '', r)
-        @accounts.c_setemail(Message.new('nick'), 'bleh', r)
-    end
-
     def test_accounts
         r = flexmock('r')
         r.should_receive(:reply).

@@ -10,7 +10,6 @@ class Accounts
     LOGOUT_SYNTAX     = 'Usage: !logout'
     SETPASS_SYNTAX    = 'Usage: !setpass <old-pass> <new-pass>'
     SETZIP_SYNTAX     = 'Usage: !setzip <zip>'
-    SETEMAIL_SYNTAX   = 'Usage: !setemail <email-address>'
     NICKS_SYNTAX      = 'Usage: !nicks <account-name>'
 
     def initialize(client)
@@ -23,7 +22,7 @@ class Accounts
             if account_exists?(account, dbh)
                 r.priv_reply("account #{account} already exists")
             else
-                dbh.exec("INSERT INTO accounts VALUES(?,?,?,NULL);", account,
+                dbh.exec("INSERT INTO accounts VALUES(?,?,?);", account,
                          $rbconfig['default-zip'], hash_passwd(pass))
                 r.priv_reply("created account #{account} for you; now add nicks with the addnick command")
                 DB.close
@@ -134,20 +133,6 @@ class Accounts
         end
     rescue RuntimeError
         r.priv_reply(SETZIP_SYNTAX)
-    end
-
-    # change an account's email address
-    def c_setemail(msg, args, r)
-        raise '' unless args =~ /^[^\s@]+@\S+/
-        DB.lock do |dbh|
-            if (account = check_auth(msg.nick, r, dbh))
-                dbh.exec("UPDATE accounts SET email = ? WHERE name = ?;",
-                         args.rstrip, account)
-                r.priv_reply('email updated')
-            end
-        end
-    rescue RuntimeError
-        r.priv_reply(SETEMAIL_SYNTAX)
     end
 
     # list the accounts in the system

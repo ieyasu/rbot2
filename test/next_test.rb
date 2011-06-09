@@ -188,15 +188,4 @@ class TestNext < Test::Unit::TestCase
         def priv_reply(str)
         end
     end
-
-    # trigger email send
-    def test_overflow
-        populate_db
-        r = TestReplier.new
-        assert_nothing_raised do
-            1.upto(20) do |i|
-                @next.c_next(Message.new('me'), "nick fun stuff #{i}", r)
-            end
-        end
-    end
 end

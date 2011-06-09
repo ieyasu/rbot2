@@ -76,7 +76,6 @@ scrabble%<word>%checks if a word is valid in scrabble
 seen%<nick> [<chan>]%displays the last thing <nick> said
 serial%<program>%finds h4x for a proprietary software application
 service%(<domain> | <ip>) [<port>]%prints information about the internet service provided by the given host
-setmail%<email-address>%changes the email address for your account; used when nexts have piled up for too long
 setpass%<old-pass> <newpass>%changes the password to your account
 setzip%<zip>%changes your accounts zip, used for default weather info location &c.
 shoot%<person>%takes a target name as an argument and echos a shot in the channel

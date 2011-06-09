@@ -81,8 +81,6 @@ Next Design
 mothball php: zipdistance, zipinfo
 
 Features:
- - email-ish list of nexts (send actual email?) when you get too many
-   or they wait too long. (only applies to account nexts)
  - if pattern matches account nick or account name, deliver to any nick
    owned by that account.
    - '-p' option: deliver to that nick pattern, not an account
@@ -106,10 +104,6 @@ Need to match to account first and uniq-ify the list.
 Pattern deliveries work as now, except without the account crap.
 
 
-
-upon !next: count number of undelivered messages. if > 7, send in email if
-email given.
-
 Split on | in addition to , and ; but only when to ( ) present.
 
 when <nick> talks, match <nick> to account and check against account nexts.
@@ -117,12 +111,6 @@ next, match <nick> against pattern recipeints.
 
 three tables: 1. messages, 2. account recipients, 3. pattern recipients
 And don't archive nexts.
-
-
-email good, but shouldn't take place of full text history stuff.  Two thresh-
-holds: time and amount (chris said 3 days, 20 nexts, pulled out of ass).
-
-
 
 
 ; nick -> account -> list of account recips

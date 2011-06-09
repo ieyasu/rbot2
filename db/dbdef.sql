@@ -12,7 +12,6 @@ CREATE TABLE accounts (
     name   TEXT NOT NULL,
     zip    INT,
     passwd TEXT,
-    email  TEXT,
     -- could add col here for notified
     PRIMARY KEY (name)
 );

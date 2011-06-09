@@ -2,8 +2,8 @@
 
 INTERNAL = ["accounts", "addnick", "at", "deletelastnext", "delnick", "forget",
             "help", "in", "listnexts", "login", "logout", "mremember", "next",
-            "nicks", "pastnexts", "raw", "read", "register", "remember", "seen",
-            "setemail", "setpass", "setzip", "unregister", "whatis"]
+            "nicks", "pastnexts", "raw", "read", "register", "remember",
+            "seen", "setpass", "setzip", "unregister", "whatis"]
 
 def handle_command(nick, dest, args)
   commands = (INTERNAL + (Dir.entries('bin') - ['.', '..'])).sort.join(', ')
