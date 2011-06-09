@@ -21,12 +21,7 @@ class Sequel::Dataset
   # when the regex has a long word char subsequence.
   def filter_regex(col, regex)
     seq = regex.to_s.scan(/\w{3,}/).sort_by {|w| w.length}.last
-    ds =
-      if seq
-        filter(col.like("%#{seq}%"))
-      else
-        self
-      end
+    ds = seq ? filter(col.like("%#{seq}%")) : self
     regex = Regexp.new(regex, Regexp::IGNORECASE) if String === regex
     ds.all.find {|row| row[col] =~ regex}
   end
