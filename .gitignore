@@ -1,5 +1,5 @@
 # project ignored
-start_rubybot.sh
+bin/config
 run/log/*
 run/db/rubybot.db
 run/config.rb

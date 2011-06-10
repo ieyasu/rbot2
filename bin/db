@@ -1,0 +1,4 @@
+#!/bin/sh
+. $BASH_SOURCE/config
+cd $RB_ROOT_DIR/run
+irb -r config -r rubygems -r rubybot2/db
