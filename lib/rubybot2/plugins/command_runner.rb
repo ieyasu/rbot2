@@ -27,7 +27,7 @@ class CommandRunner
         # only are in fact messaged so
         msg_only = $rbconfig['msg-commands'].member?(command)
         unless !msg.sent_to_channel? || (msg.text[0,1] == $rbconfig['cmd_prefix'] && !msg_only)
-            msg_only && r.priv_msg( "Try: /msg #{
+            msg_only && r.priv_reply( "Try: /msg #{
                 $rbconfig['nick']} #{msg.text[1..-1]}")
             return
         end

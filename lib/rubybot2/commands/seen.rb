@@ -20,7 +20,7 @@ class Seen
     row = last_statement(nick, chan)
 
     msg =
-      if row
+      if row.length > 0
         format_message(row)
       elsif nick
         "#{nick}#{chan} has not spoken since my log began"
@@ -39,7 +39,7 @@ class Seen
     last = last.filter(:chan => chan) if chan
     last = last.order(:at.desc)
     if nick
-      last.filter_regex(:nick, nick)
+      last.all_regex(:nick, nick).first
     else
       last.first
     end

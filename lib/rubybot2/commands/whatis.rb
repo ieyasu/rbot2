@@ -23,9 +23,9 @@ class Whatis
     def c_remember(msg, args, r)
         raise '' unless args =~ /([^=]+)==\s*(\S.*)/
         key, val = $1.downcase.strip, $2
-        row = DB[:whatis].filter(:thekey => key)
+        row = DB[:whatis].filter(:thekey => key).first
         if row
-            r.reply("#{row[]} already taught me that #{row[0]} == #{row[1]}")
+            r.reply("#{row[:nick]} already taught me that #{row[:thekey]} == #{row[:value]}")
         else
           DB[:whatis].insert(:thekey => key, :value => val.rstrip,
                              :nick => msg.nick)

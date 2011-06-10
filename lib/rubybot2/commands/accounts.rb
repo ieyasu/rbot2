@@ -103,7 +103,7 @@ class Accounts
   def c_nicks(msg, args, r)
     raise '' unless args.length > 0
     accounts = DB[:nick_accounts].filter(:account => args).select_col(:nick)
-    if accounts
+    if accounts.length > 0
       r.reply("account #{args} has the nicks: #{accounts.join(', ')}")
     elsif account_exists?(args)
       r.reply("account #{args} has no nicks")
@@ -137,7 +137,7 @@ class Accounts
   # Returns true if the account name and password match.
   def check_passwd(account, trypass, r)
     account = DB[:accounts].filter(:name => account) if String === account
-    account = account.first
+    account = account.first if account
     if account
       name = account[:name]
       salt, pass = account[:passwd].split(':')

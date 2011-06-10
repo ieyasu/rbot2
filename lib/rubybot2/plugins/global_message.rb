@@ -47,8 +47,8 @@ class GlobalMessage
 
         # update last statement
         unless $rbconfig['no-monitor-channels'].include?(msg.dest)
-          DB.run('INSERT OR REPLACE INTO last VALUES(?, ?, ?, ?);',
-                 msg.nick, msg.dest, msg.text)
+          DB['INSERT OR REPLACE INTO last VALUES(?, ?, ?, ?);',
+                 msg.nick, msg.dest, msg.text, Time.now.to_i].all
         end
 
         # check for nexts

@@ -18,11 +18,11 @@ class Sequel::Dataset
 
   # Scans the result set for a regex match in given column, pre-filtering
   # when the regex has a long word char subsequence.
-  def filter_regex(col, regex)
+  def all_regex(col, regex)
     seq = regex.to_s.scan(/[\w-]{3,}/).sort_by {|w| w.length}.last
     ds = seq ? filter(col.like("%#{seq}%")) : self
     regex = Regexp.new(regex, Regexp::IGNORECASE) if String === regex
-    ds.all.find {|row| row[col] =~ regex}
+    ds.all.find_all {|row| row[col] =~ regex}
   end
 
   # Returns an array result containing only the values of the requested column
@@ -42,8 +42,12 @@ module Account
     a = Account.ds_by_nick(nick) and a.first
   end
 
+  def Account.name_by_nick(nick)
+    a = Account.by_nick(nick) and a[:name]
+  end
+
   def Account.zip_by_nick(nick)
-    DB[:accounts].join(:nick_accounts, :account => :name).
-      filter(:nick_accounts__nick => nick).select(:zip).first[:zip]
+    a = Account.by_nick(nick)
+    a ? a[:zip] : $rbconfig['default-zip']
   end
 end

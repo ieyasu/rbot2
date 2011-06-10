@@ -20,7 +20,7 @@ class Next
             if pats.length > MAX_RECIPS
                 "you cannot next more than #{MAX_RECIPS} people at a time"
             else
-                acct = Account.by_nick(msg.nick)
+                acct = Account.name_by_nick(msg.nick)
                 NextLib.send(msg.nick, acct, pats, message)
             end
         r.priv_reply(reply)
@@ -35,13 +35,13 @@ class Next
 
     # list undelivered nexts
     def c_listnexts(msg, args, r)
-        account = Account.by_nick(msg.nick) or return
+        account = account_name(msg.nick, r) or return
         r.priv_reply(NextLib.list_undelivered(account))
     end
 
     # delete undelivered nexts
     def c_deletelastnext(msg, args, r)
-        account = Account.by_nick(msg.nick) or return
+        account = account_name(msg.nick, r) or return
         NextLib.del_last_undelivered(account, r)
     rescue ArgumentError # integer format trouble
         r.priv_reply(DEL_SYNTAX)
@@ -52,13 +52,21 @@ class Next
 
     # read already received nexts
     def c_pastnexts(msg, args, r)
-        account = Account.by_nick(msg.nick) or return
+        account = account_name(msg.nick, r) or return
         offset, limit = args.split(nil, 2)
-        offset = offset ? Integer(offset) : -1
+        offset = offset ? Integer(offset) : 0
         limit = limit ? Integer(limit) : 5
         limit = 5 if limit < 1
         r.priv_reply(NextLib.list_delivered(account, offset, limit))
     rescue ArgumentError # integer format trouble
         r.priv_reply(PAST_SYNTAX)
+    end
+
+    private
+
+    def account_name(nick, r)
+        account = Account.name_by_nick(nick)
+        r.priv_reply("you need an account first") unless account
+        account
     end
 end
