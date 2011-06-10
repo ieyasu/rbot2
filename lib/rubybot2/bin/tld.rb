@@ -4,10 +4,10 @@ SYNTAX = 'Usage: !tld <tld> | <country name>'
 MAX_RESULTS = 8
 
 def handle_command(nick, dest, args)
-  return "P\t#{SYNTAX}" if args.length == 0 || args =~ /[^a-zA-Z.]/
+  return "P\t#{SYNTAX}" if args.length == 0 || args =~ /[^a-zA-Z. ]/
 
   args = ".#{args}" if args =~ /^[a-zA-Z]{2,3}$/
-  args = args.gsub(/\\*\./, "\\\\\\.")
+  args = "'#{args.gsub(/\\*\./, "\\\\.")}'"
   if args.length < 3
     return "P\ttld or country name too short"
   end
