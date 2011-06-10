@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. $BASH_SOURCE/config
+. `dirname $BASH_SOURCE`/config
 
 cd $RB_ROOT_DIR/run
 exec screen -S brb -d -m $RB_ROOT_DIR/bin/rubybot.rb
