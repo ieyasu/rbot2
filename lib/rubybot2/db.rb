@@ -25,6 +25,11 @@ class Sequel::Dataset
     ds.all.find_all {|row| row[col] =~ regex}
   end
 
+  # Matches thing against the regular expressions in the given column.
+  def regex_col(col, thing)
+    all.find_all {|row| Regexp.new(row[col], Regexp::IGNORECASE) =~ thing}
+  end
+
   # Returns an array result containing only the values of the requested column
   def select_col(col)
     select(col).all.map { |row| row[col]}

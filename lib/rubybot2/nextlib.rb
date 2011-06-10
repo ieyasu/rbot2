@@ -101,7 +101,7 @@ module NextLib
   def NextLib.check(nick)
     account = Account.name_by_nick(nick)
     ar = DB[:account_recips].filter(:account => account).all
-    pr = DB[:pattern_recips].all_regex(:nick_pat, nick)
+    pr = DB[:pattern_recips].regex_col(:nick_pat, nick)
     recips = ar.concat(pr)
     ids = recips.map {|r| r[:next_id]}
     nexts = DB[:nexts].filter(:id => ids)
