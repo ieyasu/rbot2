@@ -1,7 +1,12 @@
 require 'sequel'
 require 'thread'
 
-DB = Sequel.connect($rbconfig['db-uri'])
+if $rbconfig['db-uri'] =~ /sqlite/
+  # cannot catch exception and reconnect; lock still in place; just don't do concurrent access
+  DB = Sequel.connect($rbconfig['db-uri'], :max_connections => 1)
+else
+  DB = Sequel.connect($rbconfig['db-uri'])
+end
 
 # sanitizes name-like values for DB columns
 def db_sanitize_name(name)
