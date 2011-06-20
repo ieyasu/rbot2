@@ -13,7 +13,7 @@ def handle_command(nick, dest, args)
 
    weighted = Float(JSON.parse(open("http://bitcoincharts.com/t/weighted_prices.json").read)["USD"]["24h"])
 
-  "P\tTradeHill: #{last} -- bid: #{bid}, ask: #{ask}, weighted: #{sprintf("$%0.2f", weighted)}"
+  "P\tTradeHill: #{last} -- bid: #{bid}, ask: #{ask}, 24h weighted: #{sprintf("$%0.2f", weighted)}"
 end
 
 load 'boilerplate.rb'
