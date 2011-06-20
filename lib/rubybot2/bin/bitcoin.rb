@@ -2,7 +2,7 @@
 
 require 'rubygems'
 require 'open-uri'
-require 'json'
+require 'nokogiri'
 
 def handle_command(nick, dest, args)
    doc = Nokogiri::HTML(open("https://www.tradehill.com/MarketData/") { |response| response.read })
