@@ -5,14 +5,12 @@ require 'open-uri'
 require 'json'
 
 def handle_command(nick, dest, args)
-  data = JSON.parse(open("https://mtgox.com/code/data/ticker.php").read)['ticker']
+   doc = Nokogiri::HTML(open("https://www.tradehill.com/MarketData/") { |response| response.read })
+   data = doc.xpath("/html/body/div[4]/fieldset/div/table/tr/td").text
+   match = data.match(/Last: (\d+.\d+) USD, .+Highest Bid: (\d+.\d+)Lowest Ask: (\d+.\d+)/)
+   last, bid, ask = [1,2,3].map { |n| sprintf("$%0.2f", Float(match[n])) }
 
-  last = "$%0.2f" % data['last']
-  prices = %w(buy sell).map do |price|
-    "#{price}: $%0.2f" % data[price]
-  end.join(", ")
-
-  "P\tMt. Gox: #{last} -- #{prices}, vol: #{data['vol']} BTC"
+  "P\tTradeHill: #{last} -- bid: #{bid}, ask: #{ask}"
 end
 
 load 'boilerplate.rb'
