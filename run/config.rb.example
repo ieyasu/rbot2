@@ -17,7 +17,7 @@ $rbconfig = {
     'msg-commands' => %w(register unregister addnick delnick login logout raw),
     'private-progs' => %w(dict forecast froogle pricewatch udict urban ud drink),
 
-    'db-file'     => 'db/rubybot.db',
+    'db-uri'     => 'sqlite://db/rubybot.db',
 
     'php-root'    => 'http://localhost/rbot2/web/cb/',
     'default-zip' => 80523
