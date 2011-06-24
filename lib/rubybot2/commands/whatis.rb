@@ -10,8 +10,8 @@ class Whatis
 
     def c_whatis(msg, args, r)
         raise '' unless args.length > 0
-        rows = DB[:whatis].sanilike(:thekey, args).limit(10).all.
-            sort_by {|row| row[:thekey].length }
+        rows = DB[:whatis].all_regex(:thekey, args).
+            sort_by {|row| row[:thekey].length}[0...10]
         if rows.length > 0
             present_whatis(rows, r)
         else
