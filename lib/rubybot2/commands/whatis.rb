@@ -10,7 +10,7 @@ class Whatis
 
     def c_whatis(msg, args, r)
         raise '' unless args.length > 0
-        rows = DB[:whatis].sanilike(:thekey, args).order('length(thekey)').limit(10).all
+        rows = DB[:whatis].sanilike(:thekey, args).order('length(thekey)').limit(10).all.reverse
         if rows.length > 0
             present_whatis(rows, r)
         else
