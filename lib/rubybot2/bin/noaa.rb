@@ -30,8 +30,8 @@ def parse_conditions(body)
 
   conditions, i = extract_td(body, i, '<table')
   return unless conditions
-  conditions =~ /(\S+)\s*(\d+)\s*F\s*\((\d+)\s*C\)/
-  conditions,tempf,tempc = $1,$2,$3
+  conditions =~ /(\D+)(\d+)\s*F\s*\((\d+)\s*C\)/
+  conditions,tempf,tempc = $1.strip,$2,$3
 
   humidity, i = extract_td(body, i, 'Humidity')
   return unless humidity
