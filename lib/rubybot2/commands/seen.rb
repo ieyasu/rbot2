@@ -11,7 +11,7 @@ class Seen
       r.reply(SYNTAX)
       return
     end
-    nick, chan = args.split(nil, 3)[0,2]
+    nick, chan = args.split(nil, 2)
     if IRC.channel_name?(nick)
       chan = nick
       nick = nil
@@ -20,7 +20,7 @@ class Seen
     row = last_statement(nick, chan)
 
     msg =
-      if row.length > 0
+      if row
         format_message(row)
       elsif nick
         "#{nick}#{chan} has not spoken since my log began"
