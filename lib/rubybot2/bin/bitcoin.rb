@@ -2,18 +2,18 @@
 
 require 'rubygems'
 require 'open-uri'
+require 'nokogiri'
 require 'json'
 
 def handle_command(nick, dest, args)
-  data = JSON.parse(open("https://mtgox.com/code/data/ticker.php").read)['ticker']
-  data['24h'] = Float(JSON.parse(open("http://bitcoincharts.com/t/weighted_prices.json").read)["USD"]["24h"])
+   doc = Nokogiri::HTML(open("https://www.tradehill.com/MarketData/") { |response| response.read })
+   data = doc.xpath("/html/body/div[4]/fieldset/div/table/tr/td").text
+   match = data.match(/Last: (\d+.\d+) USD, .+Highest Bid: (\d+.\d+)Lowest Ask: (\d+.\d+)/)
+   last, bid, ask = [1,2,3].map { |n| sprintf("$%0.2f", Float(match[n])) }
 
-  last = "$%0.2f" % data['last']
-  prices = %w(buy sell 24h).map do |price|
-    "#{price}: $%0.2f" % data[price]
-  end.join(", ")
+   weighted = Float(JSON.parse(open("http://bitcoincharts.com/t/weighted_prices.json").read)["USD"]["24h"])
 
-  "P\tMt. Gox: #{last} -- #{prices}, vol: #{data['vol']} BTC"
+  "P\tTradeHill: #{last} -- bid: #{bid}, ask: #{ask}, 24h weighted: #{sprintf("$%0.2f", weighted)}"
 end
 
 load 'boilerplate.rb'
