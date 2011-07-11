@@ -19,7 +19,6 @@ class TitleGrabber
   def m_PRIVMSG(msg, replier)
     if GRAB_URLS.any? {|url| msg.text =~ url}
       url = $1
-      puts "url = #{url.inspect}"
       @janitor.register(Thread.new { fetch_title(url, replier) })
     end
   end
