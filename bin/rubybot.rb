@@ -2,7 +2,6 @@
 
 require 'rubygems'
 
-#trap('HUP') { $client.reload_plugins }
 trap('TERM') { forcefully_quit('SIGTERM') }
 trap('INT')  { forcefully_quit('SIGINT') } # ^c
 
@@ -20,6 +19,7 @@ Thread.abort_on_exception = true
 loop do
     begin
         $client = Rbot2.new
+        trap('HUP') { $client.reload_plugins }
         $client.event_loop
         exit
     rescue
