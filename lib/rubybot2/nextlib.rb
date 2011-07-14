@@ -104,7 +104,7 @@ module NextLib
     pr = DB[:pattern_recips].regex_col(:nick_pat, nick)
     recips = ar.concat(pr)
     ids = recips.map {|r| r[:next_id]}
-    nexts = DB[:nexts].filter(:id => ids)
+    nexts = DB[:nexts].filter(:id => ids).all
     # format nexts, store for accounts, and return
     now = Time.now.to_i
     recips.map do |recip|
