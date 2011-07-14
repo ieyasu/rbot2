@@ -118,7 +118,10 @@ module NextLib
       end
       DB[:pattern_recips].filter(:next_id => nid).
         filter(:nick_pat => pr.map {|row| row[:nick_pat]}).delete
-      DB[:nexts].filter(:id => nid).delete
+      if DB[:account_recips].filter(:next_id => nid).count == 0 &&
+          DB[:pattern_recips].filter(:next_id => nid).count == 0
+        DB[:nexts].filter(:id => nid).delete
+      end
       f
     end
   end
