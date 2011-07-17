@@ -22,7 +22,8 @@ FILE_MAP = {
   'spank' => 'shots',
   'tentaclerape' => 'shots',
   'love' => 'loves',
-  'deepdick' => 'loves'
+  'deepdick' => 'loves',
+  'iching' => 'iching'
 }
 
 # a - action instead of privmsg
