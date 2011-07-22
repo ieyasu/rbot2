@@ -1,4 +1,4 @@
 #!/bin/bash
-. `dirname $BASH_SOURCE`/config
+. `dirname $BASH_SOURCE`/ENVIRONMENT
 cd $RB_ROOT_DIR/run
 irb -r config -r rubygems -r rubybot2/db

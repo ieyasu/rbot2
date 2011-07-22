@@ -1,5 +1,5 @@
 # project ignored
-bin/config
+bin/ENVIRONMENT
 run/log/*
 run/db/rubybot.db
 run/config.rb
