@@ -1,4 +1,4 @@
-RB_ROOT_DIR=/path/to/rubybot
+RB_ROOT_DIR=/home/bishop/rbot-test
 export RUBYLIB=$RB_ROOT_DIR/lib
 export PYTHONPATH=$RB_ROOT_DIR/lib/rubybot2
 export TZ="America/Denver"
