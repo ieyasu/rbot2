@@ -176,7 +176,9 @@ module IRC
         # specify a single key, pass it as a string, otherwise pass the keys
         # in an array.
         def join(channels, keys = nil)
-            send_msg("JOIN #{comma_join(channels)} #{comma_join(keys)}".rstrip)
+            channels = comma_join(channels) if channels.is_a?(Array)
+            keys = comma_join(keys) if keys.is_a?(Array)
+            send_msg("JOIN #{channels} #{keys}".rstrip)
         end
 
         # Sends a user MODE message. If modes is +nil+ (the default), mode will

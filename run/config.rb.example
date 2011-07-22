@@ -4,7 +4,11 @@ $rbconfig = {
     'nick' => 'rb-test',
     'ircname' => "bishop's ruby bot v.2",
 
-    'join-channels'       => %w(#test),
+    # comma-separated list of channels to join (type String)
+    'join-channels'       => '#test',
+    # comma-separated list of channel passwords (type String),
+    # order must match 'join-channels'
+    'channel-keys'        => nil,
     'no-monitor-channels' => %w(#private),
 
     'oper-name'   => 'rb',

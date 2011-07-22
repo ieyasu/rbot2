@@ -11,7 +11,7 @@ class GlobalMessage
 
     # Request joined channel list as soon as client is accepted
     def m_001(msg, replier)
-        @client.join($rbconfig['join-channels'])
+        @client.join($rbconfig['join-channels'], $rbconfig['channel-keys'])
         @client.send_msg("WHOIS #{$rbconfig['nick']}")
     end
 
