@@ -13,5 +13,5 @@
 		db("insert into points (nick, points) values (\"$thing\", \"$newvalue\")");
 	}
 	db("delete from points where points=\"0\"");
-	reply("$thing has $newvalue points");
+	reply("{$arg[0]} has $newvalue points");
 ?>
