@@ -57,7 +57,7 @@ module IRC
 
     # Returns true if the destination is a valid IRC channel name.
     def IRC.channel_name?(dest)
-        dest && dest.length < MAX_CHANNEL_LENGTH && dest =~ CHAN_REGEX
+        dest && dest.length < MAX_CHANNEL_LENGTH && (not dest !~ CHAN_REGEX)
     end
 
     # Returns true if _nick_ is a valid IRC nickname.
