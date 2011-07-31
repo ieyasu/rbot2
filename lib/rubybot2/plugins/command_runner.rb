@@ -18,7 +18,7 @@ class CommandRunner
     end
 
     def m_PRIVMSG(msg, r)
-        return unless msg.text =~ /^(#{$rbconfig['cmd_prefix']})?([^\/\s]+)(.*)$/
+        return unless msg.text =~ /^(#{$rbconfig['cmd_prefix']})?([^\/\s]+)\s*(.*)$/
         pfx,command,args = $1,$2,$3
 
         # do not respond to public command words without a command prefix
