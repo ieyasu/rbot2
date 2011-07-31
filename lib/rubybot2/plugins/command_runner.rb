@@ -18,17 +18,19 @@ class CommandRunner
     end
 
     def m_PRIVMSG(msg, r)
-        command, args = msg.text.split(nil, 2)
-        return unless command =~ /^#{$rbconfig['cmd_prefix']}?[^\/\s]+$/
-        command = command[1..-1] if command[0,1] == $rbconfig['cmd_prefix']
-        args ||= ''
+        return unless msg.text =~ /^(#{$rbconfig['cmd_prefix']})?([^\/\s]+)(.*)$/
+        pfx,command,args = $1,$2,$3
 
-        # ensure that commands which should be privately-messaged
-        # only are in fact messaged so
+        # do not respond to public command words without a command prefix
+        if msg.sent_to_channel? && !pfx
+          return
+        end
+
+        # ensure that commands which should be privately messaged
+        # only are in fact privately messaged
         msg_only = $rbconfig['msg-commands'].member?(command)
-        unless !msg.sent_to_channel? || (msg.text[0,1] == $rbconfig['cmd_prefix'] && !msg_only)
-            msg_only && r.priv_reply( "Try: /msg #{
-                $rbconfig['nick']} #{msg.text[1..-1]}")
+        if msg_only && msg.sent_to_channel?
+            r.priv_reply("Try: /msg #{$rbconfig['nick']} #{msg.text[1..-1]}")
             return
         end
 
