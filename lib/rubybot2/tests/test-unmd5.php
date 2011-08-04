@@ -4,4 +4,5 @@
 	assertReply("", "Give me an MD5 string and I'll try to reverse it");
 	assertReply("asdf", "Not found");
 	assertReply("912ec803b2ce49e4a541068d495ab570", "asdf");
+	assertReply("9e7fddb717d700ebc4a48c6638bb65c3", "unmd5");
 ?>
