@@ -7,7 +7,7 @@
 		if($result == "") reply_exit("Error: 50-hash daily limit reached?");
 		$xml = new SimpleXMLElement($result);
 		$result = $xml->hash->text;
-		if($result == "") reply_exit("Empty string");
+		if($result == "") reply_exit("Not found");
 		reply_exit($result);
 	} catch (Exception $e) {
 		reply_exit("Not found: $e");
