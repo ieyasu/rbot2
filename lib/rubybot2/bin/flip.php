@@ -67,9 +67,15 @@
 		$fliptable[$v] = $k;
 	}
 	$ret = "";
-	foreach(str_split($args) as $char) {
+	foreach(mb_str_split($args) as $char) {
 		if(isset($fliptable[$char])) $ret = $fliptable[$char] . $ret;
 		else $ret = $char . $ret;
 	}
 	reply("(ノ°□°)ノ︵" . $ret);
 
+	function mb_str_split( $string ) {
+		# Split at all position not after the start: ^
+		# and not before the end: $
+		return preg_split('/(?<!^)(?!$)/u', $string );
+	} 
+?>
