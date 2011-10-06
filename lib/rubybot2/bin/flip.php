@@ -71,5 +71,5 @@
 		if(isset($fliptable[$char])) $ret = $fliptable[$char] . $ret;
 		else $ret = $char . $ret;
 	}
-	reply($ret);
+	reply("(ノ°□°)ノ︵" . $ret);
 
