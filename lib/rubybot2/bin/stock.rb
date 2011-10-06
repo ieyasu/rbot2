@@ -2,57 +2,47 @@
 
 SYNTAX = 'Usage: !stock <symbol>'
 
-def parse_quote(body)
-  unless body.index('<table')
-    return "Stock symbol not  found"
-  end
-
-  i = body.index('<tr') or return
-  i = body.index('<tr', i + 3) or return
-  i = body.index('<td', i + 3) or return
-  j = body.index('</td', i) or return
-  company = strip_html(body[i...j])
-  #p company
-
-  i = body.index('<td>Last') or return
-  i = body.index('<td', i + 3) or return
+def parse_quote(body, symbol)
+  i = body.index('Last Price') or return
+  i = body.index('<td', i + 14) or return
   j = body.index('</td', i) or return
   price = strip_html(body[i...j])
   #p price
 
-  i = body.index('<td>Change') or return
-  i = body.index('<td', i + 3) or return
+  if price =~ /N\/A/
+    return "Stock symbol #{symbol} not found"
+  end
+
+  i = body.index('Change</td>') or return
+  i = body.index('<td', i + 11) or return
   j = body.index("</td", i) or return
   change = strip_html(body[i...j])
+  change = '+' + change if change[0..0] != '-'
   #p change
 
-  i = body.index('<td>&#37;Change') or return
-  i = body.index('<td', i + 3) or return
+  i = body.index('% Change</td>') or return
+  i = body.index('<td', i + 13) or return
   j = body.index("</td", i) or return
-  changepc = "(#{strip_html(body[i...j])}%)"
+  changepc = strip_html(body[i...j])
+  changepc = '+' + changepc if change[0..0] != '-'
+  changepc = "(#{changepc})"
   #p changepc
 
-  i = body.index(/<td>Last (?:Trade|Update)/) or return
-  i = body.index('<td', i + 3) or return
+  i = body.index(/Last (?:Trade|Update)<\/td/) or return
+  i = body.index('<td', i + 12) or return
   j = body.index('</td', i) or return
   time = strip_html(body[i...j])
   #p time
 
-  "#{company} #{price} #{change} #{changepc} #{time}"
+  "#{symbol.upcase}: #{price}  #{change} #{changepc}  closed #{time}"
 end
 
 def handle_command(nick, dest, args)
   return "P\t#{SYNTAX}" if args.length == 0
 
-  body = open("http://mobile.quote.com/mobitransfer.aspx?symbols=#{CGI.escape(args)}&requesttype=quotes").read
+  body = open("http://mobile.quote.com/quotes.aspx?symbol=#{CGI.escape(args)}").read
 
-  if body =~ %r!<td colspan="3">\s*<b>Quotes</b>! &&
-      body =~ %r!accesskey="1"\s+href=['"]?([^'"]+)! # "
-    url = $1
-    body = open("http://mobile.quote.com/#{strip_html(url)}").read
-  end
-
-  if (quote = parse_quote(body))
+  if (quote = parse_quote(body, args))
     "P\t#{quote}"
   else
     "P\terror parsing quote for #{args}"
