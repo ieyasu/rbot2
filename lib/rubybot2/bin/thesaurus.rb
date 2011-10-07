@@ -22,20 +22,20 @@ def parse_html(body, word)
   i = body.index('<span', i) or return
   j = body.index('</span', i) or return
   word = strip_html(body[i...j])
-  p word
+  #p word
 
   i = body.index('Part of Speech:', j) or return
   i = body.index('<td', i) or return
   j = body.index('</td', i) or return
   s = strip_html(body[i...j])
   pos = POS_MAP[s] || s
-  p pos
+  #p pos
 
   i = body.index('Definition:', j) or return
   i = body.index('<td', i) or return
   j = body.index('</td', i) or return
   defn = strip_html(body[i...j])
-  p defn
+  #p defn
 
   i = body.index('Synonyms:', j) or return
   i = body.index('<span', i) or return
