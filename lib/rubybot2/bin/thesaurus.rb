@@ -40,7 +40,7 @@ def parse_html(body, word)
   i = body.index('Synonyms:', j) or return
   i = body.index('<span', i) or return
   j = body.index('</span', j) or return
-  synonyms = strip_html(body[i...j]).gsub(/\s+,/, ',')
+  synonyms = strip_html(body[i...j]).gsub(/\s+,/, ',').gsub(' *', '')
 
   "\002#{word}\002, #{pos}: #{defn}. syn: #{synonyms}"
 end
