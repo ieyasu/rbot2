@@ -71,7 +71,7 @@
 		if(isset($fliptable[$char])) $ret = $fliptable[$char] . $ret;
 		else $ret = $char . $ret;
 	}
-	reply("(ノ°□°)ノ︵" . $ret);
+	reply("(ノ°□°)ノ︵ " . $ret);
 
 	function mb_str_split( $string ) {
 		# Split at all position not after the start: ^
