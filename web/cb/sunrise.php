@@ -1,7 +1,7 @@
 <?
-	$date = "";
-	if($args) $date = urlencode($args);
-	$url = "http://www.cmpsolv.com/cgi-bin/sunset?page=bob&exper=new99&loctype=City&loc=fort+collins%2C+co&date=$date&tz=Local&tzcustom=&q=&aviation=yes&day1=yes&colors=white&datefmt=0";
+	$loc = "fort+collins%2C+co";
+	if($args) $loc = urlencode($args);
+	$url = "http://www.cmpsolv.com/cgi-bin/sunset?page=bob&exper=new99&loctype=City&loc=$loc&date=&tz=Local&tzcustom=&q=&aviation=yes&day1=yes&colors=white&datefmt=0";
 
 	$file = file_get_contents($url);
 
