@@ -30,7 +30,6 @@ def parse_conditions(body)
 
   conditions, i = extract_td(body, i, '<table')
   return unless conditions
-p conditions #=> "fair 29 f (-2 C)"
   conditions =~ /(\D+)(-?\d+)\s*F\s*\((-?\d+)\s*C\)/
   conditions,tempf,tempc = $1.strip,$2,$3
 
