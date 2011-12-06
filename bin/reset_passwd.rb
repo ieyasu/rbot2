@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
 require 'md5'
 require 'config'
 require 'rubybot2/db'
@@ -17,9 +18,7 @@ unless ARGV.length == 2
     puts "Usage: account newpass"
     exit 1
 end
-account, newpass = ARGV[0], ARGV[1]
 
-DB.lock do |dbh|
-    dbh.exec("UPDATE accounts SET passwd = ? WHERE name = ?;",
-             hash_passwd(newpass), account)
-end
+account = Account.ds_by_nick(ARGV[0])
+newpass = ARGV[1]
+account.update(:passwd => hash_passwd(newpass))
