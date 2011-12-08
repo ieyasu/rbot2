@@ -18,7 +18,9 @@ def googlecalc(expr)
     else
       "#{data['lhs']} = #{data['rhs']}"
     end
-  comify strip_html(result.gsub(/\\x([0-9a-fA-F]{2})/) {|m| $1.hex.chr})
+  comify result.gsub(/\\x([0-9a-fA-F]{2})/) {|m| $1.hex.chr}.
+    gsub(/&#([0-9]{1,7});/) {[$1.to_i].pack('U')}.
+    gsub(/<sup>(-?\d+)<\/sup>/) {"^#{$1}"}
 end
 
 def handle_command(nick, dest, args)
