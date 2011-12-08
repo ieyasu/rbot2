@@ -14,7 +14,9 @@ def googlecalc(expr)
 
   result =
     if data['error'] && data['error'].length > 0 && data['error'] != '0'
-      "Error: #{data['error']}"
+      (data['error'] == '4') ?
+        "THERE ARE FOUR LIGHTS" :
+        "Error: #{data['error']}"
     else
       "#{data['lhs']} = #{data['rhs']}"
     end
