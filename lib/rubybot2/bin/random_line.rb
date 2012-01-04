@@ -25,7 +25,8 @@ FILE_MAP = {
   'deepdick' => 'loves',
   'iching' => 'iching',
   'troy' => 'troy_mcclure.txt',
-  'mcclure' => 'troy_mcclure.txt'
+  'mcclure' => 'troy_mcclure.txt',
+  'tracy' => 'tracy_morgan.txt'
 }
 
 # a - action instead of privmsg
