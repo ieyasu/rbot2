@@ -2,6 +2,7 @@
 
 FILE_MAP = {
   'gq' => 'galenquotes',
+  'maruth' => 'maruth.txt',
   'dec' => 'dec.txt',
   'hst' => 'hst.txt',
   'bob' => 'bob.txt',
