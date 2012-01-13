@@ -30,8 +30,9 @@ module Web
 
     def strip_html(html)
         text = html.gsub(/<p>(.+)<\/p>/, "\1\n").
+            gsub(/<!--(?:[^-]|-[^-])+-->/, '').
             gsub(%r!</?\w*(?:\s+[\w-]+(?:\s*=\s*(?:'[^']*'|"[^"]*"|[^'"> ]+))?)*\s*/?>!m, ' ') #"
-        replace_html_entities(text).gsub(/\s+/, ' ').strip
+        replace_html_entities(text).gsub(/\s+/, ' ').strip.squeeze(' ')
     end
 
     def http_post(url, data, headers = {})
