@@ -45,4 +45,4 @@ def handle_command(nick, dest, args)
   end
 end
 
-require 'boilerplate' 
+load 'boilerplate.rb'

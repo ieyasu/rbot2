@@ -36,4 +36,4 @@ rescue Exception => e
   "P\terror: #{e}"
 end
 
-require 'boilerplate' 
+load 'boilerplate.rb' 
