@@ -1,5 +1,6 @@
 require 'rubybot2/db'
-require 'md5'
+require 'digest/md5'
+include Digest
 
 class Accounts
   REGISTER_SYNTAX   = 'Usage: !register <account-name> <password>'
