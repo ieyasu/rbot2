@@ -1,5 +1,0 @@
-<?
-include('inc/mysql_func.inc');
-mysql_pconnect("mysql", "rodb", "password");
-mysql_select_db("RODB");
-?>
