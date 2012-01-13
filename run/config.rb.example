@@ -23,6 +23,5 @@ $rbconfig = {
 
     'db-uri'     => 'sqlite://db/rubybot.db',
 
-    'php-root'    => 'http://localhost/rbot2/web/cb/',
     'default-zip' => 80523
 }

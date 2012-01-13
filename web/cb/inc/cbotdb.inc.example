@@ -1,5 +1,0 @@
-<?
-require_once('inc/mysql_func.inc');
-mysql_pconnect("localhost", "cbot", "password");
-mysql_selectdb("CBOT");
-?>

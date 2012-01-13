@@ -1,7 +1,5 @@
 require 'rubybot2/thread_janitor'
 require 'rubybot2/db'
-require 'cgi'
-require 'open-uri'
 require 'open3'
 
 # Listens channel and private messages to the bot which instruct it
@@ -42,8 +40,6 @@ class CommandRunner
                     cmd.send(cmdsym, msg, args, r)
                 elsif (bin = find_bin(command, msg.dest))
                     run_bin(bin, msg, args, r)
-                elsif PHP_ROOT
-                    call_php(msg, command, args, r)
                 end
             rescue Exception => e
                 @client.logger.warn("!!! command threw exception #{e.inspect}: #{e.message} #{e.backtrace.join("\n")}")
@@ -52,9 +48,6 @@ class CommandRunner
     end
 
     private
-
-    PHP_ROOT = $rbconfig['php-root']
-    PHP_ROOT << '/' unless PHP_ROOT[-1,1] == '/'
 
     def load_commands(path)
         path =~ %r!commands/(.+)!
@@ -110,30 +103,5 @@ class CommandRunner
                 r.reply(line) if line.length > 0
             end
         end
-    end
-
-    def call_php(msg, command, args, r)
-        result = get_php(msg.nick, msg.dest, command, args) or return
-        result.each_line do |line|
-            line = line.strip
-            if line[0,8] == "\001PRIVATE"
-		line = line[9..-1]
-                r.priv_reply(line) if line.length > 0
-            elsif line[0,7] == "\001ACTION"
-                line = line[8..-1]
-                r.action(line) if line.length > 0
-            elsif line.length > 0
-                r.reply(line)
-            end
-        end
-    end
-
-    def get_php(nick, dest, command, args)
-        open("#{PHP_ROOT}#{CGI.escape command}.php?source=#{CGI.escape nick}" <<
-                 "&dest=#{CGI.escape dest}&args=#{CGI.escape args}") do |sin|
-            sin.read
-        end
-    rescue OpenURI::HTTPError => e
-        raise e unless e.message == '404 Not Found'
     end
 end
