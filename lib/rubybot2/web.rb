@@ -13,7 +13,7 @@ module Web
         '#39'    => "'",
         '#8217'  => "'",
         '#176'   => '',
-        'deg'    => "\260"
+        'deg'    => "\u00b0"
     }
 
     def replace_html_entities(html)

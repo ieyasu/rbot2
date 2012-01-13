@@ -31,7 +31,7 @@ module IRC
     hostname = "[^ .]+(?:\\.[^ .]+)*"
     prefix = "(?::(?:#{nick}(?:(?:![^\000\r\n @]+)?@#{hostname})?|#{hostname}) )?"
     command = "(?:\\d{3}|[A-Z]+)"
-    param = "[\001-\t\v\f\016-\037!-9;-\377][^ \000\r\n]*"
+    param = "[\001-\t\v\f\016-\037!-9;-\177][^ \000\r\n]*"
     parameters = "(?:\s+#{param})*(?:\s+:[^\000\r\n]*)?"
 
     # Matches valid IRC messages. The pattern is not particularly thorough
