@@ -83,7 +83,7 @@ class IRC::Replier
     def increment_public
         @public_lines += 1
         if @public_lines > SOFT_PUBLIC_LIMIT
-            raise TooManyLines if @public_lines > SOFT_PUBLIC_LIMIT * 2
+            raise IRC::TooManyLines if @public_lines > SOFT_PUBLIC_LIMIT * 2
             sleep 0.1
         end
     end
@@ -91,7 +91,7 @@ class IRC::Replier
     def increment_private
         @private_lines += 1
         if @private_lines > SOFT_PRIVATE_LIMIT
-            raise TooManyLines if @private_lines > SOFT_PRIVATE_LIMIT * 2
+            raise IRC::TooManyLines if @private_lines > SOFT_PRIVATE_LIMIT * 2
             sleep 0.1
         end
     end
