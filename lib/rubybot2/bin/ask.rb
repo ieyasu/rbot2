@@ -7,9 +7,10 @@ def parse_body(body)
     j = body.index('P>', i + 3) or return
     j = body.rindex('<', j) or return
   else
-    i = body.index(/<span[^>]+quality="PREFACE"/) || 0
-    i = body.index(/<span type="reply" quality="T"/, i) or return
-    j = body.index(/<span[^>]+quality="APPENDIX"/) or return
+    i = body.index(/<span[^>]+quality="(?:PREFACE|MISSPELLED-WORD)"/) or return
+    i ||= body.index(/<span type="reply" quality="T"/, i) 
+    j = body.index(/<span[^>]+quality="APPENDIX"/) ||
+      body.index(/<EM>Abort/) or return
   end
   strip_html body[i...j]
 end
