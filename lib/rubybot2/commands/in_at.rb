@@ -10,6 +10,7 @@ class InAt
 
   def c_in(msg, args, r)
     delay, text = args.split(';', 2)
+    raise '' unless delay && text
     at = parse_delay(delay)
     insert_job(at, msg, text, r)
   rescue RuntimeError
@@ -17,7 +18,8 @@ class InAt
   end
 
   def c_at(msg, args, r)
-    time, text = args_split(args)
+    time, text = args.split(';', 2)
+    raise '' unless time && text
     if (at = Chronic.parse(time))
       insert_job(at, msg, text, r)
     else
