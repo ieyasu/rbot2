@@ -2,14 +2,14 @@ require 'chronic'
 require 'rubybot2/db'
 
 class InAt
-  IN_SYNTAX = 'usage: !in [<y>y(ear)][<m>mon(ths)][<d>d(ays)][<m>min][<s>sec][;] <message>'
-  AT_SYNTAX = 'usage: !at <date>[;] <message>'
+  IN_SYNTAX = 'usage: !in <delay>; <message> -- delay is some combo of y(ears), mon(th), d(ay), hour, min, sec'
+  AT_SYNTAX = 'usage: !at <date>; <message> -- date can be one of many formats, e.g. "thursday 2:35", "7 days from now" or "jan 5 2018"'
 
   def initialize(client)
   end
 
   def c_in(msg, args, r)
-    delay, text = args_split(args)
+    delay, text = args.split(';', 2)
     at = parse_delay(delay)
     insert_job(at, msg, text, r)
   rescue RuntimeError
@@ -28,17 +28,6 @@ class InAt
   end
 
   private
-
-  def args_split(args)
-    ary =
-      if (i = args.index(';'))
-        [args[0...i].strip, args[i + 1..-1].strip]
-      else
-        args.split(nil, 2)
-      end
-    raise '' unless ary.length == 2 && ary[0].length>0 && ary[1].length > 0
-    ary
-  end
 
   def parse_delay(delay)
     dt = DateTime.now
