@@ -36,6 +36,10 @@ end
 def wunder_sunset(location)
   body = open("http://m.wund.com/cgi-bin/findweather/getForecast?brand=mobile&query=#{CGI.escape location}").read
 
+  if body.index('Not Found')
+    return "#{location} not found"
+  end
+
   i = body.index('Observed at') or return
   i = body.index('<b>', i) or return
   j = body.index('</b>', i) or return
