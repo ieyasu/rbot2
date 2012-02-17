@@ -5,7 +5,9 @@ require 'nokogiri'
 
 LOCAL_ZIP = /^80[235]\d\d$/ # denver, boulder, fort collins
 
-def present(n)
+
+def rise_set_for(doc, day)
+  n = doc.xpath(".//table[1]/tr/td[./font[1]/text()='#{day}']")
   s = n.first.content.strip.sub('Sunrise', '').sub(':', ":\002").
     sub('Sunset:', ' -')
   "\002#{Time.now.strftime('%b')} #{s}"
@@ -19,16 +21,17 @@ def denver_sunset
   month = t.strftime('%b')
   sun = "Denver Sunrise-set: "
 
-  n = doc.xpath(".//table[1]/tr/td[./font[1]/text()='#{t.day}']")
-  s = present(n).sub(':', " (Today):").
-    gsub(/(\d\d?:\d\d[ap]m)/, "\00308\\1\003")
+  # sunrise/set for today
+  s = rise_set_for(doc, t.day).sub(':', " (Today):").
+    gsub(/(\d\d?:\d\d[ap]m)/, "\00304\\1\003")
   sun << "#{s}   "
 
-  n = doc.xpath('.//table[1]/tr[2]/td[1]')
-  sun << "#{present(n)}   "
+  # sunrise/set for first of month
+  sun << "#{rise_set_for(doc, 1)}   "
 
-  n = doc.xpath('.//table[1]/tr[last()]/td[1]')
-  sun << present(n)
+  # sunrise/set for end of month
+  eom = Date.civil(t.year, t.month, -1)
+  sun << rise_set_for(doc, eom.day)
 
   sun
 end
@@ -55,7 +58,7 @@ def wunder_sunset(location)
   j = body.index('</td', i) or return
   set = strip_html body[i...j]
 
-  "#{loc} - Sunrise: \00308#{rise}\003  Sunset: \00308#{set}\003"
+  "#{loc} - Sunrise: \00304#{rise}\003  Sunset: \00304#{set}\003"
 end
 
 def handle_command(nick, dest, args)
