@@ -34,22 +34,8 @@ HOOK_TO_FILE = {
 # a - action instead of privmsg
 # n - do shot/love-style name replacement
 FLAGS = {
-  'bitchslap' => 'na',
-  'boot' => 'na',
-  'flog' => 'na',
-  'hit' => 'na',
-  'kick' => 'na',
-  'kill' => 'na',
-  'punch' => 'na',
-  'shoot' => 'na',
-  'slap' => 'na',
-  'smack' => 'na',
-  'smite' => 'na',
-  'spank' => 'na',
-  'stab' => 'na',
-  'tentaclerape' => 'na',
-  'love' => 'na',
-  'deepdick' => 'na'
+  'shots' => 'na',
+  'loves' => 'na'
 }
 
 # Does a fish-yates shuffle on the lines from infile, writing to outfile
@@ -94,11 +80,11 @@ def handle_command(nick, dest, args)
   return "P\tNo file mapping for #{command}!" unless file
   rl = random_line("db/#{file}")
 
-  if FLAGS[command] && FLAGS[command].index('n')
+  if FLAGS[file] && FLAGS[file].index('n')
     rl = rl.gsub('$args', args).gsub('$source', nick)
   end
 
-  if FLAGS[command] && FLAGS[command].index('a')
+  if FLAGS[file] && FLAGS[file].index('a')
     "P\t\001ACTION #{rl}\001"
   else
     "P\t#{rl}"
