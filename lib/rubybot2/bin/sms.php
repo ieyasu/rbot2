@@ -13,7 +13,7 @@ if (count($sms_args) != 2) {
 }
 
 $target = $sms_args[0];
-$message = "<$nick> ".$sms_args[1];
+$message = "From $nick: " . $sms_args[1] . " DO NOT REPLY DIRECTLY";
 
 // Find target phone number
 $data = db("select number from sms where nick=\"$target\"");
