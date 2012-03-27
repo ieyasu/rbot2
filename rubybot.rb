@@ -68,20 +68,13 @@ class Plugin
   end
 end
 
-def open_log
-  $log = Logger.new($daemonize ? 'log/rubybot.log' : STDOUT,
-                $rbconfig['max-log-files'], $rbconfig['max-log-size'])
+def open_log(file)
+  $log = Logger.new(file, $rbconfig['max-log-files'], $rbconfig['max-log-size'])
   $log.level = $rbconfig['log-level']
   log_time_fmt = $rbconfig['log-time-format']
   $log.formatter = proc do |severity, time, prog, msg|
     "#{time.strftime(log_time_fmt)}: #{msg}\n"
   end
-end
-
-def daemonize
-   if $daemonize
-     Process.daemon(true) # and don't change directory
-   end
 end
 
 def connect_client
@@ -96,7 +89,6 @@ def start_plugins
     s = File.stat(file)
     if s.file? and s.executable?
       $plugins << Plugin.new(file)
-      $log.info "Started #{file}"
     end
   end
 end
@@ -143,14 +135,14 @@ end
 
 # ---
 
-$daemonize = ARGV.any? { |arg| arg == '-d' }
+want_daemon = ARGV.any? { |arg| arg == '-d' }
 
 trap('TERM') { quit('SIGTERM') }
 trap('INT')  { quit('SIGINT') } # ^c
 trap('HUP')  { restart_plugins }
 
-daemonize
-open_log
+Process.daemon(true) if want_daemon
+open_log(want_daemon ? 'log/rubybot.log' : STDOUT)
 start_plugins
 connect_client
 
