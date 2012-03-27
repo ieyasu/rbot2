@@ -4,6 +4,16 @@ $rbconfig = {
     'nick' => 'rb-test',
     'ircname' => "bishop's ruby bot v.2",
 
+    'max-log-files' => 1000,
+    'max-log-size' => 50 * 1024 * 1024,
+
+    #'log-level' => Logger::WARN,
+    'log-level' => Logger::INFO,
+    #'log-level' => Logger::DEBUG,
+
+    #'log-time-format' => '%a, %e %b %Y %T %Z', # human readable
+    'log-time-format' => '%FT%T%z', # ISO 8601
+
     # comma-separated list of channels to join (type String)
     'join-channels'       => '#test',
     # comma-separated list of channel passwords (type String),

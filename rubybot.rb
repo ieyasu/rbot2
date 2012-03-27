@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'logger'
 require 'open3'
 require 'rubybot2/irc'
 
@@ -22,8 +23,7 @@ class Plugin
       while (line = @stdout.gets)
         line.strip!
         if IRC.valid_message?(line)
-          # XXX log instead
-          puts "#{@file} <<< #{line}"
+          $log.info "#{@file} <<< #{line}"
           $client.send_msg(line)
         end
       end
@@ -31,25 +31,25 @@ class Plugin
 
     @err_thr = Thread.new do
       while (line = @stderr.gets)
-        # XXX log stdout
-        STDERR.puts "stderr from #{@file}: #{line}"
+        $log.warn "#{@file} stderr: #{line.chop.inspect}"
       end
     end
   end
 
   # sends the given IRC message if it matches the list of commands
   def send(msg)
-    @stdin.puts(msg) if msg.command =~ @commands
+    @stdin.write(msg) if msg.command =~ @commands
   end
 
   # Close all pipes, kill process with TERM.
   def close
-    puts "Closing #{@file}"
+    $log.info "Closing #{@file}"
+
     Process.kill('INT', @wait_thr.pid) rescue nil
 
-    @stdin.close
-    @stdout.close
-    @stderr.close
+    @stdin.close rescue nil
+    @stdout.close rescue nil
+    @stderr.close rescue nil
 
     @out_thr.join
     @err_thr.join
@@ -64,7 +64,18 @@ class Plugin
     rescue Errno::ECHILD # process already exited, swallow error
     end
     status = @wait_thr.value # join and return exit status
-    puts "#{@file} exit: #{status}"
+    $log.info "#{@file} exit: #{status}"
+  end
+end
+
+def open_log
+  #'log/rubybot.log'
+  $log = Logger.new(STDOUT,
+                $rbconfig['max-log-files'], $rbconfig['max-log-size'])
+  $log.level = $rbconfig['log-level']
+  log_time_fmt = $rbconfig['log-time-format']
+  $log.formatter = proc do |severity, time, prog, msg|
+    "#{time.strftime(log_time_fmt)}: #{msg}\n"
   end
 end
 
@@ -80,7 +91,7 @@ def start_plugins
     s = File.stat(file)
     if s.file? and s.executable?
       $plugins << Plugin.new(file)
-      puts "Started #{file}"
+      $log.info "Started #{file}"
     end
   end
 end
@@ -97,8 +108,7 @@ def restart_plugins
 end
 
 def message_received(msg)
-  # XXX log message received
-  puts ">>> #{msg}" unless msg.command == IRC::CMD_PING
+  $log.info ">>> #{msg}" unless msg.command == IRC::CMD_PING
 
   case msg.command
   when IRC::RPL_WELCOME
@@ -114,7 +124,7 @@ def message_received(msg)
       end
     end
   when IRC::ERR_NOOPERHOST
-    # XXX error becoming oper
+    $log.error "Error becoming oper: #{msg.to_s.inspect}"
   end
 
   $plugins.each { |plugin| plugin.send(msg) }
@@ -132,6 +142,7 @@ trap('TERM') { quit('SIGTERM') }
 trap('INT')  { quit('SIGINT') } # ^c
 trap('HUP')  { restart_plugins }
 
+open_log
 connect_client
 start_plugins
 
@@ -142,8 +153,8 @@ begin
 rescue SystemExit
   break # quit called
 rescue => e
-  # XXX log exception
-  p e
+  bt = e.backtrace.inject('') { |s,t| "#{s}\n  #{t}" }
+  $log.error "Caught at top level: #{e.class.name}: #{e.message}#{bt}"
 end until $client.closed?
 
-puts "Rubybot shutting down normally"
+$log.info "Shutting down normally"
