@@ -40,7 +40,7 @@ end
 def handle_command(nick, dest, args)
   return "P\t#{SYNTAX}" if args.length == 0
 
-  body = open("http://mobile.quote.com/quotes.aspx?symbol=#{CGI.escape(args)}").read
+  body = read_url("http://mobile.quote.com/quotes.aspx?symbol=#{CGI.escape(args)}")
 
   if (quote = parse_quote(body, args))
     "P\t#{quote}"

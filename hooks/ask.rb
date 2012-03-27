@@ -16,7 +16,7 @@ def parse_body(body)
 end
 
 def handle_command(nick, dest, args)
-  body = open("http://start.csail.mit.edu/startfarm.cgi?query=#{CGI.escape(args)}").read
+  body = read_url("http://start.csail.mit.edu/startfarm.cgi?query=#{CGI.escape(args)}")
   if body && (answer = parse_body(body))
     "P\t#{answer}"
   else

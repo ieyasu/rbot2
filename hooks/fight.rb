@@ -45,7 +45,7 @@ def handle_command(nick, dest, args)
 
   counts = items.map do |item|
     item = CGI.escape(item.strip)
-    parse_count(open("http://www.google.com/search?hl=en&q=#{item}").read)
+    parse_count(read_url("http://www.google.com/search?hl=en&q=#{item}"))
   end
 
   if (result = get_victor(items, counts))

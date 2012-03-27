@@ -6,7 +6,7 @@ require 'raspell'
 SYNTAX = 'Usage: !spell <word>'
 
 def google_suggest(args)
-    body = open("http://www.google.com/search?lr=lang_en&q=#{CGI.escape args}").read
+    body = read_url("http://www.google.com/search?lr=lang_en&q=#{CGI.escape args}")
     i = body.index('Did you mean') or return []
     i = body.index('<i>', i) or return []
     j = body.index('</i>', i) or return []

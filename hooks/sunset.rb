@@ -15,7 +15,7 @@ end
 
 def denver_sunset
   t = Time.now
-  doc = Nokogiri::HTML(open("http://www.sunrisesunset.com/calendar.asp?comb_city_info=Denver%2C%20Colorado;104.9847;39.7392;-7;1&month=#{t.month}&year=#{t.year}&time_type=0&txsz=S&back=&supr=6334&want_mphase=0"))
+  doc = Nokogiri::HTML(read_url("http://www.sunrisesunset.com/calendar.asp?comb_city_info=Denver%2C%20Colorado;104.9847;39.7392;-7;1&month=#{t.month}&year=#{t.year}&time_type=0&txsz=S&back=&supr=6334&want_mphase=0"))
 
   t = Time.now
   month = t.strftime('%b')
@@ -37,7 +37,7 @@ def denver_sunset
 end
 
 def wunder_sunset(location)
-  body = open("http://m.wund.com/cgi-bin/findweather/getForecast?brand=mobile&query=#{CGI.escape location}").read
+  body = read_url("http://m.wund.com/cgi-bin/findweather/getForecast?brand=mobile&query=#{CGI.escape location}")
 
   if body.index('Not Found')
     return "#{location} not found"

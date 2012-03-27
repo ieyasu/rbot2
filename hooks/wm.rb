@@ -31,7 +31,7 @@ end
 
 def handle_command(nick, dest, args)
   args = ENV['ZIP'] if args.length == 0
-  body = open("http://mobile.wunderground.com/cgi-bin/findweather/getForecast?brand=mobile&query=#{CGI.escape(args)}").read
+  body = read_url("http://mobile.wunderground.com/cgi-bin/findweather/getForecast?brand=mobile&query=#{CGI.escape(args)}")
   if body && (res = parse_conditions(body))
     "P\t#{res}"
   else

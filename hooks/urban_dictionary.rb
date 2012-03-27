@@ -28,7 +28,7 @@ end
 def handle_command(nick, dest, args)
   return "P\tUsage: !dict <word>" unless args.length > 0
 
-  body = open("http://www.urbandictionary.com/define.php?term=#{CGI.escape(args)}").read
+  body = read_url("http://www.urbandictionary.com/define.php?term=#{CGI.escape(args)}")
   if (ary = parse_definitions(body))
     format_reply(ary)
   else

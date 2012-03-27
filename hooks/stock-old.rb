@@ -22,7 +22,7 @@ end
 def handle_command(nick, dest, args)
     return "P\t#{SYNTAX}" if args.length == 0
 
-    body = open("http://www.google.com/search?hl=en&q=stock%3A#{CGI.escape(args)}&btnG=Google+Search").read
+    body = read_url("http://www.google.com/search?hl=en&q=stock%3A#{CGI.escape(args)}&btnG=Google+Search")
     if (quote = parse_quote(body, args))
         "P\t#{quote}"
     else

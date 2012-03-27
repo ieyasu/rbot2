@@ -39,10 +39,10 @@ end
 def handle_command(nick, dest, args)
     args = ENV['ZIP'] if args.length == 0
     url = "zipcity.php?inputstring=#{CGI.escape(args)}"
-    body = open("http://www.crh.noaa.gov/#{url}").read
+    body = read_url("http://www.crh.noaa.gov/#{url}")
 
     if (url = parse_choose(body))
-        body = open("http:#{url}")
+        body = read_url("http:#{url}")
     end
 
     if body

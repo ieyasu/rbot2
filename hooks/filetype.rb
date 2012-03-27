@@ -24,7 +24,7 @@ def handle_command(nick, dest, args)
     args = args[i+1..-1] if i
     if args =~ /([a-zA-Z0-9$\#@!_~\-]+)/
         ext = $1
-        body = open("http://fileinfo.net/extension/#{ext}").read
+        body = read_url("http://fileinfo.net/extension/#{ext}")
         parse_fileinfo(body, ext)
     else
         "P\tbad file extension '#{args}'; legal characters are a-zA-Z0-9$\#@!_~-"

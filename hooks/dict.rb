@@ -39,7 +39,7 @@ def format_reply(ary)
 end
 
 def google_suggestions(args)
-  body = open("http://www.google.com/search?hl=en&q=#{CGI.escape(args)}").read
+  body = read_url("http://www.google.com/search?hl=en&q=#{CGI.escape(args)}")
   i = body.index('Did you mean:') or return
   i = body.index(/<a[^>]*>/, i) or return
   i += $~[0].length
@@ -50,8 +50,7 @@ end
 def handle_command(nick, dest, args)
   return "P\tUsage: !dict <word>" unless args.length > 0
 
-  body = open("http://www.google.com/search?hl=en&q=define:#{CGI.escape(args)}").read
-  
+  body = read_url("http://www.google.com/search?hl=en&q=define:#{CGI.escape(args)}")
 
   if (ary = parse_definitions(body))
     format_reply(ary)

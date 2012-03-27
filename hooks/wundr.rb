@@ -25,7 +25,7 @@ end
 
 def handle_command(nick, dest, args)
   args = ENV['ZIP'] if args.length == 0
-  doc = Nokogiri::HTML(open("http://www.wunderground.com/cgi-bin/findweather/getForecast?query=#{CGI.escape(args)}"))
+  doc = Nokogiri::HTML(read_url("http://www.wunderground.com/cgi-bin/findweather/getForecast?query=#{CGI.escape(args)}"))
   if doc && (res = parse_conditions(doc, args))
     "P\t#{res}"
   else

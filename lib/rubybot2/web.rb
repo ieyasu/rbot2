@@ -29,10 +29,22 @@ module Web
     end
 
     def strip_html(html)
-        text = html.gsub(/<p>(.+)<\/p>/, "\1\n").
+        text = html.gsub(/<p>(.+)<\/p>/, "\\1\n").
             gsub(/<!--(?:[^-]|-[^-])+-->/, '').
             gsub(%r!</?\w*(?:\s+[\w-]+(?:\s*=\s*(?:'[^']*'|"[^"]*"|[^'"> ]+))?)*\s*/?>!m, ' ') #"
         replace_html_entities(text).gsub(/\s+/, ' ').strip.squeeze(' ')
+    end
+
+    def read_url(url)
+      s = nil
+      open(url) { |fin| s = fix_encoding(fin) }
+      s
+    end
+
+    def fix_encoding(s)
+      buf = ''
+      s.each_char {|c| buf << (c.valid_encoding? ? c : '?') }
+      buf
     end
 
     def http_post(url, data, headers = {})

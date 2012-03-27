@@ -6,7 +6,7 @@ require 'open-uri'
 require 'cgi'
 
 def metacritic_search(game)
-  node = Nokogiri(open("http://www.metacritic.com/search/all/#{CGI.escape(game)}/results").read).css('.main_stats').first
+  node = Nokogiri(read_url("http://www.metacritic.com/search/all/#{CGI.escape(game)}/results")).css('.main_stats').first
   title = node.css('.product_title').text
   score = node.css('.metascore').text
   [title, score]

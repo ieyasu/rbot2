@@ -4,7 +4,7 @@ SYNTAX = 'Usage: !calc <expression>'
 
 def googlecalc(expr)
   data = {}
-  open("http://www.google.com/ig/calculator?hl=en&q=#{CGI.escape(expr)}").read.
+  read_url("http://www.google.com/ig/calculator?hl=en&q=#{CGI.escape(expr)}").
     scan(/(\w+): "((?:[^"]|\\")*)"/).
     each {|ary| data[ary.first] = ary.last }
 

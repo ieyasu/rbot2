@@ -47,17 +47,16 @@ end
 def handle_command(nick, dest, args)
   args = ENV['ZIP'] if args.length == 0
   fin = open("http://forecast.weather.gov/zipcity.php?inputstring=#{CGI.escape(args)}")
-  body = fin.read
+  body = fix_encoding fin.read
 
   if body && (url = parse_choose(body, fin))
-    p url
     fin = open(url)
-    body = fin.read
+    body = fix_encoding fin.read
   end
 
   while body && body.index(/document.location.replace\('([^']+)'\)/)
     fin = open(fin.base_uri.merge($1))
-    body = fin.read
+    body = fix_encoding fin.read
   end
 
   if body

@@ -33,7 +33,7 @@ def parse_csu_conds(body)
 end
 
 def handle_command(nick, dest, args)
-  body = open("http://www.atmos.colostate.edu/wx/fcc/fccwx_current.php").read
+  body = read_url("http://www.atmos.colostate.edu/wx/fcc/fccwx_current.php")
   if (conds = parse_csu_conds(body))
     "P\t#{conds}"
   else

@@ -34,7 +34,7 @@ end
 def handle_command(nick, dest, args)
     return "P\t#{SYNTAX}" if args.length == 0
 
-    body = open("http://froogle.google.com/froogle?q=#{CGI.escape(args)}&hl=en&show=li&lnk=showgrid").read
+    body = read_url("http://froogle.google.com/froogle?q=#{CGI.escape(args)}&hl=en&show=li&lnk=showgrid")
     res = parse_products(body)
      res ? "P\t#{res}" : "P\t#{args} not found"
 end

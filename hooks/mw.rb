@@ -41,7 +41,7 @@ end
 def handle_command(nick, dest, args)
     return "P\tUsage: !dict <word>" unless args.length > 0
 
-    body = open("http://www.m-w.com/dictionary/#{CGI.escape(args)}").read
+    body = read_url("http://www.m-w.com/dictionary/#{CGI.escape(args)}")
     if (repl = parse_definitions(body))
         "P\t#{repl}"
     else

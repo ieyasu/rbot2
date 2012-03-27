@@ -49,7 +49,7 @@ def handle_command(nick, dest, args)
   args = args.split.first
   return "P\t#{SYNTAX}" if !args || args.length == 0
 
-  body = open("http://thesaurus.com/browse/#{CGI.escape(args)}").read
+  body = read_url("http://thesaurus.com/browse/#{CGI.escape(args)}")
   if body && (res = parse_html(body, args))
     "P\t#{res}"
   else
