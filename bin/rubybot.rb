@@ -6,7 +6,11 @@ require 'rubybot2/irc'
 
 load 'config.rb'
 
+SERVICE_CHECK_TIMEOUT = 5 * 60 + 3
+
 class Service
+  attr_reader :file
+
   def initialize(file)
     @file =  File.basename file
 
@@ -46,6 +50,11 @@ class Service
   # sends the given IRC message if it matches the list of commands
   def send(msg)
     @stdin.puts(msg) if msg.command =~ @commands
+  end
+
+  # Checks subprocess for life
+  def alive?
+    @wait_thr.alive?
   end
 
   # Close all pipes, kill process with TERM.
@@ -96,6 +105,24 @@ def start_services
     s = File.stat(file)
     if s.file? and s.executable?
       $services << Service.new(file)
+    end
+  end
+
+  # watcher thread cleans up dead services
+  Thread.new do
+    loop do
+      sleep SERVICE_CHECK_TIMEOUT
+      $services.delete_if do |service|
+        if service.alive?
+          false
+        else
+          $log.error "Service #{service.file} quit unexpectedly"
+          service.close
+          sleep(0.5)
+          service.shutdown
+          true
+        end
+      end
     end
   end
 end
