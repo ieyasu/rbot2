@@ -305,6 +305,12 @@ module IRC
             end
             m
         end
+
+        # Returns true if the network socket connected to the IRC server is
+        # closed.
+        def closed?
+          @sock.closed?
+        end
     protected
         MIN_SPLIT = 32
         PREFIX_MAX = 32
