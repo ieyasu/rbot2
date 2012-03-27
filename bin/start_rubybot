@@ -1,6 +1,4 @@
 #!/bin/bash
 
 . `dirname $BASH_SOURCE`/ENVIRONMENT
-
-cd $RB_ROOT_DIR/run
-exec screen -S rb -d -m $RB_ROOT_DIR/bin/rubybot.rb
+$RB_ROOT_DIR/bin/rubybot.rb -d
