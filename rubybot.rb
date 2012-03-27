@@ -22,9 +22,11 @@ class Plugin
     @out_thr = Thread.new do
       while (line = @stdout.gets)
         line.strip!
-        if IRC.valid_message?(line)
-          $log.info "#{@file} <<< #{line}"
+        begin
           $client.send_msg(line)
+          $log.info "#{@file} <<< #{line}"
+        rescue ArgumentError
+          $log.warn "Invalid message from #{@file}: #{line.inspect}"
         end
       end
     end
@@ -34,6 +36,8 @@ class Plugin
         $log.warn "#{@file} stderr: #{line.chop.inspect}"
       end
     end
+
+    $log.info "Started #{@file} #{@commands.inspect}"
   end
 
   # sends the given IRC message if it matches the list of commands
