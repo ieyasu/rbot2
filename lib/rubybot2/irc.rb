@@ -96,7 +96,7 @@ module IRC
     #     end
     #   end
     class Client
-        attr_reader :sock, :server, :port, :nickname, :prefix
+        attr_reader :server, :port, :nickname, :prefix
 
         # Opens a TCP connection to _server:port_.
         def initialize(server, port = DEFAULT_PORT)
