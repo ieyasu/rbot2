@@ -1,9 +1,8 @@
 # project ignored
 bin/ENVIRONMENT
-run/log/*
-run/db/rubybot.db
-run/config.rb
+log/*
 db/rubybot.db
+db/*-rand
 config.rb
 *.pyc
 Gemfile.lock

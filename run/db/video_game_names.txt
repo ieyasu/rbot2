@@ -1,1 +1,0 @@
-../../db/video_game_names.txt

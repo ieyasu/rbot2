@@ -1,1 +1,0 @@
-../../lib/rubybot2/commands/seen.rb

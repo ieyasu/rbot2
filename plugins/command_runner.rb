@@ -50,8 +50,12 @@ def find_command(cmdsym, dest)
 end
 
 def find_bin(command, dest)
-  path = "run/bin/#{command}"
-  path if executable?(path)
+  def test(path, ext)
+    path += ext
+    path if executable?(path)
+  end
+  path = "hooks/#{command}"
+  test(path, '.rb') || test(path, '.php') || test(path, '.py')
 end
 
 def executable?(path)
@@ -83,7 +87,7 @@ end
 register  IRC::CMD_PRIVMSG
 
 $commands = {}
-load_commands('lib/rubybot2/commands')
+load_commands('commands')
 $janitor = ThreadJanitor.new
 
 message_loop do |msg, replier|
