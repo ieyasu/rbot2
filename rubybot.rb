@@ -17,7 +17,7 @@ class Plugin
     while (line = @stdout.gets) and (line = line.chop).length > 0
       list << line.strip
     end
-    @commands = /^(?:#{list.join('|')})$/
+    @commands = list.length > 0 ? /^(?:#{list.join('|')})$/ : /(?!)/
 
     @out_thr = Thread.new do
       while (line = @stdout.gets)
