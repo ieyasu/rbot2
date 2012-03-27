@@ -1,0 +1,43 @@
+#!/bin/bash
+
+SRC="$(pwd)/$(echo $BASH_SOURCE | sed 's/^\.\///')"
+RB_ROOT=`dirname $(dirname $SRC)`
+cd $RB_ROOT
+
+git up
+
+mkdir -p run/ log/old/ inc/
+
+mv run/log/* log/old/
+rmdir run/log
+for f in run/db/*; do
+    test -h $f && rm $f # remove symbolic links
+done
+mv run/db/* run/db/.schema db/
+rmdir run/db
+echo "You may want to clean up non-*.pid files in the run/ dir"
+
+mv lib/rubybot2/inc/sms_auth.inc inc/
+rmdir lib/rubybot2/inc
+
+echo -e "require 'logger'\n" >config.rb
+sed -n '1,/ircname/ p' run/config.rb >>config.rb
+cat <<EOD >>config.rb
+
+    'max-log-files' => 1000,
+    'max-log-size' => 50 * 1024 * 1024,
+    'log-level' => Logger::DEBUG,
+    'log-time-format' => '%a, %e %b %Y %T %Z',
+EOD
+grep -v php-root <run/config.rb | sed '1,/ircname/ d' >>config.rb
+mv run/config.rb config.rb.bak
+
+mv bin/ENVIRONMENT bin/ENVIRONMENT.bak
+cat <<EOD >bin/ENVIRONMENT
+SRC="\$(pwd)/\$(echo \$BASH_SOURCE | sed 's/^\.\///')"
+RB_ROOT=\`dirname \$(dirname \$SRC)\`
+export RUBYLIB=\$RB_ROOT/lib
+export RUBYOPT='-E utf-8'
+export PYTHONPATH=\$RB_ROOT
+export TZ="America/Denver"
+EOD
