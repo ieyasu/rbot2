@@ -36,7 +36,7 @@ end
 
 task :default => :spec
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
@@ -46,11 +46,9 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-require 'run/config.rb'
+load './config.rb'
 namespace :db do
   task :migrate do
-    Dir.chdir('run')
-    sh "sequel -m ../db/migrations #{$rbconfig['db-uri']}"
-    Dir.chdir('..')
+    sh "sequel -m db/migrations #{$rbconfig['db-uri']}"
   end
 end
