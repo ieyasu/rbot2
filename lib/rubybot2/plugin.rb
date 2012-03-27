@@ -21,3 +21,9 @@ def message_loop
     yield msg, replier
   end
 end
+
+# Given an exception, prints nicely formatted reporting information to STDERR.
+def report_exception(e)
+  bt = e.backtrace.inject('') { |s,t| "#{s}\n  #{t}" }
+  STDERR.puts "Caught exception #{e.class} checking jobs: #{e.message} #{bt}"
+end
