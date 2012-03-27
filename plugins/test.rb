@@ -1,19 +1,10 @@
 #!/usr/bin/env ruby
 
-STDOUT.sync = true # don't need to call flush
+require 'rubybot2/plugin'
 
-# list of commands to receive"
-puts "PRIVMSG"
-puts "PING"
-puts
-#STDOUT.flush
+register 'PRIVMSG', 'ping'
 
-loop do
-  sleep 2
-  puts "Time is now #{Time.now}"
-  #STDOUT.flush
-  sleep 3
-  STDERR.puts "errmsg"
-  sleep 2
-  puts "PRIVMSG #test77 :test!"
+message_loop do |msg, replier|
+  STDERR.puts "got #{msg.inspect}"
+  replier.reply msg.text
 end
