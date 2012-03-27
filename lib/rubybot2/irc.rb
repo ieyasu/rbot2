@@ -66,9 +66,9 @@ module IRC
     end
 
     # Returns true if _msg_ is a valid IRC message.
-    def IRC.valid_message?(msg)
-        msg.rstrip!
-        msg.length <= MAX_MESSAGE_LENGTH and msg =~ MESSAGE_REGEX
+    def IRC.valid_message?(text)
+        text = text.rstrip
+        text.length <= MAX_MESSAGE_LENGTH and text =~ MESSAGE_REGEX
     end
 
     # Class +Client+ provides an IRC client for user agents, services, and

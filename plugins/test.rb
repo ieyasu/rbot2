@@ -14,4 +14,6 @@ loop do
   #STDOUT.flush
   sleep 3
   STDERR.puts "errmsg"
+  sleep 2
+  puts "PRIVMSG #test77 :test!"
 end

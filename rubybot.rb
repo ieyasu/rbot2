@@ -7,7 +7,8 @@ load 'config.rb'
 
 class Plugin
   def initialize(file)
-    @file =  file
+    @file =  File.basename file
+
     @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(file)
 
     # read list of commands to send
@@ -19,18 +20,20 @@ class Plugin
 
     @out_thr = Thread.new do
       while (line = @stdout.gets)
-        # XXX feed to irc if valid message
-        STDOUT.puts "stdout from #{file}: #{line}"
+        line.strip!
+        if IRC.valid_message?(line)
+          # XXX log instead
+          puts "#{@file} <<< #{line}"
+          $client.send_msg(line)
+        end
       end
-      puts "exiting out reader"
     end
 
     @err_thr = Thread.new do
       while (line = @stderr.gets)
         # XXX log stdout
-        STDERR.puts "stderr from #{file}: #{line}"
+        STDERR.puts "stderr from #{@file}: #{line}"
       end
-      puts "exiting err reader"
     end
   end
 
@@ -95,7 +98,7 @@ end
 
 def message_received(msg)
   # XXX log message received
-  p msg unless msg.command == IRC::CMD_PING
+  puts ">>> #{msg}" unless msg.command == IRC::CMD_PING
 
   case msg.command
   when IRC::RPL_WELCOME
@@ -136,11 +139,11 @@ begin
   while (msg = $client.read_message)
     message_received(msg)
   end
-rescue IRC::MessageParseError => e
-  # XXX log exception
-  p e
 rescue SystemExit
   break # quit called
+rescue => e
+  # XXX log exception
+  p e
 end until $client.closed?
 
 puts "Rubybot shutting down normally"
