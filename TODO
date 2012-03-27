@@ -6,7 +6,6 @@ To Do
  - next searching in a web page
  - tack on javascript:parent.location='...' inside the href for pug's
    urlgrabber to fix ie referrer troubles
- - write !thes(aurus) command because you hate yourself
  - full-text search on urlgrabber
  - make timestamps anchors and links so that urls can be pasted into channel
    and will point to that vicinity of conversation
@@ -27,13 +26,12 @@ To Do
  - fix resellerratings
  - make '!next nick !smite nick' work
  - use ferret for FTS and !searchnexts
- - add merb- or camping-based web interface
+ - add sinatra-based web interface
  - plugin and command reload capability
  - repackage commands into objects with common interface, in preparation
    for using that as the standard interface for defining new !commands.
  - make rb give the date with !nexts if they're more than a week old
  - !dexonline or !411
- - <sock> !imdb to return plot summary!
 
 ---
 db: rbot:rbot/nofig7
@@ -77,8 +75,6 @@ CREATE TABLE cron (
 
 Next Design
 ===========
-
-mothball php: zipdistance, zipinfo
 
 Features:
  - if pattern matches account nick or account name, deliver to any nick
