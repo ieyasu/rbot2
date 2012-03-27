@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Listens channel and private messages to the bot which instruct it
 # to run a command.  There are three different command interfaces:
-# internal, implemented as ruby code under commands/; normal commands
+# internal, implemented as ruby code under plugins/; normal commands
 # implemented as exec()able scripts under bin/; and php web commands
 # accessed by http (see php-root config value).
 
@@ -16,8 +16,8 @@ def file_to_class(filename)
     Module.const_get(s.to_sym)
 end
 
-def load_commands(path)
-  path =~ %r!commands/(.+)!
+def load_plugins(path)
+  path =~ %r!plugins/(.+)!
   chan = $1 || ''
   Dir.foreach(path) do |fn|
     file = "#{path}/#{fn}"
@@ -25,7 +25,7 @@ def load_commands(path)
       STDERR.puts "Loading command #{fn}"
       load file
       cmd = file_to_class(fn).new(@client)
-      ($commands[chan] ||= []) << cmd
+      ($plugins[chan] ||= []) << cmd
     elsif File.directory?(fn) && IRC::channel_name?(fn)
       load_command_directory(path)
     end
@@ -44,7 +44,7 @@ rescue Exception => e
 end
 
 def find_command(cmdsym, dest)
-  (($commands[dest] || []) + $commands['']).find do |cmd|
+  (($plugins[dest] || []) + $plugins['']).find do |cmd|
     cmd.respond_to?(cmdsym) ? cmd : nil
   end
 end
@@ -86,8 +86,8 @@ end
 
 register  IRC::CMD_PRIVMSG
 
-$commands = {}
-load_commands('commands')
+$plugins = {}
+load_plugins('plugins')
 $janitor = ThreadJanitor.new
 
 message_loop do |msg, replier|

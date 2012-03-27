@@ -6,7 +6,7 @@ require 'rubybot2/irc'
 
 load 'config.rb'
 
-class Plugin
+class Service
   def initialize(file)
     @file =  File.basename file
 
@@ -86,26 +86,26 @@ def connect_client
   $client.register($rbconfig['nick'], $rbconfig['ircname'])
 end
 
-def start_plugins
-  $plugins = []
+def start_services
+  $services = []
 
-  Dir.glob('plugins/*').sort.each do |file|
+  Dir.glob('services/*').sort.each do |file|
     s = File.stat(file)
     if s.file? and s.executable?
-      $plugins << Plugin.new(file)
+      $services << Service.new(file)
     end
   end
 end
 
-def stop_plugins
-  $plugins.each { |plugin| plugin.close }
+def stop_services
+  $services.each { |service| service.close }
   sleep(0.5)
-  $plugins.each { |plugin| plugin.shutdown }
+  $services.each { |service| service.shutdown }
 end
 
-def restart_plugins
-  stop_plugins
-  start_plugins
+def restart_services
+  stop_services
+  start_services
 end
 
 def message_received(msg)
@@ -128,11 +128,11 @@ def message_received(msg)
     $log.error "Error becoming oper: #{msg.to_s.inspect}"
   end
 
-  $plugins.each { |plugin| plugin.send(msg) }
+  $services.each { |service| service.send(msg) }
 end
 
 def quit(what)
-  stop_plugins
+  stop_services
   $client.quit(what)
   exit(-1)
 end
@@ -143,11 +143,11 @@ want_daemon = ARGV.any? { |arg| arg == '-d' }
 
 trap('TERM') { quit('SIGTERM') }
 trap('INT')  { quit('SIGINT') } # ^c
-trap('HUP')  { restart_plugins }
+trap('HUP')  { restart_services }
 
 Process.daemon(true) if want_daemon
 open_log(want_daemon ? 'log/rubybot.log' : STDOUT)
-start_plugins
+start_services
 connect_client
 
 begin
