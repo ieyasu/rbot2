@@ -33,9 +33,12 @@ class Service
 
     @err_thr = Thread.new do
       while (line = @stderr.gets)
-        $log.warn "#{@file} stderr: #{line.chop.inspect}"
+        $log.warn "#{@file}: #{line.chop}"
       end
     end
+
+    name = File.basename @file, '.rb'
+    File.open("run/#{name}.pid", 'w') { |fout| fout.puts @wait_thr.pid }
 
     $log.info "Started #{@file} #{@commands.inspect}"
   end
@@ -145,7 +148,10 @@ trap('TERM') { quit('SIGTERM') }
 trap('INT')  { quit('SIGINT') } # ^c
 trap('HUP')  { restart_services }
 
-Process.daemon(true) if want_daemon
+if want_daemon
+  Process.daemon(true)
+  File.open('run/rubybot.pid', 'w') { |fout| fout.puts Process.pid }
+end
 open_log(want_daemon ? 'log/rubybot.log' : STDOUT)
 start_services
 connect_client

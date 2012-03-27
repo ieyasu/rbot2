@@ -1,6 +1,7 @@
 # project ignored
 bin/ENVIRONMENT
 log/*
+run/*
 db/rubybot.db
 db/*-rand
 config.rb
