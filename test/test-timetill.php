@@ -4,7 +4,7 @@
 	// So in here, we just include the methods file, and then do assert_reply just
 	// to make sure we don't get usage for some sample inputs.
 	require_once("test-framework.php");
-	require_once("../php-helpers/timetill.php");
+	require_once("../inc/timetill.php");
 	testMod("timetill");
 	$usage = "Time till when?";
 	assertReply("", $usage);

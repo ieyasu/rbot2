@@ -3,7 +3,7 @@
 
 require_once("inc/sms_auth.inc");
 require_once("boilerplate.php");
-require_once("php-helpers/twilio.php");
+require_once("inc/twilio.php");
 
 // Parse arguments
 $sms_args = preg_split("/\s+/", $args, 2);
