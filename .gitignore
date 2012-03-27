@@ -6,6 +6,7 @@ db/rubybot.db
 db/*-rand
 config.rb
 *.pyc
+inc/sms_auth.inc
 Gemfile.lock
 
 # rcov generated
