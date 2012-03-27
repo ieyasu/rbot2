@@ -6,6 +6,7 @@ require 'rubybot2/irc'
 
 load 'config.rb'
 
+RB_PID = 'run/rubybot.pid'
 SERVICE_CHECK_TIMEOUT = 5 * 60 + 3
 
 class Service
@@ -41,8 +42,7 @@ class Service
       end
     end
 
-    name = File.basename @file, '.rb'
-    File.open("run/#{name}.pid", 'w') { |fout| fout.puts @wait_thr.pid }
+    record_pid(pidfile, @wait_thr.pid)
 
     $log.info "Started #{@file} #{@commands.inspect}"
   end
@@ -79,9 +79,24 @@ class Service
       end
     rescue Errno::ECHILD # process already exited, swallow error
     end
+    delete_pid(pidfile)
     status = @wait_thr.value # join and return exit status
     $log.info "#{@file} exit: #{status}"
   end
+
+  private
+
+  def pidfile
+    "run/#{File.basename @file, '.rb'}.pid"
+  end
+end
+
+def record_pid(file, pid)
+  File.open(file, 'w') { |fout| fout.puts pid }
+end
+
+def delete_pid(file)
+  File.delete(file) if File.exist?(file)
 end
 
 def open_log(file)
@@ -177,7 +192,7 @@ trap('HUP')  { restart_services }
 
 if want_daemon
   Process.daemon(true)
-  File.open('run/rubybot.pid', 'w') { |fout| fout.puts Process.pid }
+  record_pid RB_PID, Process.pid
 end
 open_log(want_daemon ? 'log/rubybot.log' : STDOUT)
 start_services
@@ -195,3 +210,5 @@ rescue => e
 end until $client.closed?
 
 $log.info "Shutting down normally"
+
+delete_pid(RB_PID)
