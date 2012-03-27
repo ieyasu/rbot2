@@ -38,7 +38,7 @@ class Plugin
 
   # sends the given IRC message if it matches the list of commands
   def send(msg)
-    @stdin.write(msg) if msg.command =~ @commands
+    @stdin.puts(msg) if msg.command =~ @commands
   end
 
   # Close all pipes, kill process with TERM.
