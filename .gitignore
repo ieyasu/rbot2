@@ -3,6 +3,8 @@ bin/ENVIRONMENT
 run/log/*
 run/db/rubybot.db
 run/config.rb
+db/rubybot.db
+config.rb
 *.pyc
 Gemfile.lock
 

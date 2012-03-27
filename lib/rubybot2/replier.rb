@@ -20,7 +20,7 @@ class Replier
   # a message was sent to the bot, the reply will go to the sender directly.
   def initialize(msg)
     @sender = IRC::MessageSender.new(STDOUT)
-    @nick = msg.nick
+    @nick = msg.respond_to?(:nick) ? msg.nick : 'nick'
     @public_lines = 0
     @private_lines = 0
     @default_dest = msg.reply_to if msg.respond_to?(:reply_to)

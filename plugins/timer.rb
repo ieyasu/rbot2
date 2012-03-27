@@ -1,37 +1,32 @@
-require 'rubybot2/db'
-require 'rubybot2/replier'
+#!/usr/bin/env ruby
 
-# A sort of cron/at for the bot.  See that at and in commands in
-# commands/in_at.rb
-class Timer
-  def initialize(client)
-    @client = client
-    @t = Thread.new do
-      loop do
-        sleep(CHECK_DELAY)
-        check_jobs
-      end
+require 'rubybot2/plugin'
+require 'rubybot2/db'
+
+CHECK_DELAY = 9
+
+def check_jobs
+  cutoff = Time.now.to_i + CHECK_DELAY / 2
+  cron = DB[:cron].filter('at < ?', cutoff)
+  rows = cron.all
+  if rows.length > 0
+    cron.delete
+    rows.each do |row|
+      to = IRC.channel_name?(row[:chan]) ? row[:chan] : row[:nick]
+      $sender.privmsg(to, row[:message])
     end
   end
+rescue Exception => e
+  report_exception e
+end
 
-  private
-
-  CHECK_DELAY = 17
-
-  def check_jobs
-    cutoff = Time.now.to_i + CHECK_DELAY / 2
-    cron = DB[:cron].filter('at < ?', cutoff)
-    rows = cron.all
-    if rows.length > 0
-      cron.delete
-      IRC::Replier.lock do
-        rows.each do |row|
-          to = IRC.channel_name?(row[:chan]) ? row[:chan] : row[:nick]
-          @client.privmsg(to, row[:message])
-        end
-      end
-    end
-  rescue Exception => e
-    @client.logger.error("!!! #{e.inspect}: #{e.message} #{e.backtrace.join("\n")}")
+Thread.new do
+  loop do
+    sleep(CHECK_DELAY)
+    check_jobs
   end
 end
+
+$sender = IRC::MessageSender.new STDOUT
+register
+message_loop { |msg, replier| }
