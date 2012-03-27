@@ -1,5 +1,5 @@
 #!/bin/bash
 
 . `dirname $BASH_SOURCE`/ENVIRONMENT
-cd $RB_ROOT
-$RB_ROOT/bin/rubybot.rb -d
+PID=`cat $RB_ROOT/run/rubybot.pid`
+kill -HUP $PID
