@@ -10,7 +10,7 @@ class Plugin
   def initialize(file)
     @file =  File.basename file
 
-    @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(file)
+    @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(ENV, file)
 
     # read list of commands to send
     list = []
