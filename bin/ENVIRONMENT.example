@@ -2,5 +2,6 @@
 #RB_ROOT=`dirname $(dirname $SRC)`
 RB_ROOT=/path/to/rubybot
 export RUBYLIB=$RB_ROOT/lib
+export RUBYOPT='-E utf-8'
 export PYTHONPATH=$RB_ROOT
 export TZ="America/Denver"
