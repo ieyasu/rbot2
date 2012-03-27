@@ -2,4 +2,6 @@
 
 . `dirname $BASH_SOURCE`/ENVIRONMENT
 cd $RB_ROOT
+test -d $RB_ROOT/log || mkdir $RB_ROOT/log
+test -d $RB_ROOT/run || mkdir $RB_ROOT/run
 $RB_ROOT/bin/rubybot.rb -d
