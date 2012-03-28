@@ -8,8 +8,7 @@ require 'rubybot2/web'
 include Web
 
 GRAB_URLS = [%r!((?:https?://)?(?:\w+\.)?youtube\.com/watch[^ \t>)]+)!,
-             %r!((?:https?://)?imgur\.com/r/\w+/[\w\d]+)!i,
-             %r!((?:https?://)?(?:i\.)?imgur\.com/(?:gallery/)?[\w\d]+)!i]
+             %r!((?:https?://)?(?:i\.)?imgur\.com(?:/[\w\d]+)+)!i]
 
 def fetch_title(url, replier)
   body = read_url(url)
