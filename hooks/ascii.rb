@@ -36,30 +36,40 @@ ASCII_CONTROL = [
     '(record separator)',
     '(unit separator)',
     "' '"
-]
+   ]
+
+def show_char(args, i)
+  if i <= 127
+    s =
+      if i < ASCII_CONTROL.length
+        ASCII_CONTROL[i]
+      elsif i < 127
+        i.chr
+      else
+        '(DEL)'
+      end
+    "P\tASCII char of #{args} -> #{s}"
+  else
+    "P\t#{i} > 127, try !unicode"
+  end
+end
 
 def handle_command(nick, dest, args)
-    return "P\t#{SYNTAX}" unless args && args.length > 0
-
-    resp = ''
-    begin
-        i = Integer(args) # try as integer
-        raise 'too big' if i > 127
-        resp = "P\tASCII char of #{i} -> " <<
-            if i < ASCII_CONTROL.length
-                ASCII_CONTROL[i]
-            elsif i < 127
-                i.chr
-            else
-                '(DEL)'
-            end
-        resp << "\n"
-    rescue Exception
-        # not an integer
-    end
-    s = args[0,1] # treat as a string
-    i = s[0]
-    resp << sprintf("P\tASCII value of #{s} -> %i (0x%x  %08bB  %o Oct)", i, i, i, i)
+  case args
+  when /^(0\d+)/
+    show_char $1, args.oct
+  when /^(0x\h+)/
+    show_char $1, args.hex
+  when /^(\d{2,})/
+    show_char $1, args.to_i
+  when /(.+)/
+    args.chars.to_a.uniq[0,5].map do |c|
+      i = c.codepoints.first
+      sprintf "P\tASCII value of #{c} -> %i (0x%x  %08bB  0%o)", i, i, i, i
+    end.join("\n")
+  else
+    "P\t#{SYNTAX}"
+  end
 end
 
 load 'boilerplate.rb'
