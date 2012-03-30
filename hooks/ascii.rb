@@ -44,7 +44,7 @@ def show_char(args, i)
       if i < ASCII_CONTROL.length
         ASCII_CONTROL[i]
       elsif i < 127
-        i.chr
+        "'#{i.chr}'"
       else
         '(DEL)'
       end
