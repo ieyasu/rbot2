@@ -57,7 +57,7 @@ end
 def show_chars(s)
   s.each_char.to_a.uniq[0,5].map do |c|
     cp = c.codepoints.first
-    os = c.bytes.to_a.map {|b| "\\%o" % b}.join
+    os = c.bytes.to_a.map {|b| "\\%03o" % b}.join
     hs = c.bytes.to_a.map {|b| "\\x%X" % b}.join
     if cp >= ASCII_CONTROL.length && cp < 127
       sprintf "P\tunicode %s -> %i  U+%02X  \"%s\"", c, cp, cp, c
