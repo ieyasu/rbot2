@@ -63,10 +63,13 @@ def handle_command(nick, dest, args)
   when /^(\d{2,})/
     show_char $1, args.to_i
   when /(.+)/
-    args.chars.to_a.uniq[0,5].map do |c|
+    resp = []
+    resp << show_char(args, args.to_i) if args =~ /^\d$/
+    args.chars.to_a.uniq[0,5].each do |c|
       i = c.codepoints.first
-      sprintf "P\tASCII value of #{c} -> %i (0x%x  %08bB  0%o)", i, i, i, i
-    end.join("\n")
+      resp << sprintf("P\tASCII value of #{c} -> %i (0x%x  %08bB  0%o)", i, i, i, i)
+    end
+    resp.join("\n")
   else
     "P\t#{SYNTAX}"
   end
