@@ -1,6 +1,7 @@
-#SRC="$(pwd)/$(echo $BASH_SOURCE | sed 's/^\.\///')"
-#RB_ROOT=`dirname $(dirname $SRC)`
-RB_ROOT=/path/to/rubybot
+SRC="$(pwd)/$(echo $BASH_SOURCE | sed 's/^\.\///')"
+RB_ROOT=`dirname $(dirname $SRC)`
+# or set RB_ROOT explicitly if autodetect doesn't work
+#RB_ROOT=/path/to/rubybot
 export RUBYLIB=$RB_ROOT/lib
 export RUBYOPT='-E utf-8'
 export PYTHONPATH=$RB_ROOT

@@ -1,7 +1,24 @@
 #!/bin/bash
 
-. `dirname $BASH_SOURCE`/ENVIRONMENT
+E_PATH=`dirname $BASH_SOURCE`/ENVIRONMENT
+if [ \! -f $E_PATH ]; then
+    echo "Copying bin/ENVIRONMENT.example to bin/ENVIRONMENT; you may need to edit the bin/ENVIRONMENT file to match your setup"
+    cp $E_PATH.example $E_PATH
+fi
+. $E_PATH
 cd $RB_ROOT
+
+if [ \! -f config.rb ]; then
+    echo "You need to edit config.rb.example with your settings and save it to config.rb"
+    exit -1
+fi
+
+if [ \! -f db/rubybot.db ]; then
+    echo "no db/rubybot.db file; running rake db:migrate"
+    rake db:migrate
+fi
+
 test -d $RB_ROOT/log || mkdir $RB_ROOT/log
 test -d $RB_ROOT/run || mkdir $RB_ROOT/run
+
 $RB_ROOT/bin/rubybot.rb -d
