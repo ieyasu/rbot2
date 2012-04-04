@@ -37,7 +37,9 @@ module Web
 
     def read_url(url)
       s = nil
-      open(url) { |fin| s = fix_encoding(fin) }
+      open(url, :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |fin|
+        s = fix_encoding(fin)
+      end
       s
     end
 
