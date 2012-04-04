@@ -4,7 +4,7 @@ SRC="$(pwd)/$(echo $BASH_SOURCE | sed 's/^\.\///')"
 RB_ROOT=`dirname $(dirname $SRC)`
 cd $RB_ROOT
 
-git up
+git pull
 
 mkdir -p run/ log/old/ inc/
 
