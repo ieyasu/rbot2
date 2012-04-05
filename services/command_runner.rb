@@ -10,10 +10,12 @@ require 'rubybot2/thread_janitor'
 require 'rubybot2/db'
 require 'open3'
 
+RUN_RUBY = 'lib/rubybot2/run_ruby.rb'
+
 def file_to_class(filename)
-    File.basename(filename) =~ /(\w+)\.rb$/
-    s = $1.gsub(/(?:\A|_|-)[a-z]/) { |m| m[-1,1].upcase }
-    Module.const_get(s.to_sym)
+  File.basename(filename) =~ /(\w+)\.rb$/
+  s = $1.gsub(/(?:\A|_|-)[a-z]/) { |m| m[-1,1].upcase }
+  Module.const_get(s.to_sym)
 end
 
 def load_plugins(path)
@@ -27,35 +29,47 @@ def load_plugins(path)
       cmd = file_to_class(fn).new(@client)
       ($plugins[chan] ||= []) << cmd
     elsif File.directory?(fn) && IRC::channel_name?(fn)
-      load_command_directory(path)
+      load_hook_directory(path)
     end
   end
 end
 
-def run_command(command, args, msg, replier)
+def run_hook(command, args, msg, replier)
+  zip = Account.zip_by_nick(msg.nick) || $rbconfig['default-zip']
+  ENV['ZIP'] = zip.to_s
+
   cmdsym = "c_#{command}".to_sym
-  if (cmd = find_command(cmdsym, msg.dest))
+  if (cmd = find_hook(cmdsym, msg.dest))
     cmd.send(cmdsym, msg, args, replier)
+  elsif (rb = find_rb(command))
+    Open3.popen3(RUN_RUBY, rb, command, args, msg.full_message) do |_, out, err|
+      process_hook_output(replier, out, err)
+    end
   elsif (bin = find_bin(command, msg.dest))
-    run_bin(bin, msg, args, replier)
+    Open3.popen3(bin, msg.nick, msg.dest, args || '') do |_, out, err|
+      process_hook_output(replier, out, err)
+    end
+  else
+    # XXX log non-existent hook
   end
 rescue Exception => e
   report_exception e
 end
 
-def find_command(cmdsym, dest)
+def find_hook(cmdsym, dest)
   (($plugins[dest] || []) + $plugins['']).find do |cmd|
     cmd.respond_to?(cmdsym) ? cmd : nil
   end
 end
 
-def find_bin(command, dest)
-  def test(path, ext)
-    path += ext
-    path if executable?(path)
-  end
+def find_rb(command)
+  path = "hooks/#{command}.rb"
+  path if File.exist?(path)
+end
+
+def find_bin(command)
   path = "hooks/#{command}"
-  test(path, '')
+  path if executable?(path)
 end
 
 def executable?(path)
@@ -66,19 +80,14 @@ def executable?(path)
   end
 end
 
-def run_bin(bin, msg, args, r)
-  args ||= ''
-  zip = Account.zip_by_nick(msg.nick) || $rbconfig['default-zip']
-  ENV['ZIP'] = zip.to_s
-  Open3.popen3(bin, msg.nick, msg.dest, args) do |b_in, b_out, b_err|
-    while (line = b_out.gets)
-      line = line.rstrip
-      r.raw("#{line}\r\n") if line.length > 0
-    end
-    while (line = b_err.gets)
-      line = line.rstrip
-      r.reply(line) if line.length > 0
-    end
+def process_hook_output(r, out, err)
+  while (line = out.gets)
+    line = line.rstrip
+    r.raw("#{line}\r\n") if line.length > 0
+  end
+  while (line = err.gets)
+    line = line.rstrip
+    r.reply(line) if line.length > 0
   end
 end
 
@@ -106,5 +115,5 @@ message_loop do |msg, replier|
     next
   end
 
-  $janitor.register(Thread.new { run_command(command, args, msg, replier) })
+  $janitor.register(Thread.new { run_hook(command, args, msg, replier) })
 end
