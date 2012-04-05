@@ -9,9 +9,8 @@ def roll4d6max3
 end
 
 def handle_command(nick, dest, args)
-  s = "P\tYour stats are"
-  6.times { s << " #{roll4d6max3}" }
-  s
+  "P\tYour stats are:" <<
+    %w(str dex int wis con chr).map {|t| " #{t} #{roll4d6max3}"}.join(' ')
 end
 
 load 'boilerplate.rb'
