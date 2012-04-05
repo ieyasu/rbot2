@@ -55,7 +55,7 @@ def find_bin(command, dest)
     path if executable?(path)
   end
   path = "hooks/#{command}"
-  test(path, '.rb') || test(path, '.php') || test(path, '.py')
+  test(path, '')
 end
 
 def executable?(path)
