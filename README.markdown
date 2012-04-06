@@ -9,13 +9,14 @@ Setup and Running
 To get started, you will need to:
 
 * git clone git@github.com:ieyasu/rbot2.git
-* install the sqlite3 libraryand -dev packages if applicable to your linux distro
+* install the sqlite3 library and -dev packages if applicable to your linux distro
   This is `apt-get install libsqlite3-dev` on debian and ubuntu.
 * bundle install
 * rake db:create
-* cp run/config.rb.example run/config.rb and edit for your site
-* cp start_rubybot.sh.example start_rubybot.sh and edit for your site
-* ./start_rubybot.sh
+* cp config.rb.example config.rb and edit for your site
+* cp bin/ENVIRONMENT.example bin/ENVIRONMENT
+* look over bin/ENVIRONMENT to see if you need to change anything
+* bin/start_rubybot
 * Connect to an IRC channel rbot2 is on and try a command, e.g. !thump
 
 To see how to modify with the bot, read on.
@@ -23,25 +24,27 @@ To see how to modify with the bot, read on.
 Principles of Operation
 -----------------------
 
-Rubybot expects to be run from a location with a directory structure containing its configuration. I call this the 'run' directory, and an example run directory is included in the repository. You do not need to use that one, but it lets you run the bot out of the box.
+Rubybot is run from the root of the source tree.  There are several important files and directories:
 
-The run/ configuration is involved:
+* a db/ directory with the rubybot.db main database file.
+* log/ for log files.
+* hooks/ for normal bot commands.
+* services/ - these run as child processes of the main process and decide what to do with a given IRC message.
+* config.rb - tells the bot which server to connect to, which channels to join, and many other aspects of internal behavior.
 
-* a db/ directory with the rubybot.db database file and symlinks to the data files in CLONE_ROOT/db/
-* log/ for log files
-* bin/ for normal bot commands
-* commands/ for internal commands
-* plugins/ for bot plugins - these give the bot its behavior
-* boilerplate.* and other dep symlinks
-* config.rb
+The rubybot main process (bin/rubybot.rb) loads the config file, starts the services, then connects to the IRC server and processes messages.  Everything beyond basic connection is handled by the services.  They register for the IRC messages they wish to process, e.g. PRIVMSG.  The matching messages are written to their STDIN, and anything written to their STDOUT is relayed to the IRC server.  All communication is done as IRC protocol messages.
 
-The rubybot core (lib/rubybot2/rbot2.rb) loads the config file and plugins, then connects to the IRC server. Everything else is handled by the plugins. The plugins implement m_MESSAGE_NAME(msg, replier) methods for every IRC message they want to process. Their respone, if any, comes through the replier object. Look in lib/rubybot2/irc.rb and replier.rb for the IRC::Message and IRC::Replier classes.
+The internal commands are found under commands/.  They are slated for a rewrite to normal 'hook' commands, so this is all I will say about them.
 
-The internal commands are found under lib/rubybot2/commands/. These files have classes with methods named after the pattern m_COMMAND_NAME which are called for matching command names. These commands are loaded into the main rubybot process to implement basic functionality, especially database-intensive things such as sending 'nexts' and account manipulation. If you are adding new commands, you should probably write a normal command instead of an internal one.
 
-### 'Normal' Commands
+### 'Hook' Commands
 
-The 'normal' commands are implemented as exec()able (#! line and exec bit) scripts in lib/rubybot2/bin/. Symlinks are then created in the run/bin/ directory with the command's un-suffixed name, and multiple symlinks can be made to create aliases, e.g. run/bin/tld and run/bin/country both point to lib/rubybot2/bin/tld.rb. When rubybot runs a normal command, the current working directory is the run directory. The arguments are: nick the message came from, the destination of the message (usually a channel), and the 'arguments' to the command (everything after the !command-name part). Additionally, the environment variable ZIP is set to the nick's location (if they have set it for their account) or the default defined in config.rb. The command is expected to reply with raw IRC protocol on stdout. For debugging purposes, stderr is captured and sent to the command's origin. To make command writing easier, boilerplate.{rb,php,py} have been written. See lib/rubybot2/bin/example.rb for a basic boilerplate.rb-based command.
+These are implemented by the comman_runner.rb service.  The hooks are exec()able scripts or compiled programs in the hooks/ directory.  The hook's file name is the same as the command name, so command aliases are created by symlinking to the original hook file.
+
+The basic hook interface: the nick, channel and text of the originating PRIVMSG are passed as three command line arguments.  If it is a private message, the 'channel' will actually be the bot's nick.  Also, the environment variable ZIP is set according to either the nick's account or the default zip in config.rb.  The hook is then to respond with zero or more newline-terminated messages in IRC protocol.  For debugging purposes, stderr is captured and sent to the command's origin.
+
+To make command writing easier, boilerplate.{rb,php,py} have been written.  These are kind of ugly, so a more streamlined approach is in development.  If a hook file has a recognized language-specific extension, a special hook running script is used to provide a nicer API to get the job done with less code than with the boilerplate approach.
+
 
 ### Accounts
 
