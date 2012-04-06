@@ -1,4 +1,5 @@
 require 'socket'
+require 'rubybot2/encoding'
 
 # Implements IRC protocol client capabilities. We try to follow the
 # specification in {RFC 2812}[http://ietf.org/rfc/rfc2812.txt] while remaining
@@ -374,7 +375,7 @@ module IRC
   # A factory method which takes a raw IRC message, does some simple
   # parsing and returns a new +Message+ (or subclass) for it.
   def IRC.parse_message(line)
-    str = line.chomp
+    str = fix_encoding line.chomp
     unless IRC.valid_message?(str)
       raise MessageParseError, "#{str.inspect} not an IRC message"
     end
