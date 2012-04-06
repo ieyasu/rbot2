@@ -3,7 +3,6 @@
 # Usage: $0 hooks/HOOK.rb COMMAND ARGS IRC_MESSAGE
 
 require 'rubygems'
-require 'nokogiri'
 
 load 'config.rb'
 
@@ -38,6 +37,16 @@ end
 def match_args(pat, usage)
   pat.match($args) or exit_reply(
     "Usage: #{$rbconfig['cmd_prefix']}#{$command} #{usage}")
+end
+
+def each_line(file)
+  File.open(file) do |fin|
+    fin.each_line {|line| yield line}
+  end
+end
+
+def r(ary)
+  ary[rand(ary.size)]
 end
 
 # ---

@@ -3,6 +3,7 @@ require 'cgi'
 require 'open-uri'
 require 'uri'
 require 'rubybot2/encoding'
+require 'nokogiri'
 
 module Web
     HTML_ENTITIES = {
@@ -36,12 +37,19 @@ module Web
         replace_html_entities(text).gsub(/\s+/, ' ').strip.squeeze(' ')
     end
 
-    def read_url(url)
+    def http_get(url, *params)
+      u = url.gsub('#') {|m| CGI.escape params.shift}
       s = nil
-      open(url, :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |fin|
+      open(u, :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |fin|
         s = fix_encoding(fin)
       end
       s
+    end
+
+    alias :read_url :http_get
+
+    def noko_get(url, *params)
+      Nokogiri::HTML(http_get(url, *params))
     end
 
     def http_post(url, data, headers = {})
