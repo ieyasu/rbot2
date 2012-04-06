@@ -2,6 +2,7 @@ require 'net/http'
 require 'cgi'
 require 'open-uri'
 require 'uri'
+require 'rubybot2/encoding'
 
 module Web
     HTML_ENTITIES = {
@@ -41,12 +42,6 @@ module Web
         s = fix_encoding(fin)
       end
       s
-    end
-
-    def fix_encoding(s)
-      buf = ''
-      s.each_char {|c| buf << (c.valid_encoding? ? c : '?') }
-      buf
     end
 
     def http_post(url, data, headers = {})

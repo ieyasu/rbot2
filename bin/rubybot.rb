@@ -131,7 +131,9 @@ def start_services
         if service.alive?
           false
         else
-          $log.error "Service #{service.file} quit unexpectedly"
+          e = "Service #{service.file} quit unexpectedly"
+          $log.error e
+          $client.privmsg($rbconfig['join-channels'], e)
           service.close
           sleep(0.5)
           service.shutdown
