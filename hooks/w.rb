@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 STATES = {
   "ALABAMA"                        => "AL",
   "ALASKA"                         => "AK",
@@ -106,16 +104,10 @@ def parse_conditions(body)
     squeeze(' ').strip
 end
 
-def handle_command(nick, dest, args)
-  args = ENV['ZIP'] if args.length == 0
-  body = read_url("http://mobile.wunderground.com/cgi-bin/findweather/getForecast?brand=mobile&query=#{CGI.escape(args)}")
-  if body && (res = parse_conditions(body))
-    "P\t#{res}"
-  else
-    "P\terror parsing weather information for #{args}"
-  end
-rescue OpenURI::HTTPError => e
-  "P\terror looking up weather for #{args}: #{e.message}"
+$args = ENV['ZIP'] if $args.length == 0
+body = http_get("http://mobile.wunderground.com/cgi-bin/findweather/getForecast?brand=mobile&query=#", $args)
+if body && (res = parse_conditions(body))
+  reply res
+else
+  reply "error parsing weather information for #{$args}"
 end
-
-load 'boilerplate.rb'

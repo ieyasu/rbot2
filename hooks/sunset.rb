@@ -1,8 +1,3 @@
-#!/usr/bin/env ruby
-
-require 'rubygems'
-require 'nokogiri'
-
 LOCAL_ZIP = /^80[235]\d\d$/ # denver, boulder, fort collins
 
 
@@ -15,7 +10,7 @@ end
 
 def denver_sunset
   t = Time.now
-  doc = Nokogiri::HTML(read_url("http://www.sunrisesunset.com/calendar.asp?comb_city_info=Denver%2C%20Colorado;104.9847;39.7392;-7;1&month=#{t.month}&year=#{t.year}&time_type=0&txsz=S&back=&supr=6334&want_mphase=0"))
+  doc = noko_get("http://www.sunrisesunset.com/calendar.asp?comb_city_info=Denver%2C%20Colorado;104.9847;39.7392;-7;1&month=#&year=#&time_type=0&txsz=S&back=&supr=6334&want_mphase=0", t.month, t.year)
 
   t = Time.now
   month = t.strftime('%b')
@@ -37,7 +32,7 @@ def denver_sunset
 end
 
 def wunder_sunset(location)
-  body = read_url("http://m.wund.com/cgi-bin/findweather/getForecast?brand=mobile&query=#{CGI.escape location}")
+  body = http_get("http://m.wund.com/cgi-bin/findweather/getForecast?brand=mobile&query=#", location)
 
   if body.index('Not Found')
     return "#{location} not found"
@@ -61,20 +56,16 @@ def wunder_sunset(location)
   "#{loc} - Sunrise: \00304#{rise}\003  Sunset: \00304#{set}\003"
 end
 
-def handle_command(nick, dest, args)
-  location = (args && args.length) > 0 ? args : ENV['ZIP']
-  sun =
-    if location =~ LOCAL_ZIP
-      denver_sunset
-    else
-      wunder_sunset(location)
-    end
-
-  if sun
-    "P\t#{sun}"
+location = $args.length > 0 ? $args : ENV['ZIP']
+sun =
+  if location =~ LOCAL_ZIP
+    denver_sunset
   else
-    "P\terror parsing sunrise/sunset info for #{location}"
+    wunder_sunset(location)
   end
-end
 
-load 'boilerplate.rb'
+if sun
+  reply sun
+else
+  reply "error parsing sunrise/sunset info for #{location}"
+end

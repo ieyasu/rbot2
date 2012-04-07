@@ -1,8 +1,5 @@
-#!/usr/bin/env ruby
-
 require 'abbrev'
 
-SYNTAX = 'Usage: !kjv <book> <chapter>:<verse>[-<verse>]'
 
 BOOKS = [
     "Genesis",
@@ -103,29 +100,19 @@ def parse_body(body)
     j = body.index('</body>', i) or return
     strip_html(body[i...j]).gsub(/\[ (\d+) \]/, '[\\1]')
 end
+SYNTAX = 'Usage: !kjv <book> <chapter>:<verse>[-<verse>]'
 
-def handle_command(nick, dest, args)
-    return "P\t#{SYNTAX}" unless args =~ /([12]?[a-zA-Z ]+)\s+(\d+):(\d+)(?:-(\d+))?/
-    abook, chap, sverse, everse = $1, $2, $3, $4
+m = match_args(/([12]?[a-zA-Z ]+)\s+(\d+):(\d+)(?:-(\d+))?/,
+          '<book> <chapter>:<verse>[-<verse>]')
+abook, chap, sverse, everse = m[1], m[2], m[3], m[4]
 
-    unless (book = find_book(abook))
-        return "P\t#{abook} is not a book of the bible"
-    end
-    sverse = sverse.to_i
-    everse = everse.to_i if everse
-
-    url = "http://www.hti.umich.edu/cgi/k/kjv/kjv-idx?type=citation" <<
-        "&book=#{CGI.escape book}&chapno=#{chap}" <<
-        "&startverse=#{sverse}&endverse=#{everse}"
-    body = open(url).read
-
-    if (res = parse_body(body))
-        "P\t#{res}"
-    else
-        "P\terror parsing kjv citation for #{args}"
-    end
-rescue OpenURI::HTTPError => e
-    "P\terror looking up weather for #{args}: #{e.message}"
+unless (book = find_book(abook))
+  exit_reply "#{abook} is not a book of the bible"
 end
 
-load 'boilerplate.rb'
+body = http_get("http://www.hti.umich.edu/cgi/k/kjv/kjv-idx?type=citation&book=#&chapno=#&startverse=#&endverse=#", book, chap, sverse, everse)
+if (res = parse_body(body))
+  reply res
+else
+  reply "error parsing kjv citation for #{$args}"
+end

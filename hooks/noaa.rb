@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 def parse_choose(body, fin)
   i = body.index('More than one match was found') ||
     ((j = body.index('More than one location matched')) &&
@@ -44,36 +42,30 @@ def parse_conditions(body)
   "#{location}: #{conditions} (#{tempf}F, #{tempc}C)  Wind: #{wind}  RH: #{humidity}  #{update_at}"
 end
 
-def handle_command(nick, dest, args)
-  args = ENV['ZIP'] if args.length == 0
-  fin = open("http://forecast.weather.gov/zipcity.php?inputstring=#{CGI.escape(args)}")
+$args = ENV['ZIP'] if $args.length == 0
+fin = open("http://forecast.weather.gov/zipcity.php?inputstring=#{CGI.escape($args)}")
+body = fix_encoding fin.read
+
+if body && (url = parse_choose(body, fin))
+  fin = open(url)
   body = fix_encoding fin.read
-
-  if body && (url = parse_choose(body, fin))
-    fin = open(url)
-    body = fix_encoding fin.read
-  end
-
-  while body && body.index(/document.location.replace\('([^']+)'\)/)
-    fin = open(fin.base_uri.merge($1))
-    body = fix_encoding fin.read
-  end
-
-  if body
-    if body.index('Could not find your')
-      "P\tWeather location #{args} not found"
-    elsif body.index('Current Conditions Unavailable')
-      "P\tWeather conditions are unavailable"
-    elsif (res = parse_conditions(body))
-      res.index('NULL') ?
-      "P\tNWS is spitting out NULLs again" :
-        "P\t#{res}"
-    else
-      "P\tError parsing weather information for #{args}"
-    end
-  else
-    "P\tNo weather information for #{args}"
-  end
 end
 
-load 'boilerplate.rb'
+while body && body.index(/document.location.replace\('([^']+)'\)/)
+  fin = open(fin.base_uri.merge($1))
+  body = fix_encoding fin.read
+end
+
+if body
+  if body.index('Could not find your')
+    reply "Weather location #{$args} not found"
+  elsif body.index('Current Conditions Unavailable')
+    reply "Weather conditions are unavailable"
+  elsif (res = parse_conditions(body))
+    reply res.index('NULL') ? "NWS is spitting out NULLs again" : res
+  else
+    reply "Error parsing weather information for #{$args}"
+  end
+else
+  reply "No weather information for #{$args}"
+end

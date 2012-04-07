@@ -38,7 +38,7 @@ module Web
     end
 
     def http_get(url, *params)
-      u = url.gsub('#') {|m| CGI.escape params.shift}
+      u = url.gsub('#') {|m| CGI.escape params.shift.to_s}
       s = nil
       open(u, :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |fin|
         s = fix_encoding(fin)
