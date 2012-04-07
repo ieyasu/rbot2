@@ -12,7 +12,7 @@ GRAB_URLS = [%r!((?:https?://)?(?:\w+\.)?youtube\.com/watch[^ \t>)]+)!,
              %r!((?:https?://)?vimeo\.com/\d+)!]
 
 def fetch_title(url, replier)
-  body = read_url(url)
+  body = http_get(url)
   i = body.index('<title') or return
   j = body.index('</title', i) or return
   replier.reply("Title: #{strip_html(body[i...j])}")

@@ -36,10 +36,10 @@ end
 
 $args = ENV['ZIP'] if $args.length == 0
 url = "zipcity.php?inputstring=#"
-body = read_url("http://www.crh.noaa.gov/#{url}", $args)
+body = http_get("http://www.crh.noaa.gov/#{url}", $args)
 
 if (url = parse_choose(body))
-  body = read_url("http:#{url}", $args)
+  body = http_get("http:#{url}", $args)
 end
 
 if body
