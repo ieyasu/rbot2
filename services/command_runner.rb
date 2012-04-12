@@ -12,6 +12,15 @@ require 'open3'
 
 RUN_RUBY = 'lib/rubybot2/run_ruby.rb'
 
+def open_log(file)
+  $log = Logger.new(file, $rbconfig['max-log-files'], $rbconfig['max-log-size'])
+  $log.level = $rbconfig['log-level']
+  log_time_fmt = $rbconfig['log-time-format']
+  $log.formatter = proc do |severity, time, prog, msg|
+    "#{time.strftime(log_time_fmt)}: #{msg}\n"
+  end
+end
+
 def file_to_class(filename)
   File.basename(filename) =~ /(\w+)\.rb$/
   s = $1.gsub(/(?:\A|_|-)[a-z]/) { |m| m[-1,1].upcase }
@@ -40,19 +49,23 @@ def run_hook(command, args, msg, replier)
 
   cmdsym = "c_#{command}".to_sym
   if (cmd = find_hook(cmdsym, msg.dest))
+    $log.info "Running internal command #{command}"
     cmd.send(cmdsym, msg, args, replier)
   elsif (rb = find_rb(command))
+    $log.info "Running ruby hook #{command}"
     Open3.popen3(RUN_RUBY, rb, command, args, msg.full_message) do |_, out, err|
       process_hook_output(replier, out, err)
     end
   elsif (bin = find_bin(command))
+    $log.info "Running generic hook #{command}"
     Open3.popen3(bin, msg.nick, msg.dest, args || '') do |_, out, err|
       process_hook_output(replier, out, err)
     end
   elsif not msg.sent_to_channel? and command =~ /^\d/
+    $log.info "Reinterpreting text as calc hook"
     run_hook('calc', msg.text, msg, replier) # looks like math
   else
-    # XXX log non-existent hook
+    $log.info "Saw non-existent hook #{command}"
   end
 rescue Exception => e
   report_exception e
@@ -115,6 +128,8 @@ end
 # ---
 
 register  IRC::CMD_PRIVMSG
+
+open_log('log/command_runner.log')
 
 $plugins = {}
 load_plugins('plugins')
