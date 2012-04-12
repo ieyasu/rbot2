@@ -45,7 +45,7 @@ def run_hook(command, args, msg, replier)
     Open3.popen3(RUN_RUBY, rb, command, args, msg.full_message) do |_, out, err|
       process_hook_output(replier, out, err)
     end
-  elsif (bin = find_bin(command, msg.dest))
+  elsif (bin = find_bin(command))
     Open3.popen3(bin, msg.nick, msg.dest, args || '') do |_, out, err|
       process_hook_output(replier, out, err)
     end
