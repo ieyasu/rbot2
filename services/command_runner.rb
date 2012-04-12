@@ -49,15 +49,15 @@ def run_hook(command, args, msg, replier)
 
   cmdsym = "c_#{command}".to_sym
   if (cmd = find_hook(cmdsym, msg.dest))
-    $log.info "Running internal command #{command}"
+    $log.info "Running internal command #{command} for #{msg.nick}"
     cmd.send(cmdsym, msg, args, replier)
   elsif (rb = find_rb(command))
-    $log.info "Running ruby hook #{command}"
+    $log.info "Running ruby hook #{command} for #{msg.nick}"
     Open3.popen3(RUN_RUBY, rb, command, args, msg.full_message) do |_, out, err|
       process_hook_output(replier, out, err)
     end
   elsif (bin = find_bin(command))
-    $log.info "Running generic hook #{command}"
+    $log.info "Running generic hook #{command} for #{msg.nick}"
     Open3.popen3(bin, msg.nick, msg.dest, args || '') do |_, out, err|
       process_hook_output(replier, out, err)
     end
@@ -65,7 +65,7 @@ def run_hook(command, args, msg, replier)
     $log.info "Reinterpreting text as calc hook"
     run_hook('calc', msg.text, msg, replier) # looks like math
   else
-    $log.info "Saw non-existent hook #{command}"
+    $log.info "Saw non-existent hook #{command} from #{msg.nick}"
   end
 rescue Exception => e
   report_exception e
