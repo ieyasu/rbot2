@@ -62,7 +62,7 @@ def run_hook(command, args, msg, replier)
       process_hook_output(replier, out, err)
     end
   elsif not msg.sent_to_channel? and command =~ /^\d/
-    $log.info "Reinterpreting text as calc hook"
+    $log.info "Reinterpreting text as calc hook for #{msg.nick}"
     run_hook('calc', msg.text, msg, replier) # looks like math
   else
     $log.info "Saw non-existent hook #{command} from #{msg.nick}"
