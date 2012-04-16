@@ -37,7 +37,7 @@ match_args /\S+/, '<symbol>'
 
 body = http_get("http://mobile.quote.com/quotes.aspx?symbol=#", $args)
 
-if (quote = parse_quote(body, args))
+if (quote = parse_quote(body, $args))
     reply quote
 else
   reply "error parsing quote for #{$args}"
