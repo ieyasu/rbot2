@@ -1,7 +1,7 @@
 require 'rubybot2/nextlib'
 MAX_RECIPS = 7
 
-m = match_args(/([^,;:]+:?(?:[,;][^,;:]+:?)*)\s+(\S.*)/,
+m = match_args(/([^,;:\s]+:?(?:[,;][^,;:\s]+:?)*)\s+(\S.*)/,
           '<nick>([;,]<nick>...) <message>')
 pats = m[1].scan(/[^,;:]+/).uniq
 message = m[2].rstrip
