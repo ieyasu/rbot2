@@ -3,9 +3,9 @@ LOCAL_ZIP = /^80[235]\d\d$/ # denver, boulder, fort collins
 
 def rise_set_for(doc, day)
   n = doc.xpath(".//table[1]/tr/td[./font[1]/text()='#{day}']")
-  s = n.first.content.strip.sub('Sunrise', '').sub(':', ":\002").
+  s = n.first.content.strip.sub('Sunrise', '').
     sub('Sunset:', ' -')
-  "\002#{Time.now.strftime('%b')} #{s}"
+  "#{Time.now.strftime('%b')} #{s}"
 end
 
 def denver_sunset
@@ -19,16 +19,16 @@ def denver_sunset
   # sunrise/set for today
   s = rise_set_for(doc, t.day).sub(':', " (Today):").
     gsub(/(\d\d?:\d\d[ap]m)/, "\00304\\1\003")
-  sun << "#{s}   "
+  reply "Denver Sunrise-set: #{s}"
 
   # sunrise/set for first of month
-  sun << "#{rise_set_for(doc, 1)}   "
+  sun = "#{rise_set_for(doc, 1)}   "
 
   # sunrise/set for end of month
   eom = Date.civil(t.year, t.month, -1)
   sun << rise_set_for(doc, eom.day)
 
-  sun
+  reply sun
 end
 
 def wunder_sunset(location)
@@ -57,15 +57,12 @@ def wunder_sunset(location)
 end
 
 location = $args.length > 0 ? $args : ENV['ZIP']
-sun =
-  if location =~ LOCAL_ZIP
-    denver_sunset
-  else
-    wunder_sunset(location)
-  end
-
-if sun
-  reply sun
+if location =~ LOCAL_ZIP
+  denver_sunset
 else
-  reply "error parsing sunrise/sunset info for #{location}"
+  if (sun = wunder_sunset(location))
+    reply sun
+  else
+    reply "error parsing sunrise/sunset info for #{location}"
+  end
 end
