@@ -48,13 +48,14 @@ end
 
 def run_hook(command, args, msg, replier)
   zip = Account.zip_by_nick(msg.nick) || $rbconfig['default-zip']
-  zipinfo = get_zipinfo(zip)
   ENV['ZIP'] = zip.to_s
-  ENV['CITY'] = zipinfo.city
-  ENV['STATE'] = zipinfo.state
-  ENV['LAT'] = zipinfo.lat
-  ENV['LON'] = zipinfo.lon
-  ENV['TZ'] = zipinfo.tz
+  if (zipinfo = get_zipinfo(zip))
+    ENV['CITY'] = zipinfo.city
+    ENV['STATE'] = zipinfo.state
+    ENV['LAT'] = zipinfo.lat
+    ENV['LON'] = zipinfo.lon
+    ENV['TZ'] = zipinfo.tz
+  end
 
   cmdsym = "c_#{command}".to_sym
   if (cmd = find_hook(cmdsym, msg.dest))
