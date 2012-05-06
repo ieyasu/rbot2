@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
 # Listens channel and private messages to the bot which instruct it
-# to run a command.  There are three different command interfaces:
-# internal, implemented as ruby code under plugins/; normal commands
-# implemented as exec()able scripts under bin/; and php web commands
-# accessed by http (see php-root config value).
+# to run a command.  There are two different command interfaces, subtly
+# different: special ruby language commands which live in hooks/ and are
+# recognized by their .rb extension, and normal commands which live in
+# hooks/ as well and are exec()able scripts or compiled programs of
+# arbitrary type.
 
 require 'rubybot2/plugin'
 require 'rubybot2/thread_janitor'
@@ -30,22 +31,6 @@ def file_to_class(filename)
   Module.const_get(s.to_sym)
 end
 
-def load_plugins(path)
-  path =~ %r!plugins/(.+)!
-  chan = $1 || ''
-  Dir.foreach(path) do |fn|
-    file = "#{path}/#{fn}"
-    if (File.file?(file) || File.symlink?(file)) && fn =~ /(\w+)\.rb$/
-      STDERR.puts "Loading command #{fn}"
-      load file
-      cmd = file_to_class(fn).new(@client)
-      ($plugins[chan] ||= []) << cmd
-    elsif File.directory?(fn) && IRC::channel_name?(fn)
-      load_hook_directory(path)
-    end
-  end
-end
-
 def run_hook(command, args, msg, replier)
   zip = Account.zip_by_nick(msg.nick) || $rbconfig['default-zip']
   ENV['ZIP'] = zip.to_s
@@ -57,16 +42,12 @@ def run_hook(command, args, msg, replier)
     ENV['TZ'] = zipinfo.tz
   end
 
-  cmdsym = "c_#{command}".to_sym
-  if (cmd = find_hook(cmdsym, msg.dest))
-    $log.info "Running internal command #{command} for #{msg.nick}"
-    cmd.send(cmdsym, msg, args, replier)
-  elsif (rb = find_rb(command))
+  if (rb = find_rb(command))
     $log.info "Running ruby hook #{command} for #{msg.nick}"
     Open3.popen3(RUN_RUBY, rb, command, args, msg.full_message) do |_, out, err|
       process_hook_output(replier, out, err)
     end
-  elsif (bin = find_bin(command))
+  elsif (bin = find_hook(command))
     $log.info "Running generic hook #{command} for #{msg.nick}"
     Open3.popen3(bin, msg.nick, msg.dest, args || '') do |_, out, err|
       process_hook_output(replier, out, err)
@@ -81,18 +62,12 @@ rescue Exception => e
   report_exception e
 end
 
-def find_hook(cmdsym, dest)
-  (($plugins[dest] || []) + $plugins['']).find do |cmd|
-    cmd.respond_to?(cmdsym) ? cmd : nil
-  end
-end
-
 def find_rb(command)
   path = "hooks/#{command}.rb"
   path if File.exist?(path)
 end
 
-def find_bin(command)
+def find_hook(command)
   path = "hooks/#{command}"
   path if executable?(path)
 end
@@ -141,8 +116,6 @@ register  IRC::CMD_PRIVMSG
 
 open_log('log/command_runner.log')
 
-$plugins = {}
-load_plugins('plugins')
 $janitor = ThreadJanitor.new
 message_loop do |msg, replier|
   t = check_message(msg, replier) and $janitor.register(t)
