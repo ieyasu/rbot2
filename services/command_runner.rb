@@ -8,7 +8,10 @@
 require 'rubybot2/plugin'
 require 'rubybot2/thread_janitor'
 require 'rubybot2/db'
+require 'rubybot2/zipdb'
 require 'open3'
+
+include Zip
 
 RUN_RUBY = 'lib/rubybot2/run_ruby.rb'
 
@@ -45,7 +48,13 @@ end
 
 def run_hook(command, args, msg, replier)
   zip = Account.zip_by_nick(msg.nick) || $rbconfig['default-zip']
+  zipinfo = get_zipinfo(zip)
   ENV['ZIP'] = zip.to_s
+  ENV['CITY'] = zipinfo.city
+  ENV['STATE'] = zipinfo.state
+  ENV['LAT'] = zipinfo.lat
+  ENV['LON'] = zipinfo.lon
+  ENV['TZ'] = zipinfo.tz
 
   cmdsym = "c_#{command}".to_sym
   if (cmd = find_hook(cmdsym, msg.dest))
