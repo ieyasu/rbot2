@@ -4,7 +4,7 @@ def check_reload
       File.exist?(service) && File.mtime(service) > File.mtime(pid)
     }
     Process.kill('HUP', File.read('run/rubybot.pid').to_i)
-    reply "*** Reloaded services\n"
+    reply "\002*** Reloaded services\002"
   end
 end
 
