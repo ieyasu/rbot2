@@ -1,7 +1,6 @@
 #!/usr/bin/php
 <?
   require_once("boilerplate.php");
-  putenv("TZ=America/Denver");
   if(!$args) {
     reply(date("M jS, Y g:i:s a T")."\n");
   }
