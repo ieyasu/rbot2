@@ -52,7 +52,7 @@ def run_hook(command, args, msg, replier)
     Open3.popen3(bin, msg.nick, msg.dest, args || '') do |_, out, err|
       process_hook_output(replier, out, err)
     end
-  elsif not msg.sent_to_channel? and command =~ /^\d/
+  elsif not msg.sent_to_channel? and command =~ /^[(\d]/
     $log.info "Reinterpreting text as calc hook for #{msg.nick}"
     run_hook('calc', msg.text, msg, replier) # looks like math
   else
