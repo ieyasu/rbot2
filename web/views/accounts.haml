@@ -1,0 +1,10 @@
+%h1 Registered Accounts
+
+- if @accounts.length > 0
+  %ul
+    - @accounts.each do |acct|
+      - nicks = Account.list_nicks(acct)
+      - acct << ': ' << ((nicks.length > 0) ? nicks.join(', ') : '<i>-no nicks-</i>')
+      %li= acct
+- else
+  %p There are no accounts in the system.

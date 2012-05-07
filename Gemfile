@@ -10,6 +10,10 @@ gem "raspell", "~> 1.3"
 gem "nokogiri"
 gem "json"
 
+# web interface specific
+gem "sinatra"
+gem "haml"
+
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development do

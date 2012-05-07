@@ -1,0 +1,7 @@
+%h1 Undelivered Nexts
+
+%ol
+  - @nexts.each_with_index do |(recips, message), i|
+    %li
+      #{recips}: #{message} &nbsp;
+      %a{:href => "delete-next/#{i + 1}"} delete
