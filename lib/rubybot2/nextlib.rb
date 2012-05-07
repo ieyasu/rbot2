@@ -39,14 +39,12 @@ module NextLib
   def NextLib.list_undelivered(account)
     nxts = DB[:nexts].filter(:from_account => account).order(:sent_at.desc).limit(8).all
     return 'you have no undelivered nexts' unless nxts.length > 0
-    i = 0
     nxts.map do |nxt|
       ar = DB[:account_recips].filter(:next_id => nxt[:id]).select_col(:account)
       pr = DB[:pattern_recips].filter(:next_id => nxt[:id]).select_col(:nick_pat)
       ar, pr = NextLib.format_recips(ar, pr)
-      i += 1
-      "#{i}. #{ar}#{pr}: `#{NextLib.trunc nxt[:message]}`"
-    end.join(', ')
+      ["#{ar}#{pr}", nxt[:message]]
+    end
   end
 
   # Deletes the last undelivered next sent by the specified account.
@@ -65,20 +63,10 @@ module NextLib
 
   # Lists delivered nexts sent to the given account. The specified count
   # and limit are for specifying the subset of nexts to return.
-  def NextLib.list_delivered(account, offset, limit)
-    msgs = DB[:received_nexts].filter(:account => account).order(:recvd_at.desc).
-      limit(limit, offset).all
-    if msgs.length > 0
-      i = offset
-      msgs.map do |m|
-        i += 1
-        "#{i}. #{m[:message]}"
-      end.join('; ')
-    elsif offset > 0
-      'your account has not received any nexts back that far'
-    else
-      'your account has not received any nexts'
-    end
+  def NextLib.list_delivered(account, offset = 0, limit = nil)
+    msgs = DB[:received_nexts].filter(:account => account).order(:recvd_at.desc)
+    msgs = msgs.limit(limit, offset) if limit
+    msgs.all
   end
 
   private

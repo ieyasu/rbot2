@@ -17,7 +17,7 @@ module Account
   end
 
   # Returns true if the account name and password match.
-  def Account.check_passwd(account, trypass, r)
+  def Account.check_passwd(account, trypass, r = nil)
     account = DB[:accounts].filter(:name => account) if String === account
     account = account.first if account
     if account
@@ -25,15 +25,23 @@ module Account
       salt, pass = account[:passwd].split(':')
       md5 = MD5.hexdigest(salt + trypass)
       return true if md5 == pass
-      r.reply("bad password for account #{name}")
+      r && r.reply("bad password for account #{name}")
     else
-      r.priv_reply("unknown account #{account}")
+      r && r.priv_reply("unknown account #{account}")
     end
     false
   end
 
   def Account.exists?(account)
     DB[:accounts].filter(:name => account).count > 0
+  end
+
+  def Account.by_name(name)
+    DB[:accounts].filter(:name => name).first
+  end
+
+  def Account.list_nicks(account)
+    DB[:nick_accounts].filter(:account => account).select_col(:nick)
   end
 
   # Returns the salted, hashed password ready to store in the db
