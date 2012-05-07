@@ -41,9 +41,16 @@ The internal commands are found under commands/.  They are slated for a rewrite 
 
 These are implemented by the comman_runner.rb service.  The hooks are exec()able scripts or compiled programs in the hooks/ directory.  The hook's file name is the same as the command name, so command aliases are created by symlinking to the original hook file.
 
-The basic hook interface: the nick, channel and text of the originating PRIVMSG are passed as three command line arguments.  If it is a private message, the 'channel' will actually be the bot's nick.  Also, the environment variable ZIP is set according to either the nick's account or the default zip in config.rb.  The hook is then to respond with zero or more newline-terminated messages in IRC protocol.  For debugging purposes, stderr is captured and sent to the command's origin.
+The basic hook interface: the nick, channel and text of the originating PRIVMSG are passed as three command line arguments.  If it is a private message, the 'channel' will actually be the bot's nick.  Also, several environment variables are set according to the nick's account or the default zip in config.rb:
 
-To make command writing easier, boilerplate.{rb,php,py} have been written.  These are kind of ugly, so a more streamlined approach is in development.  If a hook file has a recognized language-specific extension, a special hook running script is used to provide a nicer API to get the job done with less code than with the boilerplate approach.
+- ZIP: the account's zip code
+- CITY, STATE: the account's place names (based on zip)
+- LAT, LON: the latitude and longitude of the account (based on zip)
+- TZ: the account's timezone.  This is a name like 'America/Denver' rather a numeric offset like '-7'.  Most Unix tools use the TZ environment variable in this way to automatically account for daylight saving time.
+
+The hook is to respond with zero or more newline-terminated messages in IRC protocol format.  For debugging purposes, stderr is captured and sent to the command's origin.
+
+To make command writing easier, boilerplate.php and boilerplated.py have been written.  These are kind of ugly, and for commands written in ruby, there is a better way.  If the script has a .rb extension, it will be run with lib/rubybot/run_ruby.rb.  This program provides an extensive API to make hook writing nicer.
 
 
 ### Accounts
