@@ -6,7 +6,7 @@ if rows.length > 0
   res = rows.shift
   lines = res[:value].split("{BR}")
   reply("#{res[:nick].strip} taught me that #{res[:thekey]} == #{lines.shift}")
-  lines.each { |line| r.reply(line) }
+  lines.each { |line| reply(line) }
   if rows.length > 0
     rows = rows[0..4] + [{:thekey => '...'}] if rows.length > 9
     reply("(also: #{rows.map {|a| a[:thekey] }.join(', ')})")
