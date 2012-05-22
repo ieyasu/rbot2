@@ -3,5 +3,5 @@ l = DB[:levels].filter(:nick.like(who + '%')).first
 if l
   reply l[:level]
 else
-  reply "#{who} not found"
+  reply "#{who} has no level"
 end
