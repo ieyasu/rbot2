@@ -34,9 +34,13 @@ def exit_reply(msg)
   exit 0
 end
 
-def match_args(pat, usage)
-  pat.match($args) or exit_reply(
-    "Usage: #{$rbconfig['cmd_prefix']}#{$command} #{usage}")
+def match_args(pat, usage = nil)
+  if (r = pat.match($args))
+    r
+  else
+    usage = yield if block_given?
+    exit_reply("Usage: #{$rbconfig['cmd_prefix']}#{$command} #{usage}")
+  end
 end
 
 def each_line(file)
