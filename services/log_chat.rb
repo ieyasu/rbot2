@@ -21,6 +21,13 @@ def open_logs(t)
   $logday = logday(t)
 end
 
+def write_log(chan, log, message)
+  unless $rbconfig['no-monitor-channels'].include?(chan)
+    log.puts message
+    log.flush
+  end
+end
+
 ###
 
 register IRC::CMD_PRIVMSG, IRC::CMD_JOIN, IRC::CMD_PART, IRC::CMD_NICK, IRC::CMD_TOPIC, IRC::CMD_KICK, IRC::CMD_MODE, IRC::CMD_QUIT
@@ -62,13 +69,8 @@ message_loop do |msg, replier|
     end
 
   if chan
-    $logs[chan].puts s
-    $logs[chan].flush
+    write_log(chan, $logs[chan], s)
   else
-    $logs.each do |chan, log|
-      next if $rbconfig['no-monitor-channels'].include?(chan)
-      log.puts s
-      log.flush
-    end
+    $logs.each {|chan, log| write_log(chan, log, s) }
   end
 end
