@@ -1,4 +1,4 @@
-m = match_args(/(.+)/, '<thing>')
+m = match_args(/(\S+)/, '<thing>')
 what = m[1]
 q = DB[:points].filter(:thing => what)
 row = q.first
