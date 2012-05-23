@@ -450,13 +450,16 @@ module IRC
       @prefix =~ PREFIX_PAT and $3
     end
 
+    # Returns the i'th param, removing the leading ':' if present.
+    def param(i)
+      s = @params[i]
+      s[0] == ':' ? s[1..-1] : s
+    end
+
     # The final message parameter when it is preceded by a colon (':');
     # +nil+ otherwise. Typically this is a user-visible message.
     def text
-      s = @params[-1]
-      if s[0,1] == ':'
-        s[1..-1]
-      end
+      param(-1)
     end
   end
 
@@ -477,7 +480,7 @@ module IRC
 
     # The channel or nickname that this message was sent to.
     def dest
-      @params[0]
+      param(0)
     end
 
     # Tests for presence of the /me-type action flag which IRC clients
