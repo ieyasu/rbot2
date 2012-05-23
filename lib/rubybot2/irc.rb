@@ -452,8 +452,8 @@ module IRC
 
     # Returns the i'th param, removing the leading ':' if present.
     def param(i)
-      s = @params[i]
-      s[0] == ':' ? s[1..-1] : s
+      s = @params[i] and
+        s[0] == ':' ? s[1..-1] : s
     end
 
     # The final message parameter when it is preceded by a colon (':');
