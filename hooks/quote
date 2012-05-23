@@ -1,6 +1,8 @@
 #!/usr/bin/php
 <?
 	require_once("boilerplate.php");
+    $log_root = getenv('RB_ROOT') . '/log';
+
 	class random_line {
 		private $currLine = null;
 		private $numLines = 0;
@@ -17,7 +19,7 @@
 	}
 
 	$chan = "#hatcave";
-	chdir("/home/sargon/log/$chan");
+	chdir($log_root . "/$chan");
 	if(preg_match("/^(\.\*)+$/", $args)) unset($args);
 	$N = null;
 	$r = new random_line();
@@ -36,19 +38,19 @@
 		pclose($handle);
 		$N = $r->get_num_lines();
 	} else {
-		$a = opendir("/home/sargon/log/$chan");
+		$a = opendir($log_root . "/$chan");
 		unset($filelist);
 		while (false !== ($file = readdir($a))) {
 			if(preg_match("/\.log$/", $file)) {
-				if(filesize("/home/sargon/log/$chan/$file") > 1) {
+				if(filesize($log_root . "/$chan/$file") > 1) {
 					$filelist[] = $file;
 				}
 			}
 		}
 		$file = $filelist[intval(mt_rand(0, count($filelist)-2))];
-		$file = "/home/sargon/log/$chan/" . $file;
+		$file = $log_root . "/$chan/" . $file;
 
-#		shell_exec("cat /home/sargon/log/*.log | fgrep -v '> !quote' | fgrep -v ' quotes found: ' > $nam");
+#		shell_exec("cat " . $log_root . "/*.log | fgrep -v '> !quote' | fgrep -v ' quotes found: ' > $nam");
 #		shell_exec("cat $file | fgrep -v '> !quote' | fgrep -v ' quotes found: ' > $nam");
 		$handle = popen("fgrep -v '> !quote' $file | fgrep -v ' quotes found: '", "r");
 		while(!feof($handle)) {
@@ -57,7 +59,7 @@
 			$r->add_line($line);
 		}
 		pclose($handle);
-#		$N = trim(shell_exec("fgrep -v '> !quote' /home/sargon/log/$chan/*.log | fgrep -v ' quotes found: ' | wc -l"));
+#		$N = trim(shell_exec("fgrep -v '> !quote' " . $log_root . "/$chan/*.log | fgrep -v ' quotes found: ' | wc -l"));
 		$N = trim(shell_exec("wc -l *.log | pcregrep \"total$\" | awk '{print $1}'")); // fastar
 	}
 		
