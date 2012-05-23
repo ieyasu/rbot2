@@ -42,6 +42,7 @@ message_loop do |msg, replier|
   s = t.strftime("%Y-%m-%dT%H:%M:%SZ ") +
     case msg.command
     when IRC::CMD_PRIVMSG
+      next unless msg.sent_to_channel?
       if msg.text =~ /^\001ACTION .*\001$/
         "#{msg.dest} * #{msg.nick} #{msg.text[8..-2]}"
       else
