@@ -1,6 +1,5 @@
 <?
 	ini_set("html_errors", false);
-	require_once("inc/db.php");
 	// nick, dest, args
 	global $nick;
 	$nick = $argv[1];
