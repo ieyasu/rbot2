@@ -34,11 +34,16 @@ end
 
 get '/' do
   if authorized?
-    @nicks = Account.list_nicks(@account[:name])
-    haml :index
+    redirect to('/account')
   else
-    haml :index_no_auth
+    haml :index
   end
+end
+
+get '/account' do
+  protected!
+  @nicks = Account.list_nicks(@account[:name])
+  haml :account
 end
 
 get '/accounts' do
@@ -62,3 +67,4 @@ get '/undelivered-nexts' do
   @nexts = NextLib.list_undelivered(@account[:name])
   haml :undelivered_nexts
 end
+

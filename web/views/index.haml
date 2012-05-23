@@ -1,23 +1,5 @@
 %h1 RubyBot Web
 
-%p Hello, #{@account[:name]}.
-
-%p
-  %a{:href => 'accounts'} List of registered accounts
-
-%p
-  %a{:href => 'undelivered-nexts'} Nexts you have sent but haven't been delivered
-  %br/
-  %a{:href => 'received-nexts'} Nexts you have received
-
-%h2 Profile
-
-%div
-  - if @nicks.length > 0
-  Nicks: #{@nicks.join(', ')}
-  - else
-    There are no nicks associated with your account.
-  %br/
-  Zip: #{@account[:zip]}
-
-%p Reset Password
+%a{:href => 'account'} View your account
+%br/
+%a{:href => 'create'} Create an account
