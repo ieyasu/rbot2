@@ -39,7 +39,7 @@ message_loop do |msg, replier|
   open_logs(t) if $logday < logday(t)
 
   chan = msg.param(0)
-  s = t.strftime("%Y-%m-%dT%H:%M:%SZ ") +
+  s = t.strftime("%Y-%m-%dT%H:%M:%SZ ") + # ISO 8601 for great justice!
     case msg.command
     when IRC::CMD_PRIVMSG
       next unless msg.sent_to_channel?
