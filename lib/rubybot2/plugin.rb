@@ -8,8 +8,13 @@ trap('INT') { exit(0) }
 
 # List of IRC messages this plugin wants to receive.
 def register(*messages)
-  messages.each { |msg| puts msg }
-  puts
+  if messages.first == :echo
+    puts 'echo'
+    messages.shift
+  else
+    puts
+  end
+  puts messages.join(' ')
 end
 
 # Given an exception, prints nicely formatted reporting information to STDERR.

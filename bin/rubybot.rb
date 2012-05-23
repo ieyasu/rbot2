@@ -17,11 +17,11 @@ class Service
 
     @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(ENV, file)
 
+    # see if it wants echoes
+    @wants_echoes = (@stdout.gets =~ /^echo$/) != nil
+
     # read list of commands to send
-    list = []
-    while (line = @stdout.gets) and (line = line.chop).length > 0
-      list << line.strip
-    end
+    list = @stdout.gets.split(/\s+/)
     @commands = list.length > 0 ? /^(?:#{list.join('|')})$/ : /(?!)/
 
     @out_thr = Thread.new do
@@ -48,8 +48,10 @@ class Service
   end
 
   # sends the given IRC message if it matches the list of commands
-  def send(msg)
-    @stdin.puts(msg) if msg.command =~ @commands
+  def send(msg, is_echo = nil)
+    if msg.command =~ @commands && (is_echo.nil? || @wants_echoes)
+      @stdin.puts(msg)
+    end
   end
 
   # Checks subprocess for life
@@ -91,6 +93,14 @@ class Service
   end
 end
 
+class RubyBot2 < IRC::Client
+  def send_msg(line)
+    super(line)
+    msg = IRC.parse_message(":#{$rbconfig['nick']} #{line}")
+    $services.each { |service| service.send(msg, :echo) }
+  end
+end
+
 def record_pid(file, pid)
   File.open(file, 'w') { |fout| fout.puts pid }
 end
@@ -109,7 +119,7 @@ def open_log(file)
 end
 
 def connect_client
-  $client = IRC::Client.new($rbconfig['host'], $rbconfig['port'])
+  $client = RubyBot2.new($rbconfig['host'], $rbconfig['port'])
   $client.register($rbconfig['nick'], $rbconfig['ircname'])
 end
 
