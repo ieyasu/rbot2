@@ -1,5 +1,5 @@
 m = match_args(/(\S+)/, '<thing>')
-what = m[1]
+what = m[1].downcase
 q = DB[:points].filter(:thing => what)
 row = q.first
 if row

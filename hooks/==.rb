@@ -5,7 +5,7 @@ m = match_args(/(\S+)/) do
   worst = bot ? "#{bot[:thing]} = #{bot[:points]}" : ''
   "<thing>; best: #{best}, worst: #{worst}"
 end
-what = m[1]
+what = m[1].downcase
 thing = DB[:points].filter(:thing => what).first
 points = thing ? thing[:points] : 0
 reply "#{what} has #{points} points"
