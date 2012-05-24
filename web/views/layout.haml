@@ -1,4 +1,13 @@
 !!! 5
 %html
+  %head
+    %title= @title || request.path_info
+    %link{href: '/style/site.css', media: 'screen', rel: 'stylesheet', type: 'text/css'}/
   %body
-    = yield
+    #navbar
+      .lead RUBYBOT WEB
+      = navitem 'account'
+      = navitem 'logs'
+      = navitem 'db'
+    #content
+      = yield

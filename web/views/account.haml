@@ -1,14 +1,10 @@
-%h1 RubyBot Web
-
-%p Hello, #{@account[:name]}.
+%p Hello, #{@account[:name]}
 
 %p
-  %a{:href => 'accounts'} List of registered accounts
-
-%p
-  %a{:href => 'undelivered-nexts'} Nexts you have sent but haven't been delivered
-  %br/
-  %a{:href => 'received-nexts'} Nexts you have received
+  View your:&emsp;&bull;
+  %a{:href => '/account/undelivered-nexts'} Undelivered nexts
+  &emsp;&bull;
+  %a{:href => '/account/received-nexts'} Received nexts
 
 %h2 Profile
 
@@ -20,4 +16,4 @@
   %br/
   Zip: #{@account[:zip]}
 
-%p Reset Password
+%p Change Password

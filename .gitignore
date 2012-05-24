@@ -9,6 +9,9 @@ config.rb
 inc/sms_auth.inc
 Gemfile.lock
 
+# sass stuff
+.sass-cache/
+
 # rcov generated
 coverage
 

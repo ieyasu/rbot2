@@ -1,6 +1,4 @@
-%h1 Nexts Received by #{@account[:name]}
-
-%p A total of #{@nexts.length} nexts:
+%p #{@account[:name]}'s #{@nexts.length} received nexts:
 
 %div.nexts
   - @nexts.each do |nxt|
