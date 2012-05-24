@@ -16,7 +16,7 @@ def open_logs(t)
   $rbconfig['join-channels'].split(',').each do |chan|
     dir = "log/#{chan}"
     Dir.mkdir(dir) unless File.directory?(dir)
-    $logs[chan] = File.open(t.strftime("log/#{chan}/%Y-%m-%d.log"), 'a+')
+    $logs[chan] = File.open(t.strftime("log/#{chan}/%Y-%m-%d-#{chan}.log"), 'a+')
   end
   $logday = logday(t)
 end
@@ -44,24 +44,24 @@ message_loop do |msg, replier|
     when IRC::CMD_PRIVMSG
       next unless msg.sent_to_channel?
       if msg.text =~ /^\001ACTION .*\001$/
-        "#{msg.dest} * #{msg.nick} #{msg.text[8..-2]}"
+        "* #{msg.nick} #{msg.text[8..-2]}"
       else
-        "#{msg.dest} <#{msg.nick}> #{msg.text}"
+        "<#{msg.nick}> #{msg.text}"
       end
     when IRC::CMD_JOIN
-      "#{msg.text} Join: #{msg.nick}"
+      "Join: #{msg.nick}"
     when IRC::CMD_PART
-      "#{msg.text} Part: #{msg.nick}"
+      "Part: #{msg.nick}"
+    when IRC::CMD_TOPIC
+      "Topic: #{msg.nick} #{msg.text}"
+    when IRC::CMD_KICK
+      "Kick: #{msg.nick} #{msg.param 1} #{msg.text || '<unk>'}"
+    when IRC::CMD_MODE
+      next unless IRC.channel_name?(chan)
+      "Mode: #{msg.param(2) || chan} #{msg.param 1}"
     when IRC::CMD_NICK
       chan = nil
       "Nick: #{msg.nick} #{msg.text}"
-    when IRC::CMD_TOPIC
-      "#{msg.param 0} Topic: #{msg.nick} #{msg.text}"
-    when IRC::CMD_KICK
-      "#{msg.param 0} Kick: #{msg.nick} #{msg.param 1} #{msg.text || '<unk>'}"
-    when IRC::CMD_MODE
-      next unless IRC.channel_name?(chan)
-      "#{chan} Mode: #{msg.param 2} #{msg.param 1}"
     when IRC::CMD_QUIT
       chan = nil
       "Quit: #{msg.nick} #{msg.text}"

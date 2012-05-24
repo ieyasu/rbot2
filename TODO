@@ -2,7 +2,6 @@ To Do
 =====
 
  - use 'does not compute' as an error message
- - "o/` it's more fun to compute"
  - next searching in a web page
  - tack on javascript:parent.location='...' inside the href for pug's
    urlgrabber to fix ie referrer troubles
@@ -11,27 +10,10 @@ To Do
    and will point to that vicinity of conversation
  - !domain ass2ass -> check all TLD's in order of popularity or something.
  - use URLs at http://xem.us/g/test-regex.php for testing pug
- - capture privately nexted urls and make available via grabber, privately
- - !map should use maps.google.com
- - http://idrink.com/ - webtender alternative
  - :bigfeh.com 433 * rb-test :Nickname is already in use.
  - <<< WHOIS rb-test
    >>> :bigfeh.com 451  WHOIS :Register first.
- - archiving url grabber that saves text of web page so that you can search
-   for urls by web page contents
- - opt-in for url summarizer, print status code for paster so they know if
-   it's a 404 or not
- - !conv enhancement: conv climbing scales and various shoe sizes,
-   see http://www.boot.com/bsizcvt.htm#Measure for more
- - fix resellerratings
  - make '!next nick !smite nick' work
- - use ferret for FTS and !searchnexts
- - add sinatra-based web interface
- - plugin and command reload capability
- - repackage commands into objects with common interface, in preparation
-   for using that as the standard interface for defining new !commands.
- - make rb give the date with !nexts if they're more than a week old
- - !dexonline or !411
 
 ---
 db: rbot:rbot/nofig7
@@ -42,35 +24,33 @@ svn co svn://f3h.com/rbot/trunk/rbot/
 \002 - bold
 \003CC - color
 
+Logging
+=======
 
-Command Interface
------------------
+Stored in files log/#channel/YYYY-MM-DD-#channel.log.  The format varies by type of message:
 
-The command-runner hook handles 'native' ruby bot commands. When a message
-matching a command is received, command-runner starts a sub-process for that
-command and passes it a single argument containing the string of the message
-invoking that command. The command is then expected to reply with zero or more
-lines of text, each a complete raw irc message ready to be sent down the pipe.
-It is up to the command to follow all the rules as to how to properly respond
-to a request.
+PRIVMSG
+        timestamp <nick> text
+PRIVMSG ACTION
+        timestamp * nick text
+JOIN
+        timestamp Join: nick
+PART
+        timestamp Part: nick
+TOPIC
+        timestamp Topic: nick topic
+KICK
+        timestamp Kick: kicker kickee why
+MODE
+        timestamp Mode: nick mode
+
+NICK
+        timestamp Nick: oldnick newnick
+QUIT
+        timestamp Quit: nick text
 
 
-
--- have one of these tables per account
-CREATE TABLE rn_<account> (
-    sent_at  INT  NOT NULL,
-    recvd_at INT  NOT NULL,
-    message  TEXT NOT NULL, --  [sent] -recips- <from> -text-
-    PRIMARY KEY (recvd_at, message)
-);
-
-
-CREATE TABLE cron (
-    at      INT  NOT NULL,
-    nick    TEXT NOT NULL,
-    message TEXT NOT NULL,
-    PRIMARY KEY (at, nick, message)
-);
+The timestamp is in ISO 8601 format, e.g. 2012-05-23T15:10:15Z so we don't run into any more DST issues.
 
 
 Next Design
