@@ -1,25 +1,27 @@
 %form{action: '/logs', method: 'get'}
   %label{for: 'from'} From:
-  %input{type: 'text', id: 'form', name: 'from', size: 10,
-         value: @startd.strftime('%Y-%m-%d')}
+  %input{type: 'text', id: 'from', name: 'from', size: 10, value: @fromd}
   %label{for: 'to'} To:
-  %input{type: 'text', id: 'to', name: 'to', size: 10,
-         value: @endd && @endd.strftime('%Y-%m-%d')}
+  %input{type: 'text', id: 'to', name: 'to', size: 10, value: @tod}
   %a{href: 'javascript:today();'} Today
   &emsp;
-  %select{id: 'channel', name: 'channel'}
+  %select{id: 'chan', name: 'chan'}
     - @channels.each do |chan|
-      %option{value: chan}= chan
+      %option{value: chan, selected: (chan == params['chan'])}= chan
   &emsp;
-  %input{type: 'radio', id: 'justurls', name: 'urls', value: 'urls', checked: 'checked'}
+  %input{type: 'radio', id: 'justurls', name: 'urls', value: 'urls',
+         checked: (params['urls'] == 'urls') && 'checked'}
   %label{for: 'justurls'} URLs
-  %input{type: 'radio', id: 'fulltext', name: 'urls', value: 'text'}
+  %input{type: 'radio', id: 'fulltext', name: 'urls', value: 'text',
+         checked: (params['urls'] == 'urls') || 'checked'}
   %label{for: 'fulltext'} Everything
   &emsp;
-  %input{type: 'text', id: 'search', name: 'search'}
+  %input{type: 'text', id: 'q', name: 'q', value: params['q']}
   %input{type: 'submit', value: 'Search'}
 
 %hr
+
+%p Dates from #{@from.localtime} to #{@to.localtime}
 
 #logs
   - @logs.each do |log|

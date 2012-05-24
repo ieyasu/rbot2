@@ -2,12 +2,16 @@ load 'config.rb'
 
 require 'rubygems'
 require 'sinatra'
+require 'date'
+require 'chronic'
 require 'rubybot2/account'
 require 'rubybot2/nextlib'
 
 helpers do
   def protected!
-    unless authorized?
+    if authorized?
+      # XXX set ENV['TZ'] to account's tz
+    else
       response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
       throw(:halt, [401, "Not authorized\n"])
     end
@@ -37,17 +41,99 @@ helpers do
       gsub(/\002([^\002]+)\002/, '<b>\\1</b>')
   end
 
-  def read_logs(startd, endd, channel)
-    ymd = startd.strftime('%Y-%m-%d')
-    File.open("log/#{channel}/#{ymd}-#{channel}.log") do |fin|
-      fin.read.split(/\r?\n/).map do |line|
-        time,text = line.split(' ', 2)
-        time = DateTime.strptime(time, '%Y-%m-%dT%H:%M:%S%Z').to_time
-        time.strftime('[%H:%M] ') +
-          text.gsub('<', '&lt;').gsub('>', '&gt;').
-          sub(/((?:&lt;[\w-]+&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>")
+  def get_log_params(urls_default = :fulltext)
+    if (from = params['from']) && from.length > 0
+      from = Chronic.parse(from, :context => :past, :guess => false)
+      from = from.begin if Chronic::Span === from 
+    else
+      t = Time.now
+      from = Time.new(t.year, t.month, t.day)
+    end
+
+    if (to = params['to']) && to.length > 0
+      to = Chronic.parse(to, :context => :past, :guess => false)
+      to = to.end if Chronic::Span === to
+    else
+      to = from + (24 * 60 * 60)
+    end
+
+    unless (chan = params['chan']) and chan =~ /^#\w+$/
+      chan = nil
+    end
+
+    case params['urls']
+    when 'urls'
+      urls = :urls
+    when 'fulltext'
+      urls = :fulltext
+    else
+      urls = urls_default
+    end
+
+    unless (q = params['q']) and q.length > 0
+      q = nil
+    end
+
+    return from.utc, to.utc, chan, urls, q
+  end
+
+  def read_logs(from, to, chan, urls, q)
+    # 1. get list of files with date range and channel(s)
+    channels = chan ? ["log/#{chan}"] : Dir["log/#*"]
+    d = from.dup
+    files = []
+    while d <= to
+      prefix = d.strftime("/%Y-%m-%d-")
+      channels.each do |dir|
+        file = "#{dir}#{prefix}#{File.basename(dir)}.log"
+        files << file if File.exist?(file)
+      end
+      d += 24 * 60 * 60
+    end
+
+    # 2. read in log lines
+    log = channels.inject({}) {|h, chan| h[File.basename chan] = []; h}
+
+    files.each do |file|
+      file =~ /\d-(#.+)\.log$/; chan = $1
+      s =
+        if urls == :urls || q               # filter with pcregrep
+          `pcregrep -hiu #{q} -- #{file}`
+        else                                # read the whole file
+          File.read(file)
+        end
+      log[chan] += s.split(/\r?\n/)
+    end
+
+    # 3. split into Time, String pairs
+    log.each_key do |chan|
+      log[chan] = log[chan].map do |line|
+        stamp, text = line.split(' ', 2)
+        t = DateTime.strptime(stamp, '%Y-%m-%dT%H:%M:%S%Z').to_time
+        [t, text]
       end
     end
+
+    # 4. filter by date range
+    log.each_key do |chan|
+      log[chan] = log[chan].select {|t, text| from <= t && t <= to}
+    end
+
+    # 5. format lines
+    res = []
+    log.each do |chan, lines|
+      res << chan
+      lines.each do |t, text|
+        if t && text
+          res << t.strftime('[%H:%M] ') +
+            text.gsub('<', '&lt;').gsub('>', '&gt;').
+            sub(/((?:&lt;[\w-]+&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>")
+        else
+          res << "t = #{t.inspect} && text = #{text.inspect}"
+        end
+      end
+    end
+    res
   end
 end
 
@@ -99,13 +185,22 @@ end
 get '/logs' do
   protected!
 
-  @channels = Dir['log/#*'].delete_if {|path| !File.directory?(path)}.sort_by {|path| File.mtime(path)}.map {|path| File.basename path} +
-    ['All']
+  @channels = ['All'] + Dir['log/#*'].delete_if {|path| !File.directory?(path)}.sort_by {|path| File.mtime(path)}.map {|path| File.basename path}
 
-  @startd = Time.now.utc
-  @endd = nil
+  @from, @to, chan, urls, q = get_log_params
 
-  @logs = read_logs(@startd, @startd, '#hatcave')
+  if (f = params['from']) && f.length > 0
+    @fromd = params['from']
+  else
+    @fromd = @from.strftime('%Y-%m-%d')
+  end
+  if (t = params['to']) && t.length > 0
+    @tod = params['to']
+  else
+    @tod = nil
+  end
+
+  @logs = read_logs(@from, @to, chan, urls, q)
 
   haml :chatlog
 end
