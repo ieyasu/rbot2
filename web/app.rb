@@ -41,7 +41,10 @@ helpers do
     ymd = startd.strftime('%Y-%m-%d')
     File.open("log/#{channel}/#{ymd}-#{channel}.log") do |fin|
       fin.read.split(/\r?\n/).map do |line|
-        line.gsub('<', '&lt;').gsub('>', '&gt;').
+        time,text = line.split(' ', 2)
+        time = DateTime.strptime(time, '%Y-%m-%dT%H:%M:%S%Z').to_time
+        time.strftime('[%H:%M] ') +
+          text.gsub('<', '&lt;').gsub('>', '&gt;').
           sub(/((?:&lt;[\w-]+&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>")
       end
     end
