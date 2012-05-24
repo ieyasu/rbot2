@@ -1,26 +1,23 @@
-%form{:action => '/chatlog', :method => 'post'}
-  %label{:for => 'start_date'} From:
-  %input{:type => 'text', :id => 'start_date', :name => 'start_date', :size => 10,
-         :value => @startd.strftime('%Y-%m-%d')}
-  %label{:for => 'end_date'} To:
-  %input{:type => 'text', :id => 'end_date', :name => 'end_date', :size => 10,
-         :value => @endd && @endd.strftime('%Y-%m-%d')}
-  %a{:href => 'javascript:today();'} Today
-
+%form{action: '/logs', method: 'get'}
+  %label{for: 'from'} From:
+  %input{type: 'text', id: 'form', name: 'from', size: 10,
+         value: @startd.strftime('%Y-%m-%d')}
+  %label{for: 'to'} To:
+  %input{type: 'text', id: 'to', name: 'to', size: 10,
+         value: @endd && @endd.strftime('%Y-%m-%d')}
+  %a{href: 'javascript:today();'} Today
   &emsp;
-  %select{:id => 'channel', :name => 'channel'}
+  %select{id: 'channel', name: 'channel'}
     - @channels.each do |chan|
-      %option{:value => chan}= chan
-
+      %option{value: chan}= chan
   &emsp;
-  %input{:type => 'radio', :id => 'justurls', :name => 'urls', :value => 'urls', :checked => 'checked'}
-  %label{:for => 'justurls'} URLs
-  %input{:type => 'radio', :id => 'fulltext', :name => 'urls', :value => 'text'}
-  %label{:for => 'fulltext'} Everything
-
+  %input{type: 'radio', id: 'justurls', name: 'urls', value: 'urls', checked: 'checked'}
+  %label{for: 'justurls'} URLs
+  %input{type: 'radio', id: 'fulltext', name: 'urls', value: 'text'}
+  %label{for: 'fulltext'} Everything
   &emsp;
-  %input{:type => 'text', :id => 'search', :name => 'search'}
-  %input{:type => 'submit', :value => 'Search'}
+  %input{type: 'text', id: 'search', name: 'search'}
+  %input{type: 'submit', value: 'Search'}
 
 %hr
 
