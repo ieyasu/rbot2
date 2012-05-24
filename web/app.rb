@@ -42,7 +42,7 @@ helpers do
     File.open("log/#{channel}/#{ymd}.log") do |fin|
       fin.read.split(/\r?\n/).map do |line|
         line.gsub('<', '&lt;').gsub('>', '&gt;').
-          gsub(/(&lt;[\w-]+&gt;)/, "<span class='nick'>\\1</span>")
+          sub(/((?:&lt;[\w-]+&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>")
       end
     end
   end
