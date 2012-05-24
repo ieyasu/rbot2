@@ -119,21 +119,26 @@ helpers do
       log[chan] = log[chan].select {|t, text| from <= t && t <= to}
     end
 
-    # 5. format lines
-    res = []
-    log.each do |chan, lines|
-      res << chan
-      lines.each do |t, text|
-        if t && text
-          res << t.strftime('[%H:%M] ') +
-            text.gsub('<', '&lt;').gsub('>', '&gt;').
-            sub(/((?:&lt;[\w-]+&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>")
-        else
-          res << "t = #{t.inspect} && text = #{text.inspect}"
+    # 5. prefix with channel when multiple channels present and sort by time,
+    #    commingling results
+    if log.keys.length > 1
+      lines = []
+      log.each do |chan, clines|
+        clines.each do |t, text|
+          lines << [t, "#{chan} #{text}"]
         end
       end
+      lines = lines.sort_by {|t, text| t}
+    else
+      lines = log[log.keys.first]
     end
-    res
+
+    # 6. format lines
+    lines.map do |t, text|
+      t.strftime('[%H:%M] ') +
+        text.gsub('<', '&lt;').gsub('>', '&gt;').
+        sub(/((?:&lt;[\w-]+&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>")
+    end
   end
 end
 
