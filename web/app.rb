@@ -39,7 +39,7 @@ helpers do
 
   def read_logs(startd, endd, channel)
     ymd = startd.strftime('%Y-%m-%d')
-    File.open("log/#{channel}/#{ymd}.log") do |fin|
+    File.open("log/#{channel}/#{ymd}-#{channel}.log") do |fin|
       fin.read.split(/\r?\n/).map do |line|
         line.gsub('<', '&lt;').gsub('>', '&gt;').
           sub(/((?:&lt;[\w-]+&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>")
