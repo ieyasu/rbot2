@@ -4,4 +4,4 @@
   - @nexts.each_with_index do |(recips, message), i|
     %li
       #{recips}: #{message} &nbsp;
-      %a{:href => "delete-next/#{i + 1}"} delete
+      %a{:href => url("/account/delete-next/#{i + 1}")} delete

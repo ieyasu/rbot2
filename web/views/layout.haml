@@ -2,7 +2,7 @@
 %html
   %head
     %title= @title || request.path_info
-    %link{href: '/style/site.css', media: 'screen', rel: 'stylesheet', type: 'text/css'}/
+    %link{href: url('/style/site.css'), media: 'screen', rel: 'stylesheet', type: 'text/css'}/
   %body
     #navbar
       .lead RUBYBOT WEB

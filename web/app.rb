@@ -32,14 +32,18 @@ helpers do
   def navitem(name)
     i = request.path_info.index(name)
     c = (i && i < 2) ? 'current' : 'other'
-    "<a href='/#{name}'><div class='#{c}'>#{name}</div></a>"
+    "<a href='#{url name}'><div class='#{c}'>#{name}</div></a>"
+  end
+
+  def link_urls(text)
+    # XXX use better regex in future
+    text.gsub(URI.regexp('http')) {|m| "<a href='#{m}'>#{m}</a>"}
   end
 
   def format_next(nxt)
     msg = nxt[:message].gsub(/<([^>]+)>/, '&lt;\\1&gt;').
       gsub('<', '&lt;').gsub('>', '&gt;')
-    msg.gsub(URI.regexp('http')) {|m| "<a href='#{m}'>#{m}</a>"}.
-      gsub(/\002([^\002]+)\002/, '<b>\\1</b>')
+    link_urls(msg).gsub(/\002([^\002]+)\002/, '<b>\\1</b>')
   end
 
   def get_log_params(urls_default = :fulltext)
@@ -137,9 +141,9 @@ helpers do
 
     # 6. format lines
     lines.map do |t, text|
-      t.strftime('[%H:%M] ') +
-        text.gsub('<', '&lt;').gsub('>', '&gt;').
+        s = text.gsub('<', '&lt;').gsub('>', '&gt;').
         sub(/((?:&lt;[\w-]+&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>")
+      t.strftime('[%H:%M] ') + link_urls(s)
     end
   end
 
@@ -153,6 +157,7 @@ helpers do
 
   def find_latest_url(files)
     files.sort_by {|file| File.mtime(file)}.reverse.each do |file|
+      # XXX filter out common useless urls, e.g. mibbit quit messages
       u = `cat #{file} | pcregrep -iuof lib/rubybot2/url-regex.txt | tail -1`.strip
       return u if u.length > 0
     end
