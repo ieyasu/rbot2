@@ -101,6 +101,7 @@ helpers do
         cmd = "cat #{files.join(' ')}"
         cmd << " | pcregrep -iue #{Shellwords.shellescape(q)}" if q
         cmd << " | pcregrep -iuf lib/rubybot2/url-regex.txt" if urls == :urls
+        cmd << " | head -n 50000" # ought to be enough for anybody!
         s = `#{cmd}`
       else                                # read the whole file
         s = ''
