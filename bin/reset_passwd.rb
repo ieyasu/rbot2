@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'md5'
-require 'config'
+require 'digest/md5'
+load 'config.rb'
 require 'rubybot2/db'
 
 # Returns the salted, hashed password ready to store in the db
