@@ -30,7 +30,7 @@ puts r
 puts
 
 # gather char runs into classes
-r = r.gsub(/([:\|])([a-z](?:\|[a-z](?!\())+)/) do |m|
+r = r.gsub(/([:\|])([a-z](?:\|[a-z](?![a-z(]))+(?=[|)]))/) do |m|
   "#{$1}[#{m.scan(/[a-z]/).join}]"
 end.gsub(/\(\?:(\[[a-z]+\])\)/, '\\1')
 puts r
