@@ -7,13 +7,12 @@ require 'date'
 require 'chronic'
 require 'shellwords'
 require 'rubybot2/account'
+require 'rubybot2/irc'
 require 'rubybot2/nextlib'
 
 helpers do
   def protected!
-    if authorized?
-      # XXX set ENV['TZ'] to account's tz
-    else
+    unless authorized?
       response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
       throw(:halt, [401, "Not authorized\n"])
     end
@@ -59,7 +58,7 @@ helpers do
       to = from + (24 * 60 * 60)
     end
 
-    unless (chan = params['chan']) and chan =~ /^#\w+$/
+    unless (chan = params['chan']) and IRC.channel_name?(chan)
       chan = nil
     end
 
@@ -79,9 +78,13 @@ helpers do
     return from.utc, to.utc, chan, urls, q
   end
 
+  def log_dirs
+    Dir["log/[#+&]*"]
+  end
+
   def read_logs(from, to, chan, urls, q)
     # 1. get list of files with date range and channel(s)
-    channels = chan ? ["log/#{chan}"] : Dir["log/#*"]
+    channels = chan ? ["log/#{chan}"] : log_dirs
     d = from.dup
     chan_files = {}
     while d <= to
@@ -157,10 +160,10 @@ helpers do
   end
 
   def last_url
-    unless (chan = params['chan']) and chan =~ /^#.*$/
+    unless (chan = params['chan']) and IRC.channel_name?(chan)
       chan = nil
     end
-    channels = chan ? ["log/#{chan}"] : Dir["log/#*"]
+    channels = chan ? ["log/#{chan}"] : log_dirs
 
     # Fast path: try the last three days' files
     t = Time.now.utc
@@ -225,7 +228,8 @@ end
 get '/logs' do
   protected!
 
-  @channels = ['All'] + Dir['log/#*'].delete_if {|path| !File.directory?(path)}.sort_by {|path| File.mtime(path)}.map {|path| File.basename path}
+  @channels = ['All'] + log_dirs.delete_if {|path| !File.directory?(path)}.
+    sort_by {|path| File.mtime(path)}.map {|path| File.basename path}
 
   @from, @to, @chan, urls, q = get_log_params
 

@@ -3,7 +3,6 @@
   %input{type: 'text', id: 'from', name: 'from', size: 10, value: @fromd}
   %label{for: 'to'} To:
   %input{type: 'text', id: 'to', name: 'to', size: 10, value: @tod}
-  %a{href: 'javascript:today();'} Today
   &emsp;
   %select{id: 'chan', name: 'chan'}
     - @channels.each do |chan|
@@ -21,7 +20,13 @@
 
 %hr
 
-%p Dates from #{@from.localtime} to #{@to.localtime}
+%p
+  Logs from #{@from.localtime} to #{@to.localtime}
+  %br/
+  - if @logs.length == 0
+    No logs for you!
+  - else
+    #{@logs.length} results:
 
 #logs
   - @logs.each do |log|
@@ -29,7 +34,7 @@
 
 %hr
 
-%a{href: '/logs/golast'} golast
+%a{href: url('/logs/golast')} golast
 - if @chan
   &emsp;
-  %a{href: "/logs/golast?chan=#{CGI.escape @chan}"} golast (this channel)
+  %a{href: url("/logs/golast?chan=#{CGI.escape @chan}")} golast #{@chan}
