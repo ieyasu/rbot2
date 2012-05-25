@@ -95,19 +95,12 @@ helpers do
 
     # 2. read in log lines
     log = channels.inject({}) {|h, chan| h[File.basename chan] = []; h}
-
     chan_files.each do |chan, files|
-      if urls == :urls || q               # filter with pcregrep
-        cmd = "cat #{files.join(' ')}"
-        cmd << " | pcregrep -iue #{Shellwords.shellescape(q)}" if q
-        cmd << " | pcregrep -iuf lib/rubybot2/url-regex.txt" if urls == :urls
-        cmd << " | head -n 50000" # ought to be enough for anybody!
-        s = `#{cmd}`
-      else                                # read the whole file
-        s = ''
-        files.each {|file| s << File.read(file) }
-      end
-      log[chan] += s.split(/\r?\n/)
+      cmd = "cat #{files.join(' ')}"
+      cmd << " | pcregrep -iue #{Shellwords.shellescape q}" if q
+      cmd << " | pcregrep -iuf lib/rubybot2/url-regex.txt" if urls == :urls
+      cmd << " | head -n 50000" # ought to be enough for anybody!
+      log[chan] += `#{cmd}`.split(/\r?\n/)
     end
 
     # 3. split into Time, String pairs
