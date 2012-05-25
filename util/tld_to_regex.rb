@@ -7,6 +7,10 @@ def gather_prefixes(tlds)
     prefix = tlds.first[0]
     i = tlds.index {|tld| tld[0] != prefix} || tlds.length
     group = tlds[0...i].map {|tld| tld[1..-1]}
+    if (j = group.index(''))
+      group.delete_at(j)
+      group << ''
+    end
     r = (group.length == 1) ? group.first : gather_prefixes(group)
     prefixes << "#{prefix}#{r}"
     tlds = tlds[i..-1]
