@@ -165,7 +165,7 @@ helpers do
   def find_latest_url(files)
     files.sort_by {|file| File.mtime(file)}.reverse_each do |file|
       # XXX filter out common useless urls, e.g. mibbit quit messages
-      u = `cat #{file} | pcregrep -iuof lib/rubybot2/url-regex.txt | tail -1`.strip
+      u = `cat #{file} | pcregrep -iuvf lib/rubybot2/url-block.txt | pcregrep -iuof lib/rubybot2/url-regex.txt | tail -1`.strip
       return u if u.length > 0
     end
     nil

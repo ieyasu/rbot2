@@ -1,0 +1,1 @@
+Quit: http://www\.mibbit\.com ajax IRC Client
