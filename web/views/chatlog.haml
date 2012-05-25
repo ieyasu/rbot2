@@ -13,7 +13,7 @@
          checked: (params['urls'] == 'urls') && 'checked'}
   %label{for: 'justurls'} URLs
   %input{type: 'radio', id: 'fulltext', name: 'urls', value: 'text',
-         checked: (params['urls'] == 'urls') || 'checked'}
+         checked: (params['urls'] == 'urls') ? nil : 'checked'}
   %label{for: 'fulltext'} Everything
   &emsp;
   %input{type: 'text', id: 'q', name: 'q', value: params['q']}
