@@ -1,0 +1,9 @@
+%p Last statements:
+
+.lasts
+  - @last.each do |l|
+    .last
+      = Time.at(l[:at].to_i).strftime('[%b %d, %Y %H:%M]')
+      = l[:chan]
+      %span.nick &lt;#{l[:nick]}&gt;
+      &= l[:stmt]

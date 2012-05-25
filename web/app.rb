@@ -284,3 +284,21 @@ get '/db/accounts' do
   @accounts = DB[:accounts].select_col(:name)
   haml :accounts
 end
+
+get '/db/last' do
+  protected!
+  @last = DB[:last].order(:chan, :nick).all
+  haml :db_last
+end
+
+get '/db/points' do
+  protected!
+  @points = DB[:points].all
+  haml :db_points
+end
+
+get '/db/levels' do
+  protected!
+  @levels = DB[:levels].all
+  haml :db_levels
+end

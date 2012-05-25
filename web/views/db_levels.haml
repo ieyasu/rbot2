@@ -1,0 +1,10 @@
+%table.levels
+  %tr
+    %th Account
+    %th Nick
+    %th Level
+  - @levels.each do |level|
+    %tr
+      %td= level[:account] || '-'
+      %td= level[:nick] || '-'
+      %td= level[:level]
