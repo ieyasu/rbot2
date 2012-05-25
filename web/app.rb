@@ -82,12 +82,13 @@ helpers do
     # 1. get list of files with date range and channel(s)
     channels = chan ? ["log/#{chan}"] : Dir["log/#*"]
     d = from.dup
-    files = []
+    chan_files = {}
     while d <= to
       prefix = d.strftime("/%Y-%m-%d-")
       channels.each do |dir|
-        file = "#{dir}#{prefix}#{File.basename(dir)}.log"
-        files << file if File.exist?(file)
+        chan = File.basename(dir)
+        file = "#{dir}#{prefix}#{chan}.log"
+        chan_files[chan] = (chan_files[chan] || []) << file if File.exist?(file)
       end
       d += 24 * 60 * 60
     end
@@ -95,17 +96,16 @@ helpers do
     # 2. read in log lines
     log = channels.inject({}) {|h, chan| h[File.basename chan] = []; h}
 
-    files.each do |file|
-      file =~ /\d-(#.+)\.log$/; chan = $1
-      s =
-        if urls == :urls || q               # filter with pcregrep
-          cmd = "cat #{file}"
-          cmd << " | pcregrep -iue #{Shellwords.shellescape(q)}" if q
-          cmd << " | pcregrep -iuf lib/rubybot2/url-regex.txt" if urls == :urls
-          `#{cmd}`
-        else                                # read the whole file
-          File.read(file)
-        end
+    chan_files.each do |chan, files|
+      if urls == :urls || q               # filter with pcregrep
+        cmd = "cat #{files.join(' ')}"
+        cmd << " | pcregrep -iue #{Shellwords.shellescape(q)}" if q
+        cmd << " | pcregrep -iuf lib/rubybot2/url-regex.txt" if urls == :urls
+        s = `#{cmd}`
+      else                                # read the whole file
+        s = ''
+        files.each {|file| s << File.read(file) }
+      end
       log[chan] += s.split(/\r?\n/)
     end
 
