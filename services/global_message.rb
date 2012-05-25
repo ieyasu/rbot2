@@ -11,6 +11,8 @@ register IRC::CMD_PRIVMSG
 message_loop do |msg, replier|
   next unless msg.sent_to_channel?
 
+  # XXX scan for URL, update golast file if one is found
+
   # update last statement
   unless $rbconfig['no-monitor-channels'].include?(msg.dest)
     DB['INSERT OR REPLACE INTO last VALUES(?, ?, ?, ?);',

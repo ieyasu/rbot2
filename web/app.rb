@@ -10,6 +10,10 @@ require 'rubybot2/account'
 require 'rubybot2/irc'
 require 'rubybot2/nextlib'
 
+
+r = File.read('lib/rubybot2/url-regex.txt').scan(/^(?![#\r\n])[^\r\n]+/)
+$url_regex = Regexp.new(r.first, Regexp::IGNORECASE)
+
 helpers do
   def protected!
     unless authorized?
@@ -36,8 +40,10 @@ helpers do
   end
 
   def link_urls(text)
-    # XXX use better regex in future
-    text.gsub(URI.regexp('http')) {|m| "<a href='#{m}'>#{m}</a>"}
+    text.gsub($url_regex) do |m|
+      u = (m =~ /^(?:http|ftp)/) ? m : "http://#{m}"
+      "<a href='#{u}'>#{m}</a>"
+    end
   end
 
   def format_next(nxt)
@@ -156,7 +162,7 @@ helpers do
   end
 
   def find_latest_url(files)
-    files.sort_by {|file| File.mtime(file)}.reverse.each do |file|
+    files.sort_by {|file| File.mtime(file)}.reverse_each do |file|
       # XXX filter out common useless urls, e.g. mibbit quit messages
       u = `cat #{file} | pcregrep -iuof lib/rubybot2/url-regex.txt | tail -1`.strip
       return u if u.length > 0
@@ -164,6 +170,7 @@ helpers do
     nil
   end
 
+  # XXX pull from file written by global_message service
   def last_url
     unless (chan = params['chan']) and IRC.channel_name?(chan)
       chan = nil
