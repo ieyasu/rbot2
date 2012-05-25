@@ -2,6 +2,7 @@ load 'config.rb'
 
 require 'rubygems'
 require 'sinatra'
+require 'cgi'
 require 'date'
 require 'chronic'
 require 'shellwords'
@@ -138,6 +139,42 @@ helpers do
         sub(/((?:&lt;[\w-]+&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>")
     end
   end
+
+  def log_files_for(channels, t)
+    prefix = t.strftime("/%Y-%m-%d-")
+    channels.map do |dir|
+      chan = File.basename(dir)
+      "#{dir}#{prefix}#{chan}.log"
+    end.delete_if {|file| !File.exist?(file)}
+  end
+
+  def find_latest_url(files)
+    files.sort_by {|file| File.mtime(file)}.reverse.each do |file|
+      u = `cat #{file} | pcregrep -iuof lib/rubybot2/url-regex.txt | tail -1`.strip
+      return u if u.length > 0
+    end
+    nil
+  end
+
+  def last_url
+    unless (chan = params['chan']) and chan =~ /^#.*$/
+      chan = nil
+    end
+    channels = chan ? ["log/#{chan}"] : Dir["log/#*"]
+
+    # Fast path: try the last three days' files
+    t = Time.now.utc
+    files = log_files_for(channels, t)
+    t -= 24 * 60 * 60
+    files += log_files_for(channels, t)
+    t -= 24 * 60 * 60
+    files += log_files_for(channels, t)
+    url = find_latest_url(files) and return url
+
+    # Slow path: go through all remaining log files newest -> oldest
+    other_files = channels.map {|c| Dir["#{c}/*.log"].to_a}.flatten - files
+    find_latest_url(other_files)
+  end
 end
 
 not_found do
@@ -190,7 +227,7 @@ get '/logs' do
 
   @channels = ['All'] + Dir['log/#*'].delete_if {|path| !File.directory?(path)}.sort_by {|path| File.mtime(path)}.map {|path| File.basename path}
 
-  @from, @to, chan, urls, q = get_log_params
+  @from, @to, @chan, urls, q = get_log_params
 
   if (f = params['from']) && f.length > 0
     @fromd = params['from']
@@ -203,9 +240,18 @@ get '/logs' do
     @tod = nil
   end
 
-  @logs = read_logs(@from, @to, chan, urls, q)
+  @logs = read_logs(@from, @to, @chan, urls, q)
 
   haml :chatlog
+end
+
+get '/logs/golast' do
+  protected!
+  if (url = last_url)
+    redirect url, 302
+  else
+    'No URL to be found!'
+  end
 end
 
 get '/db' do

@@ -30,3 +30,6 @@
 %hr
 
 %a{href: '/logs/golast'} golast
+- if @chan
+  &emsp;
+  %a{href: "/logs/golast?chan=#{CGI.escape @chan}"} golast (this channel)
