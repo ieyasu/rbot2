@@ -4,6 +4,7 @@ require 'rubygems'
 require 'sinatra'
 require 'date'
 require 'chronic'
+require 'shellwords'
 require 'rubybot2/account'
 require 'rubybot2/nextlib'
 
@@ -98,7 +99,10 @@ helpers do
       file =~ /\d-(#.+)\.log$/; chan = $1
       s =
         if urls == :urls || q               # filter with pcregrep
-          `pcregrep -hiu #{q} -- #{file}`
+          cmd = "cat #{file}"
+          cmd << " | pcregrep -iue #{Shellwords.shellescape(q)}" if q
+          cmd << " | pcregrep -iuf lib/rubybot2/url-regex.txt" if urls == :urls
+          `#{cmd}`
         else                                # read the whole file
           File.read(file)
         end
