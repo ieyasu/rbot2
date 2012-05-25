@@ -10,6 +10,7 @@ require 'rubybot2/account'
 require 'rubybot2/irc'
 require 'rubybot2/nextlib'
 
+set :public_folder, File.dirname(__FILE__) + '/pub'
 
 r = File.read('lib/rubybot2/url-regex.txt').scan(/^(?![#\r\n])[^\r\n]+/)
 $url_regex = Regexp.new(r.first, Regexp::IGNORECASE)
