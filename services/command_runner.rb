@@ -10,6 +10,7 @@ require 'rubybot2/plugin'
 require 'rubybot2/thread_janitor'
 require 'rubybot2/db'
 require 'rubybot2/zipdb'
+require 'logger'
 require 'open3'
 
 include Zip
