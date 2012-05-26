@@ -23,14 +23,14 @@ module IRC
   # Maximum length of a channel name.
   MAX_CHANNEL_LENGTH = 50
 
-  nick = "[A-}][\\-0-9A-}]*"
+  NICK = "[A-}][\\-0-9A-}]*"
 
   # Matches valid nicknames. Does not bother with length since servers do
   # not limit nicks to 9 characters as in RFC 2812.
-  NICK_REGEX = Regexp.new(nick)
+  NICK_REGEX = Regexp.new(NICK)
 
   hostname = "[^ .]+(?:\\.[^ .]+)*"
-  prefix = "(?::(?:#{nick}(?:(?:![^\000\r\n @]+)?@#{hostname})?|#{hostname}) )?"
+  prefix = "(?::(?:#{NICK}(?:(?:![^\000\r\n @]+)?@#{hostname})?|#{hostname}) )?"
   command = "(?:\\d{3}|[A-Z]+)"
   param = "[\001-\t\v\f\016-\037!-9;-\177][^ \000\r\n]*"
   parameters = "(?:\s+#{param})*(?:\s+:[^\000\r\n]*)?"

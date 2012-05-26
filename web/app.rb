@@ -56,7 +56,7 @@ helpers do
   def get_log_params(urls_default = :fulltext)
     if (from = params['from']) && from.length > 0
       from = Chronic.parse(from, :context => :past, :guess => false)
-      from = from.begin if Chronic::Span === from 
+      from = from.begin if Chronic::Span === from
     else
       t = Time.now
       from = Time.new(t.year, t.month, t.day)
@@ -141,15 +141,26 @@ helpers do
           lines << [t, "#{chan} #{text}"]
         end
       end
-      lines = lines.sort_by {|t, text| t}
+      # XXX not sure what to do about this fucking up whitespace
+      #lines = lines.sort_by {|t, text| t}
     else
       lines = log[log.keys.first]
     end
 
     # 6. format lines
     lines.map do |t, text|
-        s = text.gsub('<', '&lt;').gsub('>', '&gt;').
-        sub(/((?:&lt;[\w-]+&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>")
+      s = text.gsub('<', '&lt;').gsub('>', '&gt;').
+        sub(/((?:&lt;#{IRC::NICK}&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>").
+        gsub(/\003(1[0-5]|\d)?(?:,(1[0-5]|\d))?([^\003]+)/) do |m|
+          if $1 || $2
+            c = "<span class='"
+            c << "fg#$1" if $1
+            c << " bg$2" if $2
+            c << "'>#{$3}</span>"
+          else
+            $3
+          end
+      end
       t.strftime('[%H:%M] ') + link_urls(s)
     end
   end
