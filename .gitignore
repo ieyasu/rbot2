@@ -4,6 +4,7 @@ log/*
 run/*
 db/rubybot.db
 db/*-rand
+db/rubybot-*T*.sql.gz
 config.rb
 *.pyc
 inc/sms_auth.inc

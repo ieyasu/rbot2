@@ -1,0 +1,4 @@
+#!/bin/bash
+. `dirname $BASH_SOURCE`/ENVIRONMENT
+stamp=`date +%Y-%m-%dT%H:%M:%S`
+sqlite3 db/rubybot.db .dump | gzip -c -9 >db/rubybot-$stamp.sql.gz
