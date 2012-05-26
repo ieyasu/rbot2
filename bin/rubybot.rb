@@ -52,6 +52,8 @@ class Service
     if msg.command =~ @commands && (is_echo.nil? || @wants_echoes)
       @stdin.puts(msg)
     end
+  rescue IOError
+    # When we kill Rubybot, need to catch this except to prevent infinite loop non-exit
   end
 
   # Checks subprocess for life
@@ -214,6 +216,7 @@ begin
   while (msg = $client.read_message)
     message_received(msg)
   end
+  sleep 1
 rescue SystemExit
   break # quit called
 rescue => e
