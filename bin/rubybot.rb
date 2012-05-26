@@ -18,11 +18,19 @@ class Service
     @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(ENV, file)
 
     # see if it wants echoes
-    @wants_echoes = (@stdout.gets =~ /^echo$/) != nil
+    if (line = @stdout.gets)
+      @wants_echoes = (line =~ /^echo$/) != nil
+    else
+      raise "#{line.inspect} received for wants_echoes line"
+    end
 
     # read list of commands to send
-    list = @stdout.gets.split(/\s+/)
-    @commands = list.length > 0 ? /^(?:#{list.join('|')})$/ : /(?!)/
+    if (line = @stdout.gets)
+      list = line.split(/\s+/)
+      @commands = list.length > 0 ? /^(?:#{list.join('|')})$/ : /(?!)/
+    else
+      raise "#{line.inspect} received for commands line"
+    end
 
     @out_thr = Thread.new do
       while (line = @stdout.gets)
@@ -131,7 +139,11 @@ def start_services
   Dir.glob('services/*').sort.each do |file|
     s = File.stat(file)
     if s.file? and s.executable?
-      $services << Service.new(file)
+      begin
+        $services << Service.new(file)
+      rescue => e
+        $log.error "Error starting #{file}: #{e.message}"
+      end
     end
   end
 
