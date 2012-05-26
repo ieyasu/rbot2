@@ -2,11 +2,15 @@
 
 = haml :_errors
 
-%form{action: url('/account/create'), method: 'post'}
+%form{action: url('/admin/create_account'), method: 'post'}
   %p
     %label{for: 'name'} Name
     %br/
     %input{type: 'text', id: 'name', name: 'name', size: 16, value: params['name']}
+  %p
+    %label{for: 'nicks'} Nicks
+    %br/
+    %input{type: 'text', id: 'nicks', name: 'nicks', size: 16, value: params['nicks']}
   %p
     %label{for: 'zip'} Zip
     %br/

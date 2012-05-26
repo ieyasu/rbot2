@@ -10,5 +10,7 @@
       = navitem 'account'
       = navitem 'logs'
       = navitem 'db'
+      - if admin?
+        = navitem 'admin'
     #content
       = yield

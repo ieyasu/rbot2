@@ -43,6 +43,20 @@ helpers do
     end
   end
 
+  def admin!
+    unless admin?
+      response['WWW-Authenticate'] = %(Basic realm="Admin Area")
+      throw(:halt, [401, "Not authorized\n"])
+    end
+  end
+
+  def admin?
+    unless @account
+      authorized? or return false
+    end
+    @account[:name] == $rbconfig['web-admin-account']
+  end
+
   def navitem(name)
     i = request.path_info.index(name)
     c = (i && i < 2) ? 'current' : 'other'
@@ -309,38 +323,6 @@ post '/account/destroy' do
   haml :account_destroy
 end
 
-get '/account/create' do
-  @errors = []
-  haml :account_create
-end
-
-post '/account/create' do
-  @errors = []
-  if (@name = params['name']) and @name !~ /^\w+$/
-    @errors << "Name must only contain letters, numbers, '_', and no spaces"
-  elsif Account::exists?(@name)
-    @errors << "Account '#{@name}' already exists"
-  end
-  if (@zip = params['zip']) and @zip !~ /^\d{1,5}$/
-    @errors << "Zip is not a 5-digit US zip code"
-  end
-  if (@password = params['password']) and @password.length < 3
-    @errors << "Password must be at least 3 characters long"
-  end
-  if @password and @password =~ /\s/
-    @errors << "Password must not contain whitespace"
-  end
-
-  if @errors.length > 0
-    haml :account_create
-  elsif Account::create(@name, @zip.to_i, @password)
-    redirect to('/account')
-  else
-    @errors << "Unknown error creating account"
-    haml :account_create
-  end
-end
-
 get '/account/received-nexts' do
   protected!
   @title = 'Received Nexts'
@@ -419,4 +401,60 @@ get '/db/levels' do
   protected!
   @levels = DB[:levels].all
   haml :db_levels
+end
+
+get '/admin' do
+  admin!
+  haml :admin
+end
+
+get '/admin/create_account' do
+  admin!
+  haml :admin_create_account
+end
+
+post '/admin/create_account' do
+  admin!
+
+  @errors = []
+  if (@name = params['name']) and @name !~ /^\w+$/
+    @errors << "Name must only contain letters, numbers, '_', and no spaces"
+  elsif Account::exists?(@name)
+    @errors << "Account '#{@name}' already exists"
+  end
+  if (@zip = params['zip']) and @zip !~ /^\d{1,5}$/
+    @errors << "Zip is not a 5-digit US zip code"
+  end
+  if (nicks = params['nicks']) and
+      (nicks = nicks.scan(IRC::NICK_REGEX)).length > 0
+    nicks.each do |nick|
+      if DB[:nick_accounts].filter(:nick => nick).count > 0
+        @errors << "The nick #{nick} is already taken"
+      end
+    end
+  end
+  if (@password = params['password']) and @password.length < 3
+    @errors << "Password must be at least 3 characters long"
+  end
+  if @password and @password =~ /\s/
+    @errors << "Password must not contain whitespace"
+  end
+
+  if @errors.length > 0
+    haml :admin_create_account
+  elsif Account::create(@name, @zip.to_i, @password)
+    @errors << "Account created!"
+    nicks.each do |nick|
+      succ, msg = Account.add_nick(@name, nick)
+      @errors << msg unless succ
+    end
+    if @errors.length > 1
+      haml :admin_create_account
+    else
+      redirect to('/db/accounts')
+    end
+  else
+    @errors << "Unknown error creating account"
+    haml :admin_create_account
+  end
 end
