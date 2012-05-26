@@ -1,8 +1,8 @@
 %form{action: '/logs', method: 'get'}
   %label{for: 'from'} From:
-  %input{type: 'text', id: 'from', name: 'from', size: 10, value: @fromd}
+  %input{type: 'text', id: 'from', name: 'from', size: 10, value: params['from']}
   %label{for: 'to'} To:
-  %input{type: 'text', id: 'to', name: 'to', size: 10, value: @tod}
+  %input{type: 'text', id: 'to', name: 'to', size: 10, value: params['to']}
   &emsp;
   %select{id: 'chan', name: 'chan'}
     - @channels.each do |chan|

@@ -15,6 +15,15 @@ set :public_folder, File.dirname(__FILE__) + '/pub'
 r = File.read('lib/rubybot2/url-regex.txt').scan(/^(?![#\r\n])[^\r\n]+/)
 $url_regex = Regexp.new(r.first, Regexp::IGNORECASE)
 
+SHORT_TIME_FMT  = '[%H:%M] '
+MED_TIME_FMT    = '[%a %H:%M] '
+LONG_TIME_FMT   = '[%b %d %H:%M] '
+VLONG_TIME_FMT  = '[%b %d, %Y %H:%M] '
+DAY = 24 * 60 * 60
+WEEK = 7 * DAY
+MONTH = 31 * DAY
+YEAR = 365 * DAY
+
 helpers do
   def protected!
     unless authorized?
@@ -66,7 +75,7 @@ helpers do
       to = Chronic.parse(to, :context => :past, :guess => false)
       to = to.end if Chronic::Span === to
     else
-      to = from + (24 * 60 * 60)
+      to = from + DAY
     end
 
     unless (chan = params['chan']) and IRC.channel_name?(chan)
@@ -105,7 +114,7 @@ helpers do
         file = "#{dir}#{prefix}#{chan}.log"
         chan_files[chan] = (chan_files[chan] || []) << file if File.exist?(file)
       end
-      d += 24 * 60 * 60
+      d += DAY
     end
 
     # 2. read in log lines
@@ -161,7 +170,17 @@ helpers do
             $3
           end
       end
-      t.strftime('[%H:%M] ') + link_urls(s)
+      fmt =
+        if @to - @from < 2 * DAY
+          SHORT_TIME_FMT  # HH:MM
+        elsif @to - @from < WEEK
+          MED_TIME_FMT    # Day HH:MM
+        elsif @to - @from < YEAR
+          LONG_TIME_FMT   # Mon DY HH:MM
+        else
+          VLONG_TIME_FMT  # Mon DY, YYYY HH:MM
+        end
+      t.strftime(fmt) + link_urls(s)
     end
   end
 
@@ -194,9 +213,9 @@ helpers do
     # Fast path: try the last three days' files
     t = Time.now.utc
     files = log_files_for(channels, t)
-    t -= 24 * 60 * 60
+    t -= DAY
     files += log_files_for(channels, t)
-    t -= 24 * 60 * 60
+    t -= DAY
     files += log_files_for(channels, t)
     url = find_latest_url(files) and return url
 
@@ -345,27 +364,22 @@ post '/account/delete-next/:nid' do
   end
 end
 
+MIN_DEFAULT_RESULTS = 32
+
 get '/logs' do
   protected!
 
   @channels = ['All'] + log_dirs.delete_if {|path| !File.directory?(path)}.
     sort_by {|path| File.mtime(path)}.map {|path| File.basename path}
-
   @from, @to, @chan, urls, q = get_log_params
-
-  if (f = params['from']) && f.length > 0
-    @fromd = params['from']
-  else
-    @fromd = @from.strftime('%Y-%m-%d')
-  end
-  if (t = params['to']) && t.length > 0
-    @tod = params['to']
-  else
-    @tod = nil
-  end
-
   @logs = read_logs(@from, @to, @chan, urls, q)
-
+  two_weeks_ago = Time.now - (2 * WEEK)
+  if !(from = params['from']) || from.length < 1
+    while @logs.length < MIN_DEFAULT_RESULTS && @from > two_weeks_ago
+      @from -= DAY
+      @logs = read_logs(@from, @to, @chan, urls, q)
+    end
+  end
   haml :chatlog
 end
 
