@@ -36,14 +36,16 @@ module NextLib
 
   # Returns a list of undelivered nexts sent by the given account,
   # numbering starting with 0.
-  def NextLib.list_undelivered(account)
-    nxts = DB[:nexts].filter(:from_account => account).order(:sent_at.desc).limit(8).all
+  def NextLib.list_undelivered(account, lim = 8)
+    q = DB[:nexts].filter(:from_account => account).order(:sent_at.desc)
+    q = q.limit(lim) if lim && lim > 0
+    nxts = q.all
     return 'you have no undelivered nexts' unless nxts.length > 0
     nxts.map do |nxt|
       ar = DB[:account_recips].filter(:next_id => nxt[:id]).select_col(:account)
       pr = DB[:pattern_recips].filter(:next_id => nxt[:id]).select_col(:nick_pat)
       ar, pr = NextLib.format_recips(ar, pr)
-      ["#{ar}#{pr}", nxt[:message]]
+      {recips: "#{ar}#{pr}", msg: nxt[:message], id: nxt[:id]}
     end
   end
 
@@ -58,6 +60,19 @@ module NextLib
       r.priv_reply("deleted last undelivered next '#{NextLib.trunc nxt[:message]}'")
     else
         r.priv_reply("no undelivered nexts to delete")
+    end
+  end
+
+  # Delete the undelivered next with the given account and id.
+  def NextLib.delete_undelivered(account, nid)
+    nxt = DB[:nexts].filter(:from_account => account, :id => nid)
+    if nxt.first
+      nxt.delete
+      DB[:account_recips].filter(:next_id => nid).delete
+      DB[:pattern_recips].filter(:next_id => nid).delete
+      true
+    else
+      false
     end
   end
 

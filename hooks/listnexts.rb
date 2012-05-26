@@ -4,9 +4,9 @@ if (account = Account.name_by_nick($msg.nick))
   list = NextLib.list_undelivered(account)
   if Array === list
     i = 0
-    list = list.map do |recips, message|
+    list = list.map do |nxt|
       i += 1
-      "#{i}. #{recips}: #{NextLib.trunc message}"
+      "#{i}. #{nxt[:recips]}: #{NextLib.trunc nxt[:msg]}"
     end.join(', ')
   end
   priv_reply list

@@ -164,7 +164,6 @@ helpers do
 
   def find_latest_url(files)
     files.sort_by {|file| File.mtime(file)}.reverse_each do |file|
-      # XXX filter out common useless urls, e.g. mibbit quit messages
       u = `cat #{file} | pcregrep -iuvf lib/rubybot2/url-block.txt | pcregrep -iuof lib/rubybot2/url-regex.txt | tail -1`.strip
       if u.length > 0
         u = "http://#{u}" if u !~ /^(?:http|ftp)/
@@ -218,13 +217,98 @@ get '/account' do
   haml :account
 end
 
+post '/account' do
+  protected!
+  @errors = []
+  @notices = []
+
+  if (nicks = params['nicks'])
+    enicks = Account.list_nicks(@account[:name])
+    nicks = nicks.scan(IRC::NICK_REGEX)
+    if nicks.length > 0 # add or remove nicks
+      remnicks = enicks - nicks
+      (nicks - enicks).each do |addnick|
+        succ, msg = Account.add_nick(@account[:name], addnick)
+        (succ ? @notices : @errors) << msg
+      end
+    elsif enicks.length > 0 # remove existing nicks
+      remnicks = enicks
+    else
+      remnicks = []
+    end
+    remnicks.each do |remnick|
+      succ, msg = Account.del_nick(@account[:name], remnick)
+      (succ ? @notices : @errors) << msg
+    end
+  end
+  @nicks = Account.list_nicks(@account[:name])
+
+  if (zip = params['zip']) and zip =~ /^\d{1,5}$/
+    zip = zip.to_i
+    if zip != @account[:zip]
+      DB[:accounts].filter(name: @account[:name]).update(zip: zip)
+      @account = Account.by_name(@account[:name])
+      @notices << "Updated zip code"
+    end
+  else
+    @errors << "Zip is not a 5-digit US zip code"
+  end
+
+  if (pass1 = params['pass1']) && pass1.length > 0
+    if (pass2 = params['pass2']) && pass2.length > 0
+      if pass1.length < 3
+        @errors << "Password must be at least 3 characters long"
+      elsif pass1 != pass2
+        @errors << "Passwords do not match"
+      else
+        DB[:accounts].filter(name: @account[:name]).update(passwd: Account::hash_passwd(pass1))
+        @account = Account.by_name(@account[:name])
+        @notices << "Password updated"
+      end
+    else
+      @errors << "You must confirm the new password"
+    end
+  end
+
+  haml :account
+end
+
+post '/account/destroy' do
+  protected!
+  Account::destroy(@account[:name])
+  haml :account_destroy
+end
+
 get '/account/create' do
-  haml :create
+  @errors = []
+  haml :account_create
 end
 
 post '/account/create' do
-  # XXX do stuff with parameters
-  'not implemented yet'
+  @errors = []
+  if (@name = params['name']) and @name !~ /^\w+$/
+    @errors << "Name must only contain letters, numbers, '_', and no spaces"
+  elsif Account::exists?(@name)
+    @errors << "Account '#{@name}' already exists"
+  end
+  if (@zip = params['zip']) and @zip !~ /^\d{1,5}$/
+    @errors << "Zip is not a 5-digit US zip code"
+  end
+  if (@password = params['password']) and @password.length < 3
+    @errors << "Password must be at least 3 characters long"
+  end
+  if @password and @password =~ /\s/
+    @errors << "Password must not contain whitespace"
+  end
+
+  if @errors.length > 0
+    haml :account_create
+  elsif Account::create(@name, @zip.to_i, @password)
+    redirect to('/account')
+  else
+    @errors << "Unknown error creating account"
+    haml :account_create
+  end
 end
 
 get '/account/received-nexts' do
@@ -237,8 +321,17 @@ end
 get '/account/undelivered-nexts' do
   protected!
   @title = 'Undelivered Nexts'
-  @nexts = NextLib.list_undelivered(@account[:name])
+  @nexts = NextLib.list_undelivered(@account[:name], 0)
   haml :undelivered_nexts
+end
+
+post '/account/delete-next/:nid' do
+  protected!
+  if NextLib.delete_undelivered(@account[:name], params[:nid])
+    'success'
+  else
+    halt 409, 'next not found'
+  end
 end
 
 get '/logs' do

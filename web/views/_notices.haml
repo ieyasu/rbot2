@@ -1,0 +1,5 @@
+- if @notices && @notices.length > 0
+  .notice
+    %ul
+      - @notices.each do |notice|
+        %li= notice

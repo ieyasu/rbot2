@@ -8,12 +8,37 @@
 
 %h2 Profile
 
-%div
-  - if @nicks.length > 0
-  Nicks: #{@nicks.join(', ')}
-  - else
-    There are no nicks associated with your account.
-  %br/
-  Zip: #{@account[:zip]}
+= haml :_errors
+= haml :_notices
 
-%p Change Password
+%form{action: url('/account'), method: 'post'}
+  %p
+    %label{for: 'nicks'} Nicks:
+    %br/
+    %input{type: 'text', id: 'nicks', name: 'nicks', value: @nicks.join(' ')}
+  %p
+    %label{for: 'zip'} Zip:
+    %br/
+    %input{type: 'text', id: 'zip', name: 'zip', value: @account[:zip]}
+  %p
+    %label{for: 'pass1'} New Password:
+    %br/
+    %input{type: 'password', id: 'pass1', name: 'pass1'}
+    %br/
+    %label{for: 'pass2'} Confirm Password:
+    %br/
+    %input{type: 'password', id: 'pass2', name: 'pass2'}
+  %p
+    %input{type: 'submit', value: 'Update'}
+
+%br/
+%br/
+%form{action: url('/account/destroy'), method: 'post'}
+  %input{type: 'submit', value: 'Destroy Account',
+         onclick: 'return checkDestroy()'}
+
+:javascript
+  function checkDestroy() {
+    return confirm("Are you sure you want to destroy your account? " +
+      "This action cannot be undone.");
+  }

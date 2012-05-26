@@ -1,0 +1,19 @@
+%h2 New Account
+
+= haml :_errors
+
+%form{action: url('/account/create'), method: 'post'}
+  %p
+    %label{for: 'name'} Name
+    %br/
+    %input{type: 'text', id: 'name', name: 'name', size: 16, value: params['name']}
+  %p
+    %label{for: 'zip'} Zip
+    %br/
+    %input{type: 'text', id: 'zip', name: 'zip', size: 16, value: params['zip'] || $rbconfig['default-zip']}
+  %p
+    %label{for: 'password'} Password
+    %br/
+    %input{type: 'password', id: 'password', name: 'password', size: 16, value: params['password']}
+  %br/
+  %input{type: 'submit', value: 'Create Account'}

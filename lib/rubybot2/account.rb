@@ -3,6 +3,10 @@ require 'digest/md5'
 include Digest
 
 module Account
+  def Account.create(name, zip, pass)
+    DB[:accounts].insert(name, zip, Account::hash_passwd(pass))
+  end
+
   # delete everything belonging to the named account from the database.
   def Account.destroy(account)
     DB[:accounts].filter(:name => account).delete
@@ -42,6 +46,25 @@ module Account
 
   def Account.list_nicks(account)
     DB[:nick_accounts].filter(:account => account).select_col(:nick)
+  end
+
+  def Account.add_nick(account, nick)
+    DB[:nick_accounts].insert(nick, account)
+    return true, "added nick #{nick} to account #{account}"
+  rescue Sequel::DatabaseError
+    return false, "someone else has already added the nick #{nick} to their account"
+  end
+
+  def Account.del_nick(account, nick)
+    na = DB[:nick_accounts].filter(:nick => nick, :account => account)
+    case na.delete
+    when 1
+      return true, "removed nick #{nick} from account #{account}"
+    when 0
+      reutrn false, "account #{account} does not own nick #{nick}"
+    else
+      raise "AIEEE Shouldn't be able to delete that many"
+    end
   end
 
   # Returns the salted, hashed password ready to store in the db

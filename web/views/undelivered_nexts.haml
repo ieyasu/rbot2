@@ -1,7 +1,35 @@
-%p #{@account[:name]}'s undelivered nexts:
+- if Array === @nexts
+  %p #{@account[:name]}'s undelivered nexts:
+  %ol
+    - @nexts.each_with_index do |nxt, i|
+      %li
+        #{nxt[:recips]}: #{nxt[:msg]} &nbsp;
+        %a{:href => "javascript:checkDelete(#{nxt[:id]})"} delete
+- else
+  %p You have no undelivered nexts
 
-%ol
-  - @nexts.each_with_index do |(recips, message), i|
-    %li
-      #{recips}: #{message} &nbsp;
-      %a{:href => url("/account/delete-next/#{i + 1}")} delete
+:javascript
+  function checkDelete(nid) {
+    if (confirm("Do you really want to delete this next?")) {
+      deleteNext(nid);
+    }
+  }
+  function deleteNext(nid) {
+    var xhr;
+    if (window.XMLHttpRequest) {
+      xhr = new XMLHttpRequest();
+    } else {
+      xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          window.location.reload(false);
+        } else {
+          alert("Error deleting next: " + xhr.responseText);
+        }
+      }      
+    };
+    xhr.open("POST", "#{url('/account/delete-next/')}" + nid, true);
+    xhr.send("");
+  }
