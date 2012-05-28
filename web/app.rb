@@ -171,7 +171,7 @@ helpers do
     end
 
     # 6. format lines
-    lu = (urls == :urls)
+    lt = (urls == :urls || q)
     lines.map do |t, text|
       s = text.gsub('<', '&lt;').gsub('>', '&gt;').
         sub(/((?:&lt;#{IRC::NICK}&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>").
@@ -185,7 +185,7 @@ helpers do
             $3
           end
       end
-      "#{log_timestamp(t, lu)}<a name='#{t.to_i}'></a>#{link_urls(s)}"
+      "#{log_timestamp(t, lt)}<a name='#{t.to_i}'></a>#{link_urls(s)}"
     end
   end
 
@@ -224,7 +224,7 @@ helpers do
       u = `cat #{file} | pcregrep -iuvf lib/rubybot2/url-block.txt | pcregrep -iuof lib/rubybot2/url-regex.txt | tail -1`.strip
       if u.length > 0
         u = "http://#{u}" if u !~ /^(?:http|ftp)/
-        return u 
+        return u
       end
     end
     nil
