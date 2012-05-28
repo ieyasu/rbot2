@@ -171,6 +171,7 @@ helpers do
     end
 
     # 6. format lines
+    lu = (urls == :urls)
     lines.map do |t, text|
       s = text.gsub('<', '&lt;').gsub('>', '&gt;').
         sub(/((?:&lt;#{IRC::NICK}&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>").
@@ -184,17 +185,29 @@ helpers do
             $3
           end
       end
-      fmt =
-        if @to - @from < 2 * DAY
-          SHORT_TIME_FMT  # HH:MM
-        elsif @to - @from < WEEK
-          MED_TIME_FMT    # Day HH:MM
-        elsif @to - @from < YEAR
-          LONG_TIME_FMT   # Mon DY HH:MM
-        else
-          VLONG_TIME_FMT  # Mon DY, YYYY HH:MM
-        end
-      t.strftime(fmt) + link_urls(s)
+      "#{log_timestamp(t, lu)}<a name='#{t.to_i}'></a>#{link_urls(s)}"
+    end
+  end
+
+  def log_timestamp(t, link)
+    fmt =
+      if @to - @from < 2 * DAY
+        SHORT_TIME_FMT  # HH:MM
+      elsif @to - @from < WEEK
+        MED_TIME_FMT    # Day HH:MM
+      elsif @to - @from < YEAR
+        LONG_TIME_FMT   # Mon DY HH:MM
+      else
+        VLONG_TIME_FMT  # Mon DY, YYYY HH:MM
+      end
+    s = t.strftime(fmt)
+    if link
+      t1 = Time.new(t.year, t.month, t.day).strftime('%Y-%m-%d')
+      # XXX better to use whichever channel this line is from
+      u = "/logs?from=#{t1}&to=&chan=#{params['chan']}"
+      "<a href='#{url u}##{t.to_i}'>#{s}</a>"
+    else
+      s
     end
   end
 
