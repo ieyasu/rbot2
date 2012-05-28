@@ -15,10 +15,10 @@ set :public_folder, File.dirname(__FILE__) + '/pub'
 r = File.read('lib/rubybot2/url-regex.txt').scan(/^(?![#\r\n])[^\r\n]+/)
 $url_regex = Regexp.new(r.first, Regexp::IGNORECASE)
 
-SHORT_TIME_FMT  = '[%H:%M] '
-MED_TIME_FMT    = '[%a %H:%M] '
-LONG_TIME_FMT   = '[%b %d %H:%M] '
-VLONG_TIME_FMT  = '[%b %d, %Y %H:%M] '
+SHORT_TIME_FMT  = '[%H:%M]'
+MED_TIME_FMT    = '[%a %H:%M]'
+LONG_TIME_FMT   = '[%b %d %H:%M]'
+VLONG_TIME_FMT  = '[%b %d, %Y %H:%M]'
 DAY = 24 * 60 * 60
 WEEK = 7 * DAY
 MONTH = 31 * DAY
@@ -185,7 +185,7 @@ helpers do
             $3
           end
       end
-      "#{log_timestamp(t, lt)}<a name='#{t.to_i}'></a>#{link_urls(s)}"
+      "#{log_timestamp(t, lt)} <a name='#{t.to_i}'></a>#{link_urls(s)}"
     end
   end
 
