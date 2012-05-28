@@ -15,6 +15,8 @@ set :public_folder, File.dirname(__FILE__) + '/pub'
 r = File.read('lib/rubybot2/url-regex.txt').scan(/^(?![#\r\n])[^\r\n]+/)
 $url_regex = Regexp.new(r.first, Regexp::IGNORECASE)
 
+LOGSTAMP_FMT = '%Y-%m-%dT%H:%M:%S%Z'
+
 SHORT_TIME_FMT  = '[%H:%M]'
 MED_TIME_FMT    = '[%a %H:%M]'
 LONG_TIME_FMT   = '[%b %d %H:%M]'
@@ -116,8 +118,7 @@ helpers do
     Dir["log/[#+&]*"]
   end
 
-  def read_logs(from, to, chan, urls, q)
-    # 1. get list of files with date range and channel(s)
+  def which_log_files(from, to, chan)
     channels = chan ? ["log/#{chan}"] : log_dirs
     d = from.dup
     chan_files = {}
@@ -130,8 +131,10 @@ helpers do
       end
       d += DAY
     end
+    return channels, chan_files
+  end
 
-    # 2. read in log lines
+  def read_log_lines(channels, chan_files, urls, q)
     log = channels.inject({}) {|h, chan| h[File.basename chan] = []; h}
     chan_files.each do |chan, files|
       cmd = "cat #{files.join(' ')}"
@@ -140,38 +143,53 @@ helpers do
       cmd << " | head -n 50000" # ought to be enough for anybody!
       log[chan] += `#{cmd}`.split(/\r?\n/)
     end
+    log
+  end
 
-    # 3. split into Time, String pairs
+  def parse_timestamp(log)
     log.each_key do |chan|
       log[chan] = log[chan].map do |line|
         stamp, text = line.split(' ', 2)
-        t = DateTime.strptime(stamp, '%Y-%m-%dT%H:%M:%S%Z').to_time
+        t = DateTime.strptime(stamp, LOGSTAMP_FMT).to_time
         [t, text]
       end
     end
+    log
+  end
 
-    # 4. filter by date range
+  def filter_date_range(log, from, to)
     log.each_key do |chan|
       log[chan] = log[chan].select {|t, text| from <= t && t <= to}
     end
+    log
+  end
 
-    # 5. prefix with channel when multiple channels present and sort by time,
-    #    commingling results
-    if log.keys.length > 1
-      lines = []
-      log.each do |chan, clines|
-        clines.each do |t, text|
-          lines << [t, "#{chan} #{text}"]
-        end
+  # prefix with channel when multiple channels are present and sort
+  # by time, commingling results
+  def channelify_logs(log)
+    lines = []
+    log.each do |chan, clines|
+      clines.each do |t, text|
+        lines << [t, "#{chan} #{text}"]
       end
-      # XXX not sure what to do about this fucking up whitespace
-      #lines = lines.sort_by {|t, text| t}
-    else
-      lines = log[log.keys.first]
     end
+    # XXX not sure what to do about this fucking up whitespace
+    #lines = lines.sort_by {|t, text| t}
+    lines
+  end
 
-    # 6. format lines
-    lt = (urls == :urls || q)
+  def format_log_lines(lines, lt)
+    fmt =
+      if @to - @from < 2 * DAY
+        SHORT_TIME_FMT  # HH:MM
+      elsif @to - @from < WEEK
+        MED_TIME_FMT    # Day HH:MM
+      elsif @to - @from < YEAR
+        LONG_TIME_FMT   # Mon DY HH:MM
+      else
+        VLONG_TIME_FMT  # Mon DY, YYYY HH:MM
+      end
+
     lines.map do |t, text|
       s = text.gsub('<', '&lt;').gsub('>', '&gt;').
         sub(/((?:&lt;#{IRC::NICK}&gt;)|(?:\* [\w-]+))/, "<span class='nick'>\\1</span>").
@@ -185,21 +203,11 @@ helpers do
             $3
           end
       end
-      "#{log_timestamp(t, lt)} <a name='#{t.to_i}'></a>#{link_urls(s)}"
+      "#{log_timestamp(t, fmt, lt)} <a name='#{t.to_i}'></a>#{link_urls(s)}"
     end
   end
 
-  def log_timestamp(t, link)
-    fmt =
-      if @to - @from < 2 * DAY
-        SHORT_TIME_FMT  # HH:MM
-      elsif @to - @from < WEEK
-        MED_TIME_FMT    # Day HH:MM
-      elsif @to - @from < YEAR
-        LONG_TIME_FMT   # Mon DY HH:MM
-      else
-        VLONG_TIME_FMT  # Mon DY, YYYY HH:MM
-      end
+  def log_timestamp(t, fmt, link)
     s = t.strftime(fmt)
     if link
       t1 = Time.new(t.year, t.month, t.day).strftime('%Y-%m-%d')
@@ -209,6 +217,16 @@ helpers do
     else
       s
     end
+  end
+
+  def read_logs(from, to, chan, urls, q)
+    channels, chan_files = which_log_files(from, to, chan)
+    log = read_log_lines(channels, chan_files, urls, q)
+    log = parse_timestamp(log)
+    log = filter_date_range(log, from, to)
+    lines = (log.keys.length > 1) ? channelify_logs(log) : log[log.keys.first]
+    link_timestamps = (urls == :urls || q)
+    format_log_lines(lines, link_timestamps)
   end
 
   def log_files_for(channels, t)
