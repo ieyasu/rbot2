@@ -358,7 +358,7 @@ get '/logs' do
   two_weeks_ago = Time.now - (2 * WEEK)
   if !(from = params['from']) || from.length < 1
     while @logs.length < MIN_DEFAULT_RESULTS && @from > two_weeks_ago
-      @from -= DAY
+      @from -= DAY / 2
       @logs = read_logs(@from, @to, @chan, urls, q)
     end
   end
