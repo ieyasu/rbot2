@@ -28,5 +28,5 @@ if (ary = parse_definitions(body))
     reply "error parsing definition for #{$args}"
   end
 else
-  reply "woah there hep cat, your jive is too fresh for urban dictionary!"
+  reply "whoa there hep cat, your jive is too fresh for urban dictionary!"
 end
