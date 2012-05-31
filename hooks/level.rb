@@ -1,4 +1,4 @@
-who = $args.length > 0 ? $args : $msg.nick
+who = ($args =~ /(\S+)/) ? $1 : $msg.nick
 q =
   if (account = Account.name_by_nick(who))
     who = account
