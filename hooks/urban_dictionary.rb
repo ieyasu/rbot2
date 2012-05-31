@@ -1,7 +1,7 @@
 MAX_OUTPUT_SIZE = 1000
 
 def parse_definitions(body)
-  return if body.index('</b> is undefined.')
+  return if body.index("i> isn't defined")
   i = 0
   ary = []
   size = 0
@@ -13,16 +13,20 @@ def parse_definitions(body)
     break if ary.length > 0 && size > MAX_OUTPUT_SIZE
     i = j
   end
-  ary if ary.length > 0
+  ary
 end
 
 match_args /\w+/, '<word>'
 
 body = http_get("http://www.urbandictionary.com/define.php?term=#", $args)
 if (ary = parse_definitions(body))
-  ary.each_with_index do |r, i|
-    reply "#{i + 1}. #{r}"
+  if ary.length > 0
+    ary.each_with_index do |r, i|
+      reply "#{i + 1}. #{r}"
+    end
+  else
+    reply "error parsing definition for #{$args}"
   end
 else
-  reply "error parsing definition for #{$args}"
+  reply "woah there hep cat, your jive is too fresh for urban dictionary!"
 end
