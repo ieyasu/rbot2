@@ -21,20 +21,19 @@
 %hr
 
 %p
-  Logs from #{@from.localtime} to #{@to.localtime}
-  %br/
+  %a{href: url('/logs/golast')} golast
+  - if @chan
+    &emsp;
+    %a{href: url("/logs/golast?chan=#{CGI.escape @chan}")} golast #{@chan}
+
+%p
+  Logs from #{@from.localtime.strftime '%b %d, %H:%M %Z'} to #{@to.localtime.strftime '%b %d, %H:%M %Z'}
+  &emsp;
   - if @logs.length == 0
     No logs for you!
   - else
-    #{@logs.length} results:
+    #{@logs.length} #{params['urls'] == 'urls' ? 'URLs' : 'lines'}:
 
 #logs
   - @logs.each do |log|
     .entry= log
-
-%hr
-
-%a{href: url('/logs/golast')} golast
-- if @chan
-  &emsp;
-  %a{href: url("/logs/golast?chan=#{CGI.escape @chan}")} golast #{@chan}
