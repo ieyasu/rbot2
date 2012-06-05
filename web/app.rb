@@ -2,6 +2,7 @@ load 'config.rb'
 
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/cookies'
 require 'cgi'
 require 'date'
 require 'chronic'
@@ -29,6 +30,13 @@ DAY = 24 * 60 * 60
 WEEK = 7 * DAY
 MONTH = 31 * DAY
 YEAR = 365 * DAY
+
+OVERRIDE_STAMPS = [
+  [nil, 'auto'],
+  ['[%H:%M]', '[14:24]'],
+  ['[%y\\%m\\%d-%H:%M:%S]', '[12\06\05-14:24:01]'],
+  ['[%a %b %d %Y %H:%M:%S]', '[Tue Jun 05 2012 14:24:01']
+]
 
 helpers do
   def protected!
@@ -115,7 +123,16 @@ helpers do
       q = nil
     end
 
-    return from.utc, to.utc, chan, urls, q
+    if (s = params['stamp'] || cookies[:stamp]) and
+        (i = s.to_i) > 0 and i < OVERRIDE_STAMPS.length
+      stampi = i
+      cookies[:stamp] = i.to_s
+    else
+      stampi = nil
+      cookies[:stamp] = nil
+    end
+
+    return from.utc, to.utc, chan, urls, q, stampi
   end
 
   def log_dirs
@@ -184,7 +201,7 @@ helpers do
 
   def format_log_lines(lines, lt)
     dt = Time.now - @from
-    fmt =
+    fmt = @stampi ? OVERRIDE_STAMPS[@stampi].first :
       if dt < DAY
         SHORT_TIME_FMT
       elsif dt < WEEK
@@ -389,7 +406,7 @@ get '/logs' do
 
   @channels = ['All'] + log_dirs.delete_if {|path| !File.directory?(path)}.
     sort_by {|path| File.mtime(path)}.map {|path| File.basename path}
-  @from, @to, @chan, urls, q = get_log_params
+  @from, @to, @chan, urls, q, @stampi = get_log_params
   @logs = read_logs(@from, @to, @chan, urls, q)
   two_weeks_ago = Time.now - (2 * WEEK)
   if !(from = params['from']) || from.length < 1

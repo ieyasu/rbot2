@@ -1,4 +1,4 @@
-%form{action: '/logs', method: 'get'}
+%form{id: 'f', action: url('/logs'), method: 'get'}
   %label{for: 'from'} From:
   %input{type: 'text', id: 'from', name: 'from', size: 10, value: params['from']}
   %label{for: 'to'} To:
@@ -37,3 +37,17 @@
 #logs
   - @logs.each do |log|
     .entry= log
+
+%hr
+
+%label{for: 'timestamp'} Override timestamp:
+%select{id: 'timestamp', name: 'timestamp'}
+  - OVERRIDE_STAMPS.each_with_index do |(fmt, s), i|
+    %option{value: i, selected: (i == @stampi)}= s
+
+:javascript
+  $('#timestamp').change(function() {
+    $('#stamp').remove();
+    var s = $('#timestamp').val();
+    $('#f').append("<input type='hidden' id='stamp' name='stamp' value='" + s + "' />");
+  });
