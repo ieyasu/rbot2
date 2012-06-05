@@ -17,10 +17,14 @@ $url_regex = Regexp.new(r.first, Regexp::IGNORECASE)
 
 LOGSTAMP_FMT = '%Y-%m-%dT%H:%M:%S%Z'
 
-SHORT_TIME_FMT  = '[%H:%M]'
+# [14:24:01]                  last 24 hours
+# [Tue 14:24]                 last week
+# [Tue Jun 05 14:24]          last month
+# [Jun 05 2012 14:24]         last year
+SHORT_TIME_FMT  = '[%H:%M:%S]'
 MED_TIME_FMT    = '[%a %H:%M]'
-LONG_TIME_FMT   = '[%b %d %H:%M]'
-VLONG_TIME_FMT  = '[%b %d, %Y %H:%M]'
+LONG_TIME_FMT   = '[%a %b %d %H:%M]'
+VLONG_TIME_FMT  = '[%b %d %Y %H:%M]'
 DAY = 24 * 60 * 60
 WEEK = 7 * DAY
 MONTH = 31 * DAY
@@ -179,15 +183,16 @@ helpers do
   end
 
   def format_log_lines(lines, lt)
+    dt = Time.now - @from
     fmt =
-      if @to - @from < 2 * DAY
-        SHORT_TIME_FMT  # HH:MM
-      elsif @to - @from < WEEK
-        MED_TIME_FMT    # Day HH:MM
-      elsif @to - @from < YEAR
-        LONG_TIME_FMT   # Mon DY HH:MM
+      if dt < DAY
+        SHORT_TIME_FMT
+      elsif dt < WEEK
+        MED_TIME_FMT
+      elsif dt < MONTH
+        LONG_TIME_FMT
       else
-        VLONG_TIME_FMT  # Mon DY, YYYY HH:MM
+        VLONG_TIME_FMT
       end
 
     lines.map do |t, text|
