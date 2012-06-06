@@ -40,7 +40,7 @@
 
 %hr
 
-%label{for: 'timestamp'} Override timestamp:
+%label{for: 'timestamp'} Timestamp:
 %select{id: 'timestamp', name: 'timestamp'}
   - OVERRIDE_STAMPS.each_with_index do |(fmt, s), i|
     %option{value: i, selected: (i == @stampi)}= s

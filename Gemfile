@@ -12,6 +12,7 @@ gem "json"
 
 # web interface specific
 gem "sinatra"
+gem "sinatra-contrib"
 gem "haml"
 
 # Add dependencies to develop your gem here.
