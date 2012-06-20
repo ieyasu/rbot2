@@ -415,6 +415,7 @@ get '/logs' do
       @logs = read_logs(@from, @to, @chan, urls, q)
     end
   end
+  @logs = @logs.reverse if urls == :urls
   haml :chatlog
 end
 
