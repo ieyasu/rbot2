@@ -1,3 +1,6 @@
+$rb_root = File.join(File.dirname(__FILE__), '..')
+Dir.chdir($rb_root)
+$LOAD_PATH <<  File.join($rb_root, 'lib')
 load 'config.rb'
 
 require 'rubygems'
@@ -11,7 +14,7 @@ require 'rubybot2/account'
 require 'rubybot2/irc'
 require 'rubybot2/nextlib'
 
-set :public_folder, File.dirname(__FILE__) + '/pub'
+set :public_folder, File.dirname(__FILE__) + '/public'
 
 r = File.read('lib/rubybot2/url-regex.txt').scan(/^(?![#\r\n])[^\r\n]+/)
 $url_regex = Regexp.new(r.first, Regexp::IGNORECASE)
@@ -162,7 +165,7 @@ helpers do
       cmd << " | pcregrep -iue #{Shellwords.shellescape q}" if q
       cmd << " | pcregrep -iuf lib/rubybot2/url-regex.txt" if urls == :urls
       cmd << " | head -n 50000" # ought to be enough for anybody!
-      log[chan] += `#{cmd}`.split(/\r?\n/)
+      log[chan] += `#{cmd}`.force_encoding('utf-8').split(/\r?\n/)
     end
     log
   end
