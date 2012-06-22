@@ -9,6 +9,7 @@ config.rb
 *.pyc
 inc/sms_auth.inc
 Gemfile.lock
+hooks/service
 
 # sass stuff
 .sass-cache/
