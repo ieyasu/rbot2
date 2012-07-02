@@ -1,71 +1,26 @@
-def parse_choose(body, fin)
-  i = body.index('More than one match was found') ||
-    ((j = body.index('More than one location matched')) &&
-     body.index('<td valign="top">', j))
-  if i
-    body.index(%r!<a\s+href\s*=\s*['"]?([^'">]+)['"]?!i, i) or return
-    fin.base_uri.merge($1)
-  end
+def remspan(ccd, i)
+  ccd[i].children.first.remove
+  ccd[i].text
 end
 
-def extract_td(body, i, sigil)
-  i = body.index(sigil, i) or return
-  i = body.index('<td', i) or return
-  j = body.index('</td>', i) or return
-  [strip_html(body[i...j].gsub('&deg;', '')), j]
-end
+def parse_conditions(doc)
+  location = doc.css('div.point-forecast-area-title').text
+  conditions = doc.css('p.myforecast-current').text
+  tempf = doc.css('p.myforecast-current-lrg').text
+  tempc = doc.css('span.myforecast-current-sm').text
+  ccd = doc.css('ul.current-conditions-detail').children
+  humidity = remspan(ccd, 0)
+  wind = remspan(ccd, 2)
+  updated_at = doc.css('p.current-conditions-timestamp').text
+  updated_at = updated_at.gsub(/Last Update on /i, '')
 
-def parse_conditions(body)
-  i = body.index(/Current local weather/i) or return
-
-  i = body.index(/<span class=.blue1/, i) or return
-  j = body.index("</span", i) or return
-  location = strip_html(body[i...j])
-
-  i = body.index(/Last Update on ([^,]+,[^<]+)<br>/, j) or
-    i = body.index(/Last Update on (\d\d? \w+ [^<]+)<br>/) or return
-  update_at = $1.strip
-
-  conditions, i = extract_td(body, i, '<table')
-  return unless conditions
-  conditions =~ /(\D+)(-?\d+)\s*F\s*\((-?\d+)\s*C\)/
-  conditions,tempf,tempc = $1.strip,$2,$3
-
-  humidity, i = extract_td(body, i, 'Humidity')
-  return unless humidity
-  humidity = humidity.delete(' ')
-
-  wind, i = extract_td(body, i, 'Wind Speed')
-  return unless wind
-  wind = "from #{wind}" unless wind =~ /calm/i
-
-  "#{location}: #{conditions} (#{tempf}F, #{tempc}C)  Wind: #{wind}  RH: #{humidity}  #{update_at}"
+  "#{location}: #{conditions} (#{tempf}, #{tempc})  Wind: #{wind}  RH: #{humidity}  #{updated_at}"
 end
 
 $args = ENV['ZIP'] if $args.length == 0
-fin = open("http://forecast.weather.gov/zipcity.php?inputstring=#{CGI.escape($args)}")
-body = fix_encoding fin.read
-
-if body && (url = parse_choose(body, fin))
-  fin = open(url)
-  body = fix_encoding fin.read
-end
-
-while body && body.index(/document.location.replace\('([^']+)'\)/)
-  fin = open(fin.base_uri.merge($1))
-  body = fix_encoding fin.read
-end
-
-if body
-  if body.index('Could not find your')
-    reply "Weather location #{$args} not found"
-  elsif body.index('Current Conditions Unavailable')
-    reply "Weather conditions are unavailable"
-  elsif (res = parse_conditions(body))
-    reply res.index('NULL') ? "NWS is spitting out NULLs again" : res
-  else
-    reply "Error parsing weather information for #{$args}"
-  end
+doc = noko_get("http://forecast.weather.gov/zipcity.php?inputstring=#", $args)
+if (conds = parse_conditions(doc))
+  reply conds
 else
-  reply "No weather information for #{$args}"
+  reply "Error parsing conditions for #{$args}"
 end
