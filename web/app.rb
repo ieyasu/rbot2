@@ -271,7 +271,7 @@ helpers do
     if link
       t1 = Time.new(t.year, t.month, t.day).strftime('%Y-%m-%d')
       # XXX better to use whichever channel this line is from
-      u = "/logs?w=range&from=#{t1}&to=&chan=#{params['chan']}"
+      u = "/logs?w=range&from=#{t1}&to=&chan=#{escape params['chan']}"
       "<a href='#{url u}##{t.to_i}'>#{s}</a>"
     else
       s
