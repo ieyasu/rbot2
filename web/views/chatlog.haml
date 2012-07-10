@@ -1,8 +1,15 @@
 %form{id: 'f', action: url('/logs'), method: 'get'}
-  %label{for: 'from'} From:
-  %input{type: 'text', id: 'from', name: 'from', size: 10, value: params['from']}
-  %label{for: 'to'} To:
-  %input{type: 'text', id: 'to', name: 'to', size: 10, value: params['to']}
+  %input{type: 'radio', id: 'range', name: 'w', value: 'range',
+         checked: (@when == :range) ? 'checked' : nil}
+  %label{for: 'range'} Date range
+  &nbsp;
+  %input{type: 'radio', id: 'latest', name: 'w', value: 'latest',
+         checked: (@when == :latest) ? 'checked' : nil}
+  %label{for: 'latest'} Latest
+  &nbsp;
+  %input{type: 'radio', id: 'alltime', name: 'w', value: 'all',
+         checked: (@when == :all) ? 'checked' : nil}
+  %label{for: 'alltime'} All time
   &emsp;
   %select{id: 'chan', name: 'chan'}
     - @channels.each do |chan|
@@ -18,16 +25,29 @@
   %input{type: 'text', id: 'q', name: 'q', value: params['q']}
   %input{type: 'submit', value: 'Search'}
 
+  #rangesel{style: (@when == :range) ? nil : "display: none;"}
+    %label{for: 'from'} From:
+    %input{type: 'text', id: 'from', name: 'from', size: 10, value: params['from']}
+    %label{for: 'to'} To:
+    %input{type: 'text', id: 'to', name: 'to', size: 10, value: params['to']}
+
+:javascript
+  $('input[name="w"]').change(function() {
+    var rs = $('#rangesel');
+    if ($('input[name="w"]:checked').val() == "range") {
+      rs.show();
+    } else {
+      rs.hide();
+    }
+  });
+
 %hr
 
 %p
-  %a{href: url('/logs/golast')} golast
-  - if @chan
-    &emsp;
-    %a{href: url("/logs/golast?chan=#{CGI.escape @chan}")} golast #{@chan}
-
-%p
-  Logs from #{@from.localtime.strftime '%b %d, %H:%M %Z'} to #{@to.localtime.strftime '%b %d, %H:%M %Z'}
+  - if @from && @to
+    Logs from #{@from.localtime.strftime '%b %d %Y, %H:%M %Z'} to #{@to.localtime.strftime '%b %d %Y, %H:%M %Z'}
+  - else
+    Logs for all time
   &emsp;
   - if @logs.length == 0
     No logs for you!
@@ -44,6 +64,13 @@
 %select{id: 'timestamp', name: 'timestamp'}
   - OVERRIDE_STAMPS.each_with_index do |(fmt, s), i|
     %option{value: i, selected: (i == @stampi)}= s
+
+&emsp;
+%a{href: url('/logs/golast')} golast
+
+- if @chan
+  &emsp;
+  %a{href: url("/logs/golast?chan=#{CGI.escape @chan}")} golast #{@chan}
 
 :javascript
   $('#timestamp').change(function() {

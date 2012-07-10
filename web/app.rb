@@ -29,7 +29,8 @@ SHORT_TIME_FMT  = '[%H:%M:%S]'
 MED_TIME_FMT    = '[%a %H:%M]'
 LONG_TIME_FMT   = '[%a %b %d %H:%M]'
 VLONG_TIME_FMT  = '[%b %d %Y %H:%M]'
-DAY = 24 * 60 * 60
+HOUR = 60 * 60
+DAY = 24 * HOUR
 WEEK = 7 * DAY
 MONTH = 31 * DAY
 YEAR = 365 * DAY
@@ -38,7 +39,7 @@ OVERRIDE_STAMPS = [
   [nil, 'auto'],
   ['[%H:%M]', '[14:24]'],
   ['[%y\\%m\\%d-%H:%M:%S]', '[12\06\05-14:24:01]'],
-  ['[%a %b %d %Y %H:%M:%S]', '[Tue Jun 05 2012 14:24:01']
+  ['[%a %b %d %Y %H:%M:%S]', '[Tue Jun 05 2012 14:24:01]']
 ]
 
 helpers do
@@ -94,21 +95,6 @@ helpers do
   end
 
   def get_log_params(urls_default = :fulltext)
-    if (from = params['from']) && from.length > 0
-      from = Chronic.parse(from, :context => :past, :guess => false)
-      from = from.begin if Chronic::Span === from
-    else
-      t = Time.now
-      from = Time.new(t.year, t.month, t.day)
-    end
-
-    if (to = params['to']) && to.length > 0
-      to = Chronic.parse(to, :context => :past, :guess => false)
-      to = to.end if Chronic::Span === to
-    else
-      to = from + DAY
-    end
-
     unless (chan = params['chan']) and IRC.channel_name?(chan)
       chan = nil
     end
@@ -126,6 +112,41 @@ helpers do
       q = nil
     end
 
+    w =
+      case params['w']
+      when 'latest'
+        :latest
+      when 'all'
+        q ? :all : :latest
+      when 'range'
+        :range
+      else
+        :latest
+      end
+
+    case w
+    when :latest
+      to = Time.now
+      from = to - DAY
+      to += HOUR
+    when :all
+      to = from = nil
+    when :range
+      if (from = params['from']) && from.length > 0
+        from = Chronic.parse(from, :context => :past, :guess => false)
+        from = from.begin if Chronic::Span === from
+      else
+        from = Time.now - DAY
+      end
+
+      if (to = params['to']) && to.length > 0
+        to = Chronic.parse(to, :context => :past, :guess => false)
+        to = to.end if Chronic::Span === to
+      else
+        to = from + DAY
+      end
+    end
+
     if (s = params['stamp'] || cookies[:stamp]) and
         (i = s.to_i) > 0 and i < OVERRIDE_STAMPS.length
       stampi = i
@@ -135,7 +156,7 @@ helpers do
       cookies[:stamp] = nil
     end
 
-    return from.utc, to.utc, chan, urls, q, stampi
+    return w, from && from.utc, to && to.utc, chan, urls, q, stampi
   end
 
   def log_dirs
@@ -144,16 +165,23 @@ helpers do
 
   def which_log_files(from, to, chan)
     channels = chan ? ["log/#{chan}"] : log_dirs
-    d = from.dup
     chan_files = {}
-    while d <= to
-      prefix = d.strftime("/%Y-%m-%d-")
+    if from.nil? && to.nil?
       channels.each do |dir|
         chan = File.basename(dir)
-        file = "#{dir}#{prefix}#{chan}.log"
-        chan_files[chan] = (chan_files[chan] || []) << file if File.exist?(file)
+        chan_files[chan] = Dir["#{dir}/????-??-??-*.log"].to_a
       end
-      d += DAY
+    else
+      d = from.dup
+      while d <= to
+        prefix = d.strftime("/%Y-%m-%d-")
+        channels.each do |dir|
+          chan = File.basename(dir)
+          file = "#{dir}#{prefix}#{chan}.log"
+          chan_files[chan] = (chan_files[chan] || []) << file if File.exist?(file)
+        end
+        d += DAY
+      end
     end
     return channels, chan_files
   end
@@ -161,10 +189,12 @@ helpers do
   def read_log_lines(channels, chan_files, urls, q)
     log = channels.inject({}) {|h, chan| h[File.basename chan] = []; h}
     chan_files.each do |chan, files|
-      cmd = "cat #{files.join(' ')}"
+      fi = files.join(' ')
+      next unless fi.length > 0
+      cmd = "cat #{fi}"
       cmd << " | pcregrep -iue #{Shellwords.shellescape q}" if q
       cmd << " | pcregrep -iuf lib/rubybot2/url-regex.txt" if urls == :urls
-      cmd << " | head -n 50000" # ought to be enough for anybody!
+      cmd << " | head -n 20000" # ought to be enough for anybody!
       log[chan] += `#{cmd}`.force_encoding('utf-8').split(/\r?\n/)
     end
     log
@@ -182,10 +212,14 @@ helpers do
   end
 
   def filter_date_range(log, from, to)
-    log.each_key do |chan|
-      log[chan] = log[chan].select {|t, text| from <= t && t <= to}
+    if from && to
+      log.each_key do |chan|
+        log[chan] = log[chan].select {|t, text| from <= t && t <= to}
+      end
+      log
+    else # 'all time'
+      log
     end
-    log
   end
 
   # prefix with channel when multiple channels are present and sort
@@ -203,7 +237,7 @@ helpers do
   end
 
   def format_log_lines(lines, lt)
-    dt = Time.now - @from
+    dt = @from ? Time.now - @from : YEAR
     fmt = @stampi ? OVERRIDE_STAMPS[@stampi].first :
       if dt < DAY
         SHORT_TIME_FMT
@@ -237,7 +271,7 @@ helpers do
     if link
       t1 = Time.new(t.year, t.month, t.day).strftime('%Y-%m-%d')
       # XXX better to use whichever channel this line is from
-      u = "/logs?from=#{t1}&to=&chan=#{params['chan']}"
+      u = "/logs?w=range&from=#{t1}&to=&chan=#{params['chan']}"
       "<a href='#{url u}##{t.to_i}'>#{s}</a>"
     else
       s
@@ -409,10 +443,10 @@ get '/logs' do
 
   @channels = ['All'] + log_dirs.delete_if {|path| !File.directory?(path)}.
     sort_by {|path| File.mtime(path)}.map {|path| File.basename path}
-  @from, @to, @chan, urls, q, @stampi = get_log_params
+  @when, @from, @to, @chan, urls, q, @stampi = get_log_params
   @logs = read_logs(@from, @to, @chan, urls, q)
   two_weeks_ago = Time.now - (2 * WEEK)
-  if !(from = params['from']) || from.length < 1
+  if @when == :latest
     while @logs.length < MIN_DEFAULT_RESULTS && @from > two_weeks_ago
       @from -= DAY / 2
       @logs = read_logs(@from, @to, @chan, urls, q)

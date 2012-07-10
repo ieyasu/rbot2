@@ -14,6 +14,7 @@ To Do
  - <<< WHOIS rb-test
    >>> :bigfeh.com 451  WHOIS :Register first.
  - make '!next nick !smite nick' work
+ - grab all of timecube's website, split into lines, randomize, cache
 
 ---
 db: rbot:rbot/nofig7
@@ -23,6 +24,31 @@ svn co svn://f3h.com/rbot/trunk/rbot/
 
 \002 - bold
 \003CC - color
+
+Grabber
+=======
+
+- cookie-based sessions
+- don't link mibbit.com quit shit in url-only view
+- highlight contextified line when clicking on timestamp -> location in logs
+- no time search doesn't necessarily go into present time (noticed at 12:49a mst)
+  - works fine when search today -> tomorrow
+- better date selection:
+  - all time (default?)
+  - latest
+  - date range (with gui selector)
+
+
+Different timestamps based on how long ago, not search span.  Also user-overridable.
+
+[14:24:01]                  last 24 hours
+[Tue 14:24]                 last week
+[Tue Jun 05 14:24]          last month
+[Jun 05 2012 14:24]         last year
+
+[14:24]
+[12\06\05-14:24:01] <joe>
+
 
 Logging
 =======
