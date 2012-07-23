@@ -27,9 +27,9 @@
 
   #rangesel{style: (@when == :range) ? nil : "display: none;"}
     %label{for: 'from'} From:
-    %input{type: 'text', id: 'from', name: 'from', size: 10, value: params['from']}
+    %input{type: 'text', id: 'from', name: 'from', size: 20, value: params['from']}
     %label{for: 'to'} To:
-    %input{type: 'text', id: 'to', name: 'to', size: 10, value: params['to']}
+    %input{type: 'text', id: 'to', name: 'to', size: 20, value: params['to']}
 
 :javascript
   $('input[name="w"]').change(function() {
@@ -46,6 +46,7 @@
 %p
   - if @from && @to
     Logs from #{@from.localtime.strftime '%b %d %Y, %H:%M %Z'} to #{@to.localtime.strftime '%b %d %Y, %H:%M %Z'}
+    (#{@from.utc.strftime '%Y-%m-%dT%H:%MZ'} - #{@to.utc.strftime '%Y-%m-%dT%H:%MZ'})
   - else
     Logs for all time
   &emsp;
