@@ -204,7 +204,7 @@ helpers do
       chan = File.basename(channel)
       cmd = "cd '#{channel}'; cat #{files.join(' ')}"
       cmd << " | pcregrep -iue #{Shellwords.shellescape q}" if q
-      cmd << " | pcregrep -iuf lib/rubybot2/url-regex.txt" if urls == :urls
+      cmd << " | pcregrep -iuf $RB_ROOT/lib/rubybot2/url-regex.txt" if urls == :urls
       cmd << " | head -n 20000" # ought to be enough for anybody!
       log[chan] = `#{cmd}`.force_encoding('utf-8').split(/\r?\n/)
     end
