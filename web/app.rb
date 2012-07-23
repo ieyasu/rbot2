@@ -1,4 +1,5 @@
 $rb_root = File.join(File.dirname(__FILE__), '..')
+ENV['RB_ROOT'] = File.absolute_path($rb_root)
 Dir.chdir($rb_root)
 $LOAD_PATH <<  File.join($rb_root, 'lib')
 load 'config.rb'
