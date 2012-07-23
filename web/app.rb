@@ -42,6 +42,7 @@ OVERRIDE_STAMPS = [
   ['[%a %b %d %Y %H:%M:%S]', '[Tue Jun 05 2012 14:24:01]']
 ]
 
+# XXX need to use user's timezone or default (mountain)
 helpers do
   def protected!
     unless authorized?
@@ -124,6 +125,7 @@ helpers do
         :latest
       end
 
+    # XXX make sure this is interpreted in user's locale, etc
     case w
     when :latest
       to = Time.now
@@ -166,74 +168,71 @@ helpers do
   def which_log_files(from, to, chan)
     channels = chan ? ["log/#{chan}"] : log_dirs
     chan_files = {}
-    if from.nil? && to.nil?
-      channels.each do |dir|
-        chan = File.basename(dir)
-        chan_files[chan] = Dir["#{dir}/????-??-??-*.log"].to_a
-      end
-    else
-      d = from.dup
-      while d <= to
-        prefix = d.strftime("/%Y-%m-%d-")
-        channels.each do |dir|
-          chan = File.basename(dir)
-          file = "#{dir}#{prefix}#{chan}.log"
-          chan_files[chan] = (chan_files[chan] || []) << file if File.exist?(file)
+    channels.each do |chan|
+      if from.nil? && to.nil?
+        chan_files[chan] = Dir.entries(chan).grep(/\d{4}-\d\d-\d\d-[#+&].*\.log/).sort
+      else
+        chan_files[chan] = []
+        justchan = File.basename(chan) + ".log"
+        d = from.dup
+        while d <= to
+          file = d.strftime("%Y-%m-%d-") + justchan
+          chan_files[chan] << file if File.exist?("#{chan}/#{file}")
+          d += DAY
         end
-        d += DAY
       end
     end
-    return channels, chan_files
+    chan_files
   end
 
-  def read_log_lines(channels, chan_files, urls, q)
-    log = channels.inject({}) {|h, chan| h[File.basename chan] = []; h}
-    chan_files.each do |chan, files|
-      fi = files.join(' ')
-      next unless fi.length > 0
-      cmd = "cat #{fi}"
+  def read_log_lines(chan_files, urls, q)
+    log = {}
+    chan_files.each do |channel, files|
+      next if files.length < 1
+      chan = File.basename(channel)
+      cmd = "cd '#{channel}'; cat #{files.join(' ')}"
       cmd << " | pcregrep -iue #{Shellwords.shellescape q}" if q
       cmd << " | pcregrep -iuf lib/rubybot2/url-regex.txt" if urls == :urls
       cmd << " | head -n 20000" # ought to be enough for anybody!
-      log[chan] += `#{cmd}`.force_encoding('utf-8').split(/\r?\n/)
+      log[chan] = `#{cmd}`.force_encoding('utf-8').split(/\r?\n/)
     end
     log
   end
 
-  def parse_timestamp(log)
-    log.each_key do |chan|
-      log[chan] = log[chan].map do |line|
+  def parse_timestamps!(log)
+    log.each_key do |channel|
+      log[channel].map! do |line|
         stamp, text = line.split(' ', 2)
         t = DateTime.strptime(stamp, LOGSTAMP_FMT).to_time
         [t, text]
       end
     end
-    log
   end
 
-  def filter_date_range(log, from, to)
-    if from && to
-      log.each_key do |chan|
-        log[chan] = log[chan].select {|t, text| from <= t && t <= to}
+  # only need to filter first and last lines
+  # except those don't exist anymore, so just stop when beginning timestamp
+  # is >= from and ending timestamp is <= to
+  def filter_date_range!(from, to, log)
+    if from && to # ignore 'all time'
+      log.keys.each do |channel|
+        if log[channel].length > 0
+          i = log[channel].index  {|t, text| t >= from }
+          j = log[channel].rindex {|t, text| t <= to }
+          log[channel] = log[channel][i..j]
+        end
       end
-      log
-    else # 'all time'
-      log
     end
   end
 
-  # prefix with channel when multiple channels are present and sort
-  # by time, commingling results
   def channelify_logs(log)
     lines = []
-    log.each do |chan, clines|
+    log.each do |channel, clines|
+      chan = File.basename(channel)
       clines.each do |t, text|
         lines << [t, "#{chan} #{text}"]
       end
     end
-    # XXX not sure what to do about this fucking up whitespace
-    #lines = lines.sort_by {|t, text| t}
-    lines
+    lines.sort_by {|t, _| t}
   end
 
   def format_log_lines(lines, lt)
@@ -279,11 +278,11 @@ helpers do
   end
 
   def read_logs(from, to, chan, urls, q)
-    channels, chan_files = which_log_files(from, to, chan)
-    log = read_log_lines(channels, chan_files, urls, q)
-    log = parse_timestamp(log)
-    log = filter_date_range(log, from, to)
-    lines = (log.keys.length > 1) ? channelify_logs(log) : log[log.keys.first]
+    chan_files = which_log_files(from, to, chan)
+    log = read_log_lines(chan_files, urls, q)
+    parse_timestamps!(log)
+    filter_date_range!(from, to, log)
+    lines = (log.size > 1) ? channelify_logs(log) : log.values.first
     link_timestamps = (urls == :urls || q)
     format_log_lines(lines, link_timestamps)
   end
