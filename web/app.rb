@@ -13,6 +13,9 @@ require 'shellwords'
 require 'rubybot2/account'
 require 'rubybot2/irc'
 require 'rubybot2/nextlib'
+require 'rubybot2/zipdb'
+
+include Zip
 
 set :public_folder, File.dirname(__FILE__) + '/public'
 
@@ -45,7 +48,9 @@ OVERRIDE_STAMPS = [
 # XXX need to use user's timezone or default (mountain)
 helpers do
   def protected!
-    unless authorized?
+    if authorized?
+      set_tz
+    else
       response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
       throw(:halt, [401, "Not authorized\n"])
     end
@@ -74,6 +79,13 @@ helpers do
       authorized? or return false
     end
     @account[:name] == $rbconfig['web-admin-account']
+  end
+
+  def set_tz
+    zip = @account[:zip]
+    if (zipinfo = get_zipinfo(zip))
+      ENV['TZ'] = zipinfo.tz
+    end
   end
 
   def navitem(name)
