@@ -33,7 +33,7 @@ def file_to_class(filename)
 end
 
 def run_hook(command, args, msg, replier)
-  zip = Account.zip_by_nick(msg.nick) || $rbconfig['default-zip']
+  zip = Account.zip_by_nick(msg.nick)
   ENV['ZIP'] = zip.to_s
   if (zipinfo = get_zipinfo(zip))
     ENV['CITY'] = zipinfo.city
