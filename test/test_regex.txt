@@ -10,3 +10,4 @@ mattsbishop@gmail.com              # probably don't want to match this
 / # also not an url
 https://p.twimg.com/Av3Sz_mCEAEA-5e.jpg:large
 https://docs.google.com/viewer?a=v&q=cache:eA-7yLK011AJ:www.elcomsoft.com/WP/BH-EU-2012-WP.pdf+&hl=en&gl=us&pid=bl&srcid=ADGEESgRUaeTyjHPKEXPXZf8EHutSN8E3-ZRDdpsspaWYDcDEHbu1V1gaSqyCVLvUZjkSv2j5pQd_BfbeMBdQce0sEx40ZhrwzLkmYbmakstEysdnIj9WWB1dcfH7BU3izbKOh7tPpZE&sig=AHIEtbQISRPRupat8r68OKzrHXPXdZ6D4Q
+http://tech.fortune.cnn.com/2012/07/05/could-pc-gaming-make-a-comeback/?utm_source=GaggleAMP-The%20NPD%20Group%20Toys/Games&utm_medium=Twitter%20(GaggleAMP)&utm_content=24151-Could%20PC%20gam&utm_campaign=(GaggleAMP)
