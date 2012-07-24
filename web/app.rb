@@ -20,8 +20,8 @@ include Zip
 
 set :public_folder, File.dirname(__FILE__) + '/public'
 
-r = File.read('lib/rubybot2/url-regex.txt').scan(/^(?![#\r\n])[^\r\n]+/)
-$url_regex = Regexp.new(r.first, Regexp::IGNORECASE)
+r = File.read('lib/rubybot2/url-regex').strip
+$url_regex = Regexp.new(r, Regexp::IGNORECASE)
 
 LOGSTAMP_FMT = '%Y-%m-%dT%H:%M:%S%Z'
 
@@ -205,7 +205,7 @@ helpers do
       chan = File.basename(channel)
       cmd = "cd '#{channel}'; cat #{files.join(' ')}"
       cmd << " | pcregrep -iue #{Shellwords.shellescape q}" if q
-      cmd << " | pcregrep -iuf $RB_ROOT/lib/rubybot2/url-regex.txt" if urls == :urls
+      cmd << " | pcregrep -iuf $RB_ROOT/lib/rubybot2/url-regex" if urls == :urls
       cmd << " | head -n 20000" # ought to be enough for anybody!
       log[chan] = `#{cmd}`.force_encoding('utf-8').split(/\r?\n/)
     end
@@ -310,7 +310,7 @@ helpers do
 
   def find_latest_url(files)
     files.sort_by {|file| File.mtime(file)}.reverse_each do |file|
-      u = `cat #{file} | pcregrep -iuvf lib/rubybot2/url-block.txt | pcregrep -iuof lib/rubybot2/url-regex.txt | tail -1`.strip
+      u = `cat #{file} | pcregrep -iuvf lib/rubybot2/url-block.txt | pcregrep -iuof lib/rubybot2/url-regex | tail -1`.strip
       if u.length > 0
         u = "http://#{u}" if u !~ /^(?:http|ftp)/
         return u
