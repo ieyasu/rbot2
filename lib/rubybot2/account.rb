@@ -71,7 +71,7 @@ module Account
   def Account.hash_passwd(pass)
     salt = ''
     File.open('/dev/urandom') do |fin|
-      6.times { salt << sprintf("%x", fin.getc.getbyte(0)) }
+      6.times { salt << sprintf("%x", fin.getbyte) }
     end
     "#{salt}:#{MD5.hexdigest(salt + pass)}"
   end

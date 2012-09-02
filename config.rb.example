@@ -35,5 +35,7 @@ $rbconfig = {
 
     'db-uri'     => 'sqlite://db/rubybot.db',
 
-    'default-zip' => 80523
+    'default-zip' => 80523,
+
+    'web-root' => '/'
 }

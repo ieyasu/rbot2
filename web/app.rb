@@ -7,6 +7,7 @@ load 'config.rb'
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/cookies'
+require 'base64'
 require 'cgi'
 require 'date'
 require 'chronic'
@@ -18,6 +19,7 @@ require 'rubybot2/zipdb'
 
 include Zip
 
+set :sessions, false
 set :public_folder, File.dirname(__FILE__) + '/public'
 
 r = File.read('lib/rubybot2/url-regex').strip
@@ -58,14 +60,39 @@ helpers do
   end
 
   def authorized?
+    # look for session cookie, use that if it matches session db
+    if (sid = cookies[:sid])
+      sf = DB[:sessions].filter(:sid => sid)
+      if (session = sf.first)
+        if Time.at(session[:expires_at]) > Time.now # session still valid
+          @account = Account.by_name(session[:account])
+          return true if @account
+        else
+          sf.delete
+        end
+      end
+    end
+
     @auth ||=  Rack::Auth::Basic::Request.new(request.env)
     if @auth.provided? && @auth.basic? && @auth.credentials
       name, trypass = @auth.credentials
       @account = Account.by_name(name)
-      Account.check_passwd(name, trypass)
+      save_session if (cp = Account.check_passwd(name, trypass))
+      cp
     else
       false
     end
+  end
+
+  def save_session
+    sid = nil
+    File.open('/dev/urandom') do |fin|
+      sid = Base64.encode64(fin.read(16)).strip
+    end
+    exp = Time.now + 60 * 60 * 24 * 32
+    DB[:sessions].insert(sid, @account[:name], exp.to_i)
+    response.set_cookie('sid', {:value => sid, :expires => exp,
+                                :path => $rbconfig['web-root']})
   end
 
   def admin!
@@ -165,13 +192,22 @@ helpers do
     if (s = params['stamp'] || cookies[:stamp]) and
         (i = s.to_i) > 0 and i < OVERRIDE_STAMPS.length
       stampi = i
-      cookies[:stamp] = i.to_s
+      cookie = s
+      exp = Time.now + 60 * 60 * 24 * 30
     else
       stampi = nil
-      cookies[:stamp] = nil
+      cookie = ''
+      exp = Time.now - 100000 # delete that sucker!
     end
+    # update cookie as appropriate
+    response.set_cookie('stamp', {value: cookie, expires: exp, path: request.path})
 
     return w, from && from.utc, to && to.utc, chan, urls, q, stampi
+  end
+
+  def validate_stamp_index(stamp)
+    stampi = stamp.to_i
+    (stampi > 0 and stampi < OVERRIDE_STAMPS.length) ? stampi : nil
   end
 
   def log_dirs
