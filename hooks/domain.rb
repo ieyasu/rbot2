@@ -3,7 +3,7 @@ require 'shellwords'
 match_args(/.+/, "<domain.tld>")
 
 resp = `whois '#{Shellwords.shellescape $args}'`
-if resp =~ /expir(?:es|ation)(?:\s+on)?(?:\s+date)?(?:[^:\r\n]*:)?\s*(\S+)/i
+if resp =~ /expir(?:es|ation)(?:\s+on)?(?:\s+date)?(?:[^:\r\n]*:)?\s*(.+)/i
   reply "#{$args} expires #{$1.strip}"
 elsif resp =~ /No match for/ or resp =~ /No.*this kind of object/
   reply "#{$args} available"
@@ -13,6 +13,9 @@ end
 
 #      Record expires on 2013-08-10
 #    Expires on..............: 2020-09-13.
-#registration-expiration:         26-Apr-2013
+# registration-expiration:         26-Apr-2013
 #      Expires on: 06-Sep-12
-#Expiration Date: 2013-05-10 18:17:39
+# Expiration Date: 2013-05-10 18:17:39
+# Domain Expiration Date:                      Sat Mar 30 23:59:59 GMT 2013
+# Expiration date: 07 Jun 2013 18:29:00
+# Expiration date: 29 Apr 2013 15:12:00
