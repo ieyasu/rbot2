@@ -1,12 +1,12 @@
-require 'shellwords'
+require 'whois'
 
 match_args(/.+/, "<domain.tld>")
 
-resp = `whois '#{Shellwords.shellescape $args}'`
-if resp =~ /expir(?:es|ation)(?:\s+on)?(?:\s+date)?(?:[^:\r\n]*:)?\s*(.+)/i
-  reply "#{$args} expires #{$1.strip}"
-elsif resp =~ /No match for/ or resp =~ /No.*this kind of object/
+r = Whois::Client.new.query($args)
+if r.available?
   reply "#{$args} available"
+elsif r.to_s =~ /expir(?:es|ation)(?:\s+on)?(?:\s+date)?(?:[^:\r\n]*:)?\s*(.+)/i
+  reply "#{$args} expires #{$1.strip}"
 else
   reply "Parse error in whois response for #{$args}"
 end
