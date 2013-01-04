@@ -4,7 +4,7 @@
 require 'rubybot2/plugin'
 
 def logday(t)
-  t.year * 366 + t.month * 31 + t.day
+  Time.new(t.year, t.month, t.day)
 end
 
 def open_logs(t)
@@ -32,7 +32,8 @@ end
 
 register :echo, IRC::CMD_PRIVMSG, IRC::CMD_JOIN, IRC::CMD_PART, IRC::CMD_NICK, IRC::CMD_TOPIC, IRC::CMD_KICK, IRC::CMD_MODE, IRC::CMD_QUIT
 
-$logday = -1
+# date older than any current time that will be logged
+$logday = Time.new(2000, 1, 1)
 
 message_loop do |msg, replier|
   t = Time.now.utc
