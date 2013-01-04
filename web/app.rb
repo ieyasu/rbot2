@@ -332,6 +332,7 @@ helpers do
     parse_timestamps!(log)
     filter_date_range!(from, to, log)
     lines = (log.size > 1) ? channelify_logs(log) : log.values.first
+    lines = [] unless lines
     link_timestamps = (urls == :urls || q)
     format_log_lines(lines, link_timestamps)
   end
