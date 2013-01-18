@@ -31,7 +31,8 @@ HOOK_TO_FILE = {
   'mcclure'      => 'troy_mcclure.txt',
   'tracy'        => 'tracy_morgan.txt',
   'grouphug'     => 'grouphug.txt',
-  'fap'          => 'grouphug.txt'
+  'fap'          => 'grouphug.txt',
+  'qotd'          => 'qotd.txt'
 }
 
 # a - action instead of privmsg
