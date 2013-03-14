@@ -10,7 +10,7 @@ def parse_quote(body)
   changepc = s[5]
   stockname = s[6]
 
-  return nil if body =~ /MISSING SYMBOL/
+  return nil if s[0] == "MISSING SYMBOLS LIST."
   return nil if s[4] == "N/A"
 
   "#{stockname} (#{symbol.upcase}): #{price} #{change} #{changepc} last trade #{date} #{time}"
