@@ -1,5 +1,5 @@
 def parse_quote(body)
-  require "CSV"
+  require "csv"
   CSV.parse(body).first do |s|
     symbol = s[0]
     price = s[1]
