@@ -18,7 +18,7 @@ body = http_get("http://finance.yahoo.com/d/quotes.csv?s=", $args + "&f=sl1d1t1c
 #symbol,price,date,time,change,pct,name
 #"GOOG", "820.34", "3/14/2013", "1:02pm", "-4.97", "-0.60%", "Google Inc."] 
 
-if (quote = parse_quote(body, $args))
+if (quote = parse_quote(body))
     reply quote
 else
   reply "error parsing quote for #{$args}"
