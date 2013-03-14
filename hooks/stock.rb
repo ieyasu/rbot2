@@ -1,14 +1,14 @@
 def parse_quote(body)
   require "csv"
-  CSV.parse(body).first do |s|
-    symbol = s[0]
-    price = s[1]
-    date = s[2]
-    time = s[3]
-    change = s[4]
-    changepc = s[5]
-    stockname = s[6]
-  end
+  s = CSV.parse(body).first
+  symbol = s[0]
+  price = s[1]
+  date = s[2]
+  time = s[3]
+  change = s[4]
+  changepc = s[5]
+  stockname = s[6]
+
   "#{stockname} (#{symbol.upcase}): #{price} #{change} #{changepc} last trade #{date} #{time}"
 end
 
