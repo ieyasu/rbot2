@@ -1,6 +1,5 @@
 def parse_quote(body)
-  return nil if body =~ /MISSING SYMBOL/
-  
+
   require "csv"
   s = CSV.parse(body).first
   symbol = s[0]
@@ -10,6 +9,9 @@ def parse_quote(body)
   change = s[4]
   changepc = s[5]
   stockname = s[6]
+
+  return nil if body =~ /MISSING SYMBOL/
+  return nil if s[1] == "N/A"
 
   "#{stockname} (#{symbol.upcase}): #{price} #{change} #{changepc} last trade #{date} #{time}"
 end
