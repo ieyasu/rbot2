@@ -1,6 +1,6 @@
 require 'whois'
 
-match_args(/.+/, "<domain.tld>")
+match_args(/.+\..+/, "<domain.tld>")
 
 r = Whois::Client.new.query($args)
 if r.available?
