@@ -12,6 +12,9 @@
 	global $arg; // args split by space
 	$arg = preg_split("/\s+/", $args);
 
+    // set timezone - >= 5.4.0 stopped reading the TZ env
+    date_default_timezone_set(getenv("TZ"));
+
 	function reply($message) {
 		global $dest;
 		reply_to($message, $dest);
