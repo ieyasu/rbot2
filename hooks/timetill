@@ -2,5 +2,7 @@
 <?
 	require_once("boilerplate.php");
 	require_once("inc/timetill.php");
+    if (strlen($args) == 0 && preg_match("/l(5|five)\$/", $argv[0]))
+        $args = '5';
 	reply_exit(timeTill(time(), $args));
 ?>
