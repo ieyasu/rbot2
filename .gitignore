@@ -58,3 +58,4 @@ pkg
 #*.swp
 web/cb/inc/*db.inc
 lib/rubybot2/inc/sms_auth.inc
+#windows
