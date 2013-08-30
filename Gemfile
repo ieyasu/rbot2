@@ -24,3 +24,5 @@ group :development do
   gem "jeweler", ">= 1.8.3"
   gem "shotgun"
 end
+
+gem "shorturl"
