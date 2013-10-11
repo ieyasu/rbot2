@@ -23,8 +23,6 @@
 		exit();
 	}
 
-	$args = stripslashes($args);
-
 	reply(get_madlib($args));
 
 	function get_madlib($str) {
