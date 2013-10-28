@@ -2,7 +2,7 @@ require 'whois'
 
 match_args(/.+\..+/, "<domain.tld>")
 
-r = Whois::Client.new.query($args)
+r = Whois::Client.new.lookup($args)
 if r.available?
   reply "#{$args} available"
 elsif r.to_s =~ /expir(?:es|ation)(?:\s+on)?(?:\s+date)?(?:[^:\r\n]*:)?\s*(.+)/i
