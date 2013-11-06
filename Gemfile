@@ -10,6 +10,7 @@ gem "raspell", "~> 1.3"
 gem "nokogiri"
 gem "json"
 gem "whois"
+gem "wolfram"
 
 # web interface specific
 gem "sinatra"

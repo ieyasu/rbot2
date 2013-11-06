@@ -1,25 +1,9 @@
-def parse_body(body)
-  i = body.index(/<span[^>]+quality="DONT-KNOW"/)
-  if i
-    i = body.index('<P', i) or return
-    j = body.index('P>', i + 3) or return
-    j = body.rindex('<', j) or return
-  else
-    i = body.index(/<span[^>]+quality="(?:PREFACE|MISSPELLED-WORD)"/) or return
-    i ||= body.index(/<span type="reply" quality="T"/, i) 
-    j = body.index(/<span[^>]+quality="APPENDIX"/) ||
-      body.index(/<EM>Abort/) or return
-  end
-  strip_html body[i...j]
-end
+require 'wolfram'
 
-begin
-  body = http_get("http://start.csail.mit.edu/startfarm.cgi?query=#", $args)
-  if body && (answer = parse_body(body))
-    reply answer
-  else
-    reply "error parsing answer for #{$args}"
-  end
-rescue OpenURI::HTTPError => e
-  reply "error asking about #{$args}: #{e.message}"
+Wolfram.appid = "L6LWRQ-5JY85G3LQ5"
+r = Wolfram::HashPresenter.new(Wolfram.fetch($args)).to_hash
+if r[:pods]['Result'] then
+  reply("Result: #{r[:pods]['Result'].first} (Interpreted input: #{r[:pods]['Input interpretation'].first})")
+else
+  reply("THERE ARE FOUR LIGHTS")
 end
