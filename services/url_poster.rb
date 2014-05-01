@@ -9,11 +9,11 @@ require 'snoo'
 
 $url_regex = Regexp.new(File.read('lib/rubybot2/url-regex').strip, Regexp::IGNORECASE)
 
-def fetch_title(url, replier)
+def fetch_title(url)
   body = http_get(url)
   i = body.index('<title') or return
   j = body.index('</title', i) or return
-  replier.reply("Title: #{strip_html(body[i...j])}")
+  strip_html(body[i...j])
 end
 
 register IRC::CMD_PRIVMSG
