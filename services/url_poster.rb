@@ -7,11 +7,11 @@ require 'rubybot2/web'
 include Web
 require 'snoo'
 
-URL_REGEX = [%r!^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$!]
+$url_regex = Regexp.new(File.read('lib/rubybot2/url-regex').strip, Regexp::IGNORECASE)
 
 if $rbconfig['reddit_user'] && $rbconfig['reddit_password'] && $rbconfig['reddit_sub'] then
   message_loop do |msg, replier|
-    if URL_REGEX =~ msg.text
+    if $url_regex =~ msg.text
       url = $&
       r = Snoo::Client.new
       r.log_in $rbconfig['reddit_user'], $rbconfig['reddit_password']
