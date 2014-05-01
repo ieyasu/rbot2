@@ -11,6 +11,7 @@ gem "nokogiri"
 gem "json"
 gem "whois"
 gem "wolfram"
+gem "snoo"
 
 # web interface specific
 gem "sinatra"
