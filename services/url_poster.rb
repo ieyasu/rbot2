@@ -9,9 +9,12 @@ require 'snoo'
 
 $url_regex = Regexp.new(File.read('lib/rubybot2/url-regex').strip, Regexp::IGNORECASE)
 
-if $rbconfig['reddit_user'] && $rbconfig['reddit_password'] && $rbconfig['reddit_sub'] then
-  message_loop do |msg, replier|
-    if $url_regex =~ msg.text
+message_loop do |msg, replier|
+  $log.info "subroutine message_loop run OK"
+  if $url_regex =~ msg.text
+    $log.info "found a url"
+    if $rbconfig['reddit_user'] && $rbconfig['reddit_password'] && $rbconfig['reddit_sub'] then
+      $log.info "attempting to post"
       url = $&
       r = Snoo::Client.new
       r.log_in $rbconfig['reddit_user'], $rbconfig['reddit_password']
