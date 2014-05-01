@@ -9,6 +9,13 @@ require 'snoo'
 
 $url_regex = Regexp.new(File.read('lib/rubybot2/url-regex').strip, Regexp::IGNORECASE)
 
+def fetch_title(url, replier)
+  body = http_get(url)
+  i = body.index('<title') or return
+  j = body.index('</title', i) or return
+  replier.reply("Title: #{strip_html(body[i...j])}")
+end
+
 register IRC::CMD_PRIVMSG
 
 $janitor = ThreadJanitor.new
@@ -19,7 +26,7 @@ message_loop do |msg, replier|
       url = $&
       r = Snoo::Client.new
       r.log_in $rbconfig['reddit_user'], $rbconfig['reddit_password']
-      r.submit msg.text, $rbconfig['reddit_sub'], { :url => url}
+      r.submit fetch_title(url), $rbconfig['reddit_sub'], { :url => url}
     end
   end
 end
