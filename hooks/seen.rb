@@ -1,7 +1,7 @@
 def last_statement(nick, chan)
   last = DB[:last]
   last = last.filter(:chan => chan) if chan
-  last = last.order(:at.desc)
+  last = last.order(Sequel.desc(:at)
   if nick
     last.all_regex(:nick, nick).first
   else

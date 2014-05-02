@@ -1,5 +1,5 @@
 m = match_args(/(\S+)/) do
-  top = DB[:points].order(:points.desc).limit(1).first
+  top = DB[:points].order(Sequel.desc(:points)).limit(1).first
   best = top ? "#{top[:thing]} = #{top[:points]}" : ''
   bot = DB[:points].order(:points).limit(1).first
   worst = bot ? "#{bot[:thing]} = #{bot[:points]}" : ''
