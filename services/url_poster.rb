@@ -22,10 +22,10 @@ $janitor = ThreadJanitor.new
 
 message_loop do |msg, replier|
   if $url_regex =~ msg.text
-    if $rbconfig['reddit_user'] && $rbconfig['reddit_password'] && $rbconfig['reddit_sub'] then
+    if $rbconfig['reddit_users'] && $rbconfig['reddit_password'] && $rbconfig['reddit_sub'] then
       url = $&
       r = Snoo::Client.new
-      r.log_in $rbconfig['reddit_user'], $rbconfig['reddit_password']
+      r.log_in $rbconfig['reddit_users'].sample, $rbconfig['reddit_password']
       r.submit fetch_title(url), $rbconfig['reddit_sub'], { :url => url}
     end
   end
