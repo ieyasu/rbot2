@@ -4,6 +4,8 @@ ndice, faces, offset = m[1].to_i, m[2].to_i, m[3].to_i
 
 exit_reply "need at least 1 dice!" unless ndice > 0
 exit_reply "need at least 1 face!" unless faces > 0
+exit_reply "cannot have more than 10 dice!" unless ndice <= 10
+exit_reply "any more sides than 200 is silly!" unless faces <= 200
 
 rolls = []
 ndice.times { rolls << rand(faces) + 1 }
