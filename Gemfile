@@ -11,7 +11,6 @@ gem "nokogiri"
 gem "json"
 gem "whois"
 gem "wolfram"
-gem "snoo"
 gem "wunderground"
 
 # web interface specific
