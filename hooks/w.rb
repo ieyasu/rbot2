@@ -6,7 +6,7 @@ w = Wunderground.new($rbconfig['wunderground_key'])
 # if not location specified, check PWS ID first, then zip
 if $args.length == 0
   $args = "pws:" + ENV['PWS'] unless ENV['PWS'].nil?
-  $args = ENV['ZIP'] if ENV['ZIP'].nil?
+  $args = ENV['ZIP'] if ENV['PWS'].nil?
 end
 
 wx = w.conditions_for($args)['current_observation']
