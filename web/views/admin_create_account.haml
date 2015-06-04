@@ -16,6 +16,10 @@
     %br/
     %input{type: 'text', id: 'zip', name: 'zip', size: 16, value: params['zip'] || $rbconfig['default-zip']}
   %p
+    %label{for: 'zip'} PWS Station ID
+    %br/
+    %input{type: 'text', id: 'pws', name: 'pws', size: 16, value: params['pws']}
+  %p
     %label{for: 'password'} Password
     %br/
     %input{type: 'password', id: 'password', name: 'password', size: 16, value: params['password']}

@@ -437,6 +437,14 @@ post '/account' do
     @errors << "Zip is not a 5-digit US zip code"
   end
 
+  if (pws = params['pws'])
+    if pws != @account[:pws]
+      DB[:accounts].filter(name: @account[:name]).update(pws: pws)
+      @account = Account.by_name(@account[:name])
+      @notices << "Updated PWS station ID"
+    end
+  end
+
   if (pass1 = params['pass1']) && pass1.length > 0
     if (pass2 = params['pass2']) && pass2.length > 0
       if pass1.length < 3
