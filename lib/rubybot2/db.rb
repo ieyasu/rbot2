@@ -63,4 +63,9 @@ module Account
     a = Account.by_nick(nick)
     a ? a[:zip] : $rbconfig['default-zip']
   end
+
+  def Account.pws_by_nick(nick)
+    a = Account.by_nick(nick)
+    a ? a[:pws] : nil
+  end
 end

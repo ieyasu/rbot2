@@ -48,6 +48,12 @@ To set your zip location, type
 
 at the command prompt.  Once set, rubybot will use this zip location as the default location for weather information and other local-specific data returned.
 
+To set your PWS ID, type
+
+    /msg rb setpws <pws> <password>
+
+at the command prompt.  Once set, rubybot will use this PWS ID for more localized weather information.
+
 To change your password, use
 
     /msg rb setpass <old-pass> <new-pass>

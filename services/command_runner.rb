@@ -42,6 +42,8 @@ def run_hook(command, args, msg, replier)
     ENV['LON'] = zipinfo.lon
     ENV['TZ'] = zipinfo.tz
   end
+  pws = Account.pws_by_nick(msg.nick)
+  ENV['PWS'] = pws.to_s
 
   if (rb = find_rb(command))
     $log.info "Running ruby hook #{command} for #{msg.nick}"

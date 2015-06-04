@@ -3,7 +3,11 @@ require 'date'
 
 w = Wunderground.new($rbconfig['wunderground_key'])
 
-$args = ENV['ZIP'] if $args.length == 0
+# if not location specified, check PWS ID first, then zip
+if $args.length == 0
+  $args = "pws:" + ENV['PWS'] unless ENV['PWS'].nil?
+  $args = ENV['ZIP'] if ENV['ZIP'].nil?
+end
 
 wx = w.conditions_for($args)['current_observation']
 if wx then

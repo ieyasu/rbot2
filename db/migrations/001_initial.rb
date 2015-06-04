@@ -11,6 +11,7 @@ Sequel.migration do
     create_table(:accounts) do
       String :name, :primary_key => true
       Fixnum :zip
+      String :pws
       String :passwd
     end
 
