@@ -95,6 +95,9 @@ def process_hook_output(r, out, err)
 end
 
 def check_message(msg, replier)
+  # slack integration - strip <sb> to parse commands
+  msg.text.delete!("<sb> ")
+
   return unless msg.text =~ /^(#{$rbconfig['cmd_prefix']})?([^\/\s]+)\s*(.*)$/
   pfx,command,args = $1,$2,$3
   command = command.downcase
