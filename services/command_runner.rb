@@ -98,7 +98,7 @@ def check_message(msg, replier)
   # slack integration - strip <sb> to parse commands
   if msg.nick == "sb"
     msg.nick = msg.text[/<([^>]+)>/, 1]
-    msg.text.gsub!(/<[^>]+> !/)
+    msg.text.gsub!(/<[^>]+> !/, '!')
   end
 
   return unless msg.text =~ /^(#{$rbconfig['cmd_prefix']})?([^\/\s]+)\s*(.*)$/
